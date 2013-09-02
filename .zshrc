@@ -56,4 +56,4 @@ alias glggo='git log --graph --pretty=oneline --abbrev-commit'
 export SVN_EDITOR=vim
 
 # Solves problem with tmux and unicode characters
-export LC_ALL="UTF8"
+export LC_ALL="UTF-8"
