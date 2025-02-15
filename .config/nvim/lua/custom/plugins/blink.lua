@@ -99,10 +99,7 @@ return {
     -- elsewhere in your config, without redefining it, via `opts_extend`
     sources = {
       -- This is for an upcoming release of blink
-      -- default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot', 'lazydev' },
-      completion = {
-        enabled_providers = { 'lsp', 'path', 'snippets', 'buffer', 'copilot', 'lazydev' },
-      },
+      default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot', 'lazydev' },
       -- optionally disable cmdline completions
       -- cmdline = {},
       providers = {
@@ -122,8 +119,7 @@ return {
             return items
           end,
         },
-        lsp = { fallback_for = { 'lazydev' } },
-        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
+        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
       },
     },
 
