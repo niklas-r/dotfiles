@@ -28,11 +28,4 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
 -- vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz', { desc = 'Go prev location' })
 
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
--- Neotest
-vim.keymap.set('n', '<leader>us', '<CMD>lua require("neotest").summary()<CR>', { desc = '[U]nit Test [S]ummary' })
-vim.keymap.set('n', '<leader>uo', '<CMD>lua require("neotest").output()<CR>', { desc = '[U]nit Test [O]utput' })
-vim.keymap.set('n', '<leader>up', '<CMD>lua require("neotest").output_panel()<CR>', { desc = '[U]nit Test Output [P]anel' })
-vim.keymap.set('n', '<leader>urt', '<CMD>lua require("neotest").run.run()<CR>', { desc = '[U]nit Test [R]un Nearest [T]est' })
-vim.keymap.set('n', '<leader>urf', '<CMD>lua require("neotest").run.run(vim.fn.expand("%"))<CR>', { desc = '[U]nit Test [R]un Current [F]ile' })
-vim.keymap.set('n', '<leader>us', '<CMD>lua require("neotest").run.stop()<CR>', { desc = '[U]nit Test [S]top Nearest Test' })
-vim.keymap.set('n', '<leader>ua', '<CMD>lua require("neotest").run.attach()<CR>', { desc = '[U]nit Test [A]ttach Nearest Test' })
+
