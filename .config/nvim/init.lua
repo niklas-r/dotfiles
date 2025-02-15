@@ -1401,7 +1401,7 @@ require('lazy').setup {
               [']C'] = { query = '@class.outer', desc = 'Next [C]lass end' },
             },
             goto_previous_start = {
-              ['[f'] = { query = '@function.outer', desc = 'Prev [M]ethod' },
+              ['[m'] = { query = '@function.outer', desc = 'Prev [M]ethod' },
               ['[c'] = { query = '@class.outer', desc = 'Prev [C]lass' },
             },
             goto_previous_end = {
