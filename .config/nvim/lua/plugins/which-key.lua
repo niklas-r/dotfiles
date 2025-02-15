@@ -64,10 +64,8 @@ return {
 
     spec = {
       { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-      { '<leader>d', group = '[D]ocument' },
       { '<leader>r', group = '[R]ename' },
       { '<leader>s', group = '[S]earch' },
-      { '<leader>w', group = '[W]orkspace' },
       { '<leader>m', group = 'Harpoon [M]arks', mode = { 'n' } },
       { '<leader>u', group = '[U]nit Test', mode = { 'n' } },
       { '<leader>ud', group = '[U]nit Test [D]ebug', mode = { 'n' } },
