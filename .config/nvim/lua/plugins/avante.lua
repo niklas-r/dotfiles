@@ -14,6 +14,15 @@ return {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string
     provider = 'claude', -- Recommend using Claude
     auto_suggestions_provider = 'copilot', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+    copilot = {
+      endpoint = 'https://api.githubcopilot.com/',
+      model = 'claude-3.5-sonnet',
+      proxy = nil, -- [protocol://]host[:port] Use this proxy
+      allow_insecure = false, -- Do not allow insecure server connections
+      timeout = 30000, -- Timeout in milliseconds
+      temperature = 0.1, -- kinda creative
+      max_tokens = 8192,
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
