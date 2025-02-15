@@ -1317,17 +1317,18 @@ require('lazy').setup({
           -- Automatically jump forward to textobj, similar to targets.vim
           lookahead = true,
 
-          --         keymaps = {
-          --           -- You can use the capture groups defined in textobjects.scm
-          --           ['am'] = { query = '@function.outer', desc = '[A]round [M]ethod' },
-          --           ['im'] = { query = '@function.inner', desc = '[I]n [M]ethod' },
-          --           ['ac'] = { query = '@class.outer', desc = '[A]round [C]lass' },
-          --           -- You can optionally set descriptions to the mappings (used in the desc parameter of
-          --           -- nvim_buf_set_keymap) which plugins like which-key display
-          --           ['ic'] = { query = '@class.inner', desc = '[I]n [C]lass' },
-          --           -- You can also use captures from other query groups like `locals.scm`
-          --           ['as'] = { query = '@local.scope', query_group = 'locals', desc = '[A]round [S]cope' },
-          --         },
+          -- Extra mappings that can be used with mini.surround and mini.ai
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ['am'] = { query = '@function.outer', desc = 'around method' },
+            ['im'] = { query = '@function.inner', desc = 'in method' },
+            ['ac'] = { query = '@class.outer', desc = 'around class' },
+            -- You can optionally set descriptions to the mappings (used in the desc parameter of
+            -- nvim_buf_set_keymap) which plugins like which-key display
+            ['ic'] = { query = '@class.inner', desc = 'in class' },
+            -- You can also use captures from other query groups like `locals.scm`
+            ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'around scope' },
+          },
 
           -- You can choose the select mode (default is charwise 'v')
           --
