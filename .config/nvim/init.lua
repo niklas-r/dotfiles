@@ -852,7 +852,6 @@ require('lazy').setup({
         'stylua', -- Used to format Lua code
         -- 'prettierd', -- Until this bug is solved I can't use it https://github.com/fsouza/prettierd/issues/352
         'prettier',
-        'eslint_d', -- ESLint daemon, faster than eslint
         'shellcheck', -- Bash linter
         'shfmt', -- Bash formatter
         'beautysh', -- Bash, Zsh etc formatter
