@@ -3,7 +3,7 @@ return {
   dependencies = {
     'folke/which-key.nvim',
   },
-  lazy = true,
+  lazy = false, -- Needs to be false to work with Wezterm integration
   init = function()
     local wk = require 'which-key'
     wk.add { '<leader>b', group = 'Swap [B]uffer' }
@@ -21,96 +21,27 @@ return {
     -- the default number of lines/columns to resize by at a time
     default_amount = 3,
   },
-  keys = {
+  config = function(_, opts)
+    local ss = require 'smart-splits'
+    ss.setup(opts)
+
     -- recommended mappings
     -- resizing splits
     -- these keymaps will also accept a range,
-    -- for example `10<M-C-h>` will `resize_left` by `(10 * config.default_amount)`
-    {
-      '<M-Left>',
-      function()
-        require('smart-splits').resize_left()
-      end,
-      desc = 'Resize left',
-    },
-    {
-      '<M-Down>',
-      function()
-        require('smart-splits').resize_down()
-      end,
-      desc = 'Resize down',
-    },
-    {
-      '<M-Up>',
-      function()
-        require('smart-splits').resize_up()
-      end,
-      desc = 'Resize up',
-    },
-    {
-      '<M-Right>',
-      function()
-        require('smart-splits').resize_right()
-      end,
-      desc = 'Resize right',
-    },
+    -- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
+    vim.keymap.set('n', '<M-h>', ss.resize_left, { desc = 'Resize split leftward' })
+    vim.keymap.set('n', '<M-j>', ss.resize_down, { desc = 'Resize split downward' })
+    vim.keymap.set('n', '<M-k>', ss.resize_up, { desc = 'Resize split upward' })
+    vim.keymap.set('n', '<M-l>', ss.resize_right, { desc = 'Resize split rightward' })
     -- moving between splits
-    {
-      '<C-h>',
-      function()
-        require('smart-splits').move_cursor_left()
-      end,
-      desc = 'Move cursor left',
-    },
-    {
-      '<C-j>',
-      function()
-        require('smart-splits').move_cursor_down()
-      end,
-      desc = 'Move cursor down',
-    },
-    {
-      '<C-k>',
-      function()
-        require('smart-splits').move_cursor_up()
-      end,
-      desc = 'Move cursor up',
-    },
-    {
-      '<C-l>',
-      function()
-        require('smart-splits').move_cursor_right()
-      end,
-      desc = 'Move cursor right',
-    },
+    vim.keymap.set('n', '<C-h>', ss.move_cursor_left, { desc = 'Move cursor to left split' })
+    vim.keymap.set('n', '<C-j>', ss.move_cursor_down, { desc = 'Move cursor to split below' })
+    vim.keymap.set('n', '<C-k>', ss.move_cursor_up, { desc = 'Move cursor to split above' })
+    vim.keymap.set('n', '<C-l>', ss.move_cursor_right, { desc = 'Move cursor to right split' })
     -- swapping buffers between windows
-    {
-      '<leader>bh',
-      function()
-        require('smart-splits').swap_buf_left()
-      end,
-      desc = 'Swap [B]uffer left',
-    },
-    {
-      '<leader>bj',
-      function()
-        require('smart-splits').swap_buf_down()
-      end,
-      desc = 'Swap [B]uffer down',
-    },
-    {
-      '<leader>bk',
-      function()
-        require('smart-splits').swap_buf_up()
-      end,
-      desc = 'Swap [B]uffer up',
-    },
-    {
-      '<leader>bl',
-      function()
-        require('smart-splits').swap_buf_right()
-      end,
-      desc = 'Swap [B]uffer right',
-    },
-  },
+    vim.keymap.set('n', '<leader>bh', ss.swap_buf_left, { desc = 'Swap buffer with left split' })
+    vim.keymap.set('n', '<leader>bj', ss.swap_buf_down, { desc = 'Swap buffer with split below' })
+    vim.keymap.set('n', '<leader>bk', ss.swap_buf_up, { desc = 'Swap buffer with split above' })
+    vim.keymap.set('n', '<leader>bl', ss.swap_buf_right, { desc = 'Swap buffer with right split' })
+  end,
 }
