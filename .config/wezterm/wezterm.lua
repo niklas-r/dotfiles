@@ -79,22 +79,6 @@ config.keys = {
   { key = '[', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
   { key = ']', mods = 'LEADER', action = act.ActivateTabRelative(1) },
   { key = 'n', mods = 'LEADER', action = act.ShowTabNavigator },
-  {
-    key = 'e',
-    mods = 'LEADER',
-    action = act.PromptInputLine {
-      description = wezterm.format {
-        { Attribute = { Intensity = 'Bold' } },
-        { Foreground = { AnsiColor = 'Fuchsia' } },
-        { Text = 'Enter new name for tab:' },
-      },
-      action = wezterm.action_callback(function(window, _, line)
-        if line then
-          window:active_tab():set_title(line)
-        end
-      end),
-    },
-  },
   -- Key table for moving tabs around
   { key = 'm', mods = 'LEADER', action = act.ActivateKeyTable { name = 'move_tab_mode', one_shot = false } },
   -- Or shortcuts to move tab w/o move_tab_mode table. SHIFT is for when caps lock is on

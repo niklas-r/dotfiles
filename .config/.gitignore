@@ -26,9 +26,16 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Root
-raycast/
-nvm/
-gh/
-github-copilot/
-configstore/
+# Ignore everything
+*
+
+# Select what to include specifically
+!/wezterm/
+!/weztern/**
+!/nvim/
+!/nvim/**
+!/lazygit/
+!/lazygit/**
+!/zsh/
+!/zsh/**
+
