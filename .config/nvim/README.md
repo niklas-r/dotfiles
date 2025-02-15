@@ -10,6 +10,6 @@ Based on Kickstart.nvim and has since then been heavily modified.
 - ripgrep
 - jq
 
-## Plarforms
+## Platforms
 
 This config has mainly been tested in Wezterm on Mac OS but should work in any terminal emulator and OS.
