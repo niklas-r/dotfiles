@@ -1,4 +1,7 @@
 require 'config/opts'
+require 'config.filetypes'
+require 'config.remaps'
+require 'config.autocmds'
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -23,9 +26,6 @@ require('lazy').setup {
   spec = {
     'tpope/vim-sleuth',
     { import = 'plugins' },
-    require 'config.filetypes',
-    require 'config.remaps',
-    require 'config.autocmds',
   },
 }
 
