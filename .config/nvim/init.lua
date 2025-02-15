@@ -236,7 +236,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
--- Used to display recording in mini.statusline
+-- Used to display recording in lualine
 -- Autocmd to track the end of macro recording
 vim.api.nvim_create_autocmd('RecordingEnter', {
   pattern = '*',
@@ -1221,36 +1221,36 @@ require('lazy').setup({
       -- Simple and easy statusline.
       --  You could remove this setup call if you don't like it,
       --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      statusline.setup {
-        -- set use_icons to true if you have a Nerd Font
-        use_icons = vim.g.have_nerd_font,
-        content = {
-          active = function()
-            local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
-            local git = statusline.section_git { trunc_width = 40 }
-            local diff = statusline.section_diff { trunc_width = 75 }
-            local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
-            local lsp = statusline.section_lsp { trunc_width = 75 }
-            local filename = statusline.section_filename { trunc_width = 140 }
-            local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
-            local search = statusline.section_searchcount { trunc_width = 75 }
-            local macro = vim.g.macro_recording
-
-            return MiniStatusline.combine_groups {
-              { hl = mode_hl, strings = { mode } },
-              { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
-              { hl = '', strings = { '%<' } }, -- Mark general truncate point
-              '%=', -- End left alignment, start center alignment
-              { hl = 'MiniStatuslineFilename', strings = { filename } },
-              '%=', -- End center alignment, start right alignment
-              { hl = 'MiniStatuslineFilename', strings = { macro } },
-              { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
-              { hl = mode_hl, strings = { search, '%2l:%-2v' } },
-            }
-          end,
-        },
-      }
+      -- local statusline = require 'mini.statusline'
+      -- statusline.setup {
+      --   -- set use_icons to true if you have a Nerd Font
+      --   use_icons = vim.g.have_nerd_font,
+      --   content = {
+      --     active = function()
+      --       local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+      --       local git = statusline.section_git { trunc_width = 40 }
+      --       local diff = statusline.section_diff { trunc_width = 75 }
+      --       local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
+      --       local lsp = statusline.section_lsp { trunc_width = 75 }
+      --       local filename = statusline.section_filename { trunc_width = 140 }
+      --       local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
+      --       local search = statusline.section_searchcount { trunc_width = 75 }
+      --       local macro = vim.g.macro_recording
+      --
+      --       return MiniStatusline.combine_groups {
+      --         { hl = mode_hl, strings = { mode } },
+      --         { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
+      --         { hl = '', strings = { '%<' } }, -- Mark general truncate point
+      --         '%=', -- End left alignment, start center alignment
+      --         { hl = 'MiniStatuslineFilename', strings = { filename } },
+      --         '%=', -- End center alignment, start right alignment
+      --         { hl = 'MiniStatuslineFilename', strings = { macro } },
+      --         { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+      --         { hl = mode_hl, strings = { search, '%2l:%-2v' } },
+      --       }
+      --     end,
+      --   },
+      -- }
       -- ... and there is more!
       --  Check out: https://github.com/echasnovski/mini.nvim
     end,
