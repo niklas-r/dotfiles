@@ -11,4 +11,5 @@ return {
   require 'custom.plugins.auto-dark-mode',
   require 'custom.plugins.harpoon',
   require 'custom.plugins.trouble',
+  require 'custom.plugins.goto-preview',
 }
