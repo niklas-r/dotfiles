@@ -1,27 +1,5 @@
 require 'config/opts'
 
--- [[ Basic Autocommands ]]
---  See `:help lua-guide-autocommands`
-
--- Highlight when yanking (copying) text
---  Try it with `yap` in normal mode
---  See `:help vim.highlight.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-})
-
--- Don't add DAP buffers to list of buffers
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'dap-repl',
-  callback = function(args)
-    vim.api.nvim_set_option_value('buflisted', false, { buffer = args.buf })
-  end,
-})
-
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -33,25 +11,6 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
-
--- Used to display recording in lualine
--- Autocmd to track the end of macro recording
-vim.api.nvim_create_autocmd('RecordingEnter', {
-  pattern = '*',
-  callback = function()
-    vim.g.macro_recording = 'Recording @' .. vim.fn.reg_recording()
-    vim.cmd 'redrawstatus'
-  end,
-})
-
--- Autocmd to track the end of macro recording
-vim.api.nvim_create_autocmd('RecordingLeave', {
-  pattern = '*',
-  callback = function()
-    vim.g.macro_recording = ''
-    vim.cmd 'redrawstatus'
-  end,
-})
 
 -- Icons to use in the completion menu.
 -- local symbol_kinds = {
