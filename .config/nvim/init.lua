@@ -1,4 +1,4 @@
---[[
+--[[init
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -960,27 +960,27 @@ require('lazy').setup({
           -- LazyVim.on_load('which-key.nvim', function()
           --   vim.schedule(LazyVim.mini.ai_whichkey)
           -- end)
-          local ai = require 'mini.ai'
+          -- local ai = require 'mini.ai'
           return {
             n_lines = 500,
-            custom_textobjects = {
-              o = ai.gen_spec.treesitter { -- code block
-                a = { '@block.outer', '@conditional.outer', '@loop.outer' },
-                i = { '@block.inner', '@conditional.inner', '@loop.inner' },
-              },
-              f = ai.gen_spec.treesitter { a = '@function.outer', i = '@function.inner' }, -- function
-              c = ai.gen_spec.treesitter { a = '@class.outer', i = '@class.inner' }, -- class
-              t = { '<([%p%w]-)%f[^<%w][^<>]->.-</%1>', '^<.->().*()</[^/]->$' }, -- tags
-              d = { '%f[%d]%d+' }, -- digits
-              e = { -- Word with case
-                { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
-                '^().*()$',
-              },
-              -- i = LazyVim.mini.ai_indent, -- indent
-              -- g = LazyVim.mini.ai_buffer, -- buffer
-              u = ai.gen_spec.function_call(), -- u for "Usage"
-              U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
-            },
+            -- custom_textobjects = {
+            --   o = ai.gen_spec.treesitter { -- code block
+            --     a = { '@block.outer', '@conditional.outer', '@loop.outer' },
+            --     i = { '@block.inner', '@conditional.inner', '@loop.inner' },
+            --   },
+            --   f = ai.gen_spec.treesitter { a = '@function.outer', i = '@function.inner' }, -- function
+            --   c = ai.gen_spec.treesitter { a = '@class.outer', i = '@class.inner' }, -- class
+            --   t = { '<([%p%w]-)%f[^<%w][^<>]->.-</%1>', '^<.->().*()</[^/]->$' }, -- tags
+            --   d = { '%f[%d]%d+' }, -- digits
+            --   e = { -- Word with case
+            --     { '%u[%l%d]+%f[^%l%d]', '%f[%S][%l%d]+%f[^%l%d]', '%f[%P][%l%d]+%f[^%l%d]', '^[%l%d]+%f[^%l%d]' },
+            --     '^().*()$',
+            --   },
+            --   -- i = LazyVim.mini.ai_indent, -- indent
+            --   -- g = LazyVim.mini.ai_buffer, -- buffer
+            --   u = ai.gen_spec.function_call(), -- u for "Usage"
+            --   U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
+            -- },
           }
         end,
       }
@@ -1046,10 +1046,31 @@ require('lazy').setup({
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
+    event = { 'BufReadPre', 'BufNewFile' },
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'javascript', 'typescript', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = {
+        'json',
+        'yaml',
+        'javascript',
+        'typescript',
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'gitignore',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -1058,6 +1079,15 @@ require('lazy').setup({
         --  If you are experiencing weird indenting issues, add the language to
         --  the list of additional_vim_regex_highlighting and disabled languages for indent.
         additional_vim_regex_highlighting = { 'ruby' },
+      },
+      incremental_selection = {
+        enable = true,
+        keymaps = {
+          init_selection = '<C-space>',
+          node_incremental = '<C-space>',
+          scope_incremental = false,
+          node_decremental = '<bs>',
+        },
       },
       indent = { enable = true, disable = { 'ruby' } },
     },
