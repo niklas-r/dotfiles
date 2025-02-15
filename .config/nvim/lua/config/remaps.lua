@@ -54,7 +54,9 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Black hole delete' })
 vim.keymap.set('n', 'q', '<Nop>')
 vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 
--- Macros which will get you cancelled
+-- Keybinds which will get you cancelled
 vim.keymap.set('n', '<C-c>', 'ciw')
+
+vim.keymap.set('n', '<C-w>b', ':%bd|e#<CR>', { desc = 'Close all other [B]uffers' })
 
 return {}
