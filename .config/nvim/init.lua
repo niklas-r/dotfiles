@@ -175,8 +175,7 @@ vim.keymap.set('n', '<Esc>', function()
   end
 end)
 
--- Disable inline diagnostics
-vim.diagnostic.config { virtual_text = false, float = { border = 'rounded' } }
+vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -417,6 +416,26 @@ require('lazy').setup {
     { -- Useful plugin to show you pending keybinds.
       'folke/which-key.nvim',
       event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+      keys = {
+        {
+          '<leader>?',
+          function()
+            require('which-key').show { global = false }
+          end,
+          desc = 'Buffer Local Keymaps (which-key)',
+        },
+        {
+          '<leader>t',
+          function()
+            -- Show hydra mode for toggles
+            require('which-key').show {
+              keys = '<leader>t',
+              loop = true, -- this will keep the popup open until you hit <esc>
+            }
+          end,
+          desc = '[T]oggles',
+        },
+      },
       opts = {
         icons = {
           -- set icon mappings to true if you have a Nerd Font
@@ -464,7 +483,6 @@ require('lazy').setup {
           { '<leader>r', group = '[R]ename' },
           { '<leader>s', group = '[S]earch' },
           { '<leader>w', group = '[W]orkspace' },
-          { '<leader>t', group = '[T]oggle' },
           { '<leader>m', group = 'Harpoon [M]arks', mode = { 'n' } },
           { '<leader>u', group = '[U]nit Test', mode = { 'n' } },
           { '<leader>ud', group = '[U]nit Test [D]ebug', mode = { 'n' } },
@@ -1372,8 +1390,8 @@ require('lazy').setup {
             border = 'none',
             floating_preview_opts = { border = 'rounded' },
             peek_definition_code = {
-              ['<leader>dm'] = { query = '@function.outer', desc = 'Peek definition [M]ethod' },
-              ['<leader>dc'] = { query = '@class.outer', desc = 'Peek definition [C]lass' },
+              ['<leader>dm'] = { query = '@function.outer', desc = 'Peek definition [M]ethod', mode = 'n' },
+              ['<leader>dc'] = { query = '@class.outer', desc = 'Peek definition [C]lass', mode = 'n' },
             },
           },
           select = {
