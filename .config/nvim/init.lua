@@ -983,6 +983,9 @@ require('lazy').setup({
       -- copilot
       'zbirenbaum/copilot-cmp',
       'rcarriga/cmp-dap',
+      -- Needed to display Tailwind colors in auto-completion
+      'tailwind-tools',
+      'onsails/lspkind-nvim',
     },
     config = function()
       -- See `:help cmp`
@@ -999,9 +1002,17 @@ require('lazy').setup({
         preselect = cmp.PreselectMode.None,
         -- Add icons to the completion menu.
         formatting = {
-          format = function(_, vim_item)
-            vim_item.kind = (symbol_kinds[vim_item.kind] or '') .. '  ' .. vim_item.kind
-            return vim_item
+          format = function(entry, vim_item)
+            local lspkind_ok, lspkind = pcall(require, 'lspkind')
+            if not lspkind_ok then
+              vim_item.kind = (symbol_kinds[vim_item.kind] or '') .. '  ' .. vim_item.kind
+              return vim_item
+            else
+              -- From lspkind
+              return lspkind.cmp_format {
+                before = require('tailwind-tools.cmp').lspkind_format,
+              }(entry, vim_item)
+            end
           end,
         },
         snippet = {
