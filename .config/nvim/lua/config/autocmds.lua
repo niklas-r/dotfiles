@@ -34,4 +34,22 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  callback = function()
+    if package.loaded['nvim-treesitter.parsers'] == nil or require 'nvim-treesitter.parsers' == nil then
+      return
+    end
+
+    -- check if treesitter has parser
+    if require('nvim-treesitter.parsers').has_parser() then
+      -- use treesitter folding
+      vim.opt.foldmethod = 'expr'
+      vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    else
+      -- use alternative foldmethod
+      vim.opt.foldmethod = 'syntax'
+    end
+  end,
+})
+
 return {}

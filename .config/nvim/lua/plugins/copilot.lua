@@ -5,6 +5,9 @@ return {
   opts = {
     suggestion = { enabled = false },
     panel = { enabled = false },
+    filetypes = {
+      bigfile = false,
+    },
   },
   dependencies = {},
 }

@@ -72,10 +72,8 @@ vim.opt.scrolloff = 10
 -- Enable 24-bit colour which is required for vim-notify
 vim.opt.termguicolors = true
 
--- Set default code folding to depend on Treesitter
 vim.opt.foldenable = true
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldmethod = 'syntax'
 
 -- Optional
 -- Show fold in side column
