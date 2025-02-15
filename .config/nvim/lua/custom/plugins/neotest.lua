@@ -59,6 +59,13 @@ return {
       desc = '[U]nit Test [R]un Current [F]ile',
     },
     {
+      '<leader>url',
+      function()
+        require('neotest').run.run_last()
+      end,
+      desc = '[U]nit Test [R]un: [L]ast Test',
+    },
+    {
       '<leader>udt',
       function()
         require('neotest').run.run { strategy = 'dap' }
@@ -86,7 +93,6 @@ return {
       end,
       desc = 'Next test',
     },
-
     {
       '[t',
       function()
@@ -101,7 +107,6 @@ return {
       end,
       desc = 'Next failed test',
     },
-
     {
       '[T',
       function()
