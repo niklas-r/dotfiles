@@ -15,19 +15,32 @@ return {
   config = function()
     require('noice').setup {
       routes = {
-        -- Filter out 'No information available' which happens when using LSP hover in Typescript
         {
           filter = {
+            -- Filter out 'No information available' which happens when using LSP hover in Typescript
             event = 'notify',
             find = 'No information available',
           },
           opts = { skip = true },
         },
+        {
+          filter = {
+            event = 'msg_show',
+            any = {
+              { find = '%d+L, %d+B' },
+              -- Filter out spammy notifications when saving buffer
+              { find = '; after #%d+' },
+
+              { find = '; before #%d+' },
+            },
+          },
+          view = 'mini',
+        },
       },
       lsp = {
-        progress = {
-          enabled = false,
-        },
+        -- progress = {
+        --   enabled = false,
+        -- },
         -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
