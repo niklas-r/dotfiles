@@ -500,6 +500,7 @@ require('lazy').setup({
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      'folke/trouble.nvim',
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -523,6 +524,11 @@ require('lazy').setup({
 
       -- [[ Configure Telescope ]]
       -- See `:help telescope` and `:help telescope.setup()`
+      local open_with_trouble = require('trouble.sources.telescope').open
+
+      -- Use this to add more results without clearing the trouble list
+      local add_to_trouble = require('trouble.sources.telescope').add
+
       require('telescope').setup {
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
@@ -534,7 +540,8 @@ require('lazy').setup({
         },
         defaults = {
           mappings = {
-            i = { ['<C-7>'] = 'which_key' },
+            i = { ['<C-7>'] = 'which_key', ['<C-t>'] = open_with_trouble, ['<C-T>'] = add_to_trouble },
+            n = { ['<C-t>'] = open_with_trouble, ['<C-T>'] = add_to_trouble },
           },
           file_ignore_patterns = {
             '^.git/',
