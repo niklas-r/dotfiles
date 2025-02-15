@@ -94,6 +94,7 @@ return {
         disabled_filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard' },
         section_separators = { left = '', right = '' },
         ignore_focus = { 'trouble' },
+        always_show_tabline = false,
       },
       sections = {
         lualine_a = {
@@ -183,6 +184,27 @@ return {
           { 'location', fmt = trunc(0, 0, 80, true) },
         },
       },
+      tabline = {
+        lualine_a = {
+          {
+            'tabs',
+            mode = 1, -- 0: Shows tab_nr
+            -- 1: Shows tab_name
+            -- 2: Shows tab_nr + tab_name
+
+            path = 0, -- 0: just shows the filename
+            -- 1: shows the relative path and shorten $HOME to ~
+            -- 2: shows the full path
+            -- 3: shows the full path and shorten $HOME to ~
+            show_modified_status = false,
+          },
+        },
+        lualine_b = {},
+        lualine_c = {},
+        lualine_x = {},
+        lualine_y = {},
+        lualine_z = {},
+      },
       inactive_sections = {
         lualine_c = {
           {
@@ -195,6 +217,7 @@ return {
           },
         },
       },
+      winbar = {},
       extensions = {
         'lazy',
         'mason',
