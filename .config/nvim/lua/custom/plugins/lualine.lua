@@ -3,6 +3,7 @@ return {
   dependencies = {
     {
       'bwpge/lualine-pretty-path',
+      'folke/snacks.nvim',
       -- dev = true,
     },
   },
@@ -57,17 +58,32 @@ return {
       return ret
     end
 
-    -- Snacks.toggle({
-    --   name = 'lualine symbols',
-    --   get = function() return vim.b.trouble_lualine ~= false end,
-    --   set = function(state) vim.b.trouble_lualine = state end,
-    -- }):map('<leader>vl')
-    --
-    -- Snacks.toggle({
-    --   name = 'lualine lsp names',
-    --   get = function() return vim.g.custom_lualine_show_lsp_names end,
-    --   set = function(state) vim.g.custom_lualine_show_lsp_names = state end,
-    -- }):map('<leader>vL')
+    local snacks = require 'snacks'
+
+    -- Toggling vim.b.trouble_lualine doesn't seem to do anything and I don't really want to toggle it anyway
+    -- snacks
+    --   .toggle({
+    --     name = 'lualine symbols',
+    --     get = function()
+    --       return vim.b.trouble_lualine ~= false
+    --     end,
+    --     set = function(state)
+    --       vim.b.trouble_lualine = state
+    --     end,
+    --   })
+    --   :map '<leader>tS'
+
+    snacks
+      .toggle({
+        name = 'lualine lsp names',
+        get = function()
+          return vim.g.custom_lualine_show_lsp_names
+        end,
+        set = function(state)
+          vim.g.custom_lualine_show_lsp_names = state
+        end,
+      })
+      :map '<leader>tN'
 
     return {
       options = {
