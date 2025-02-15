@@ -392,6 +392,24 @@ require('lazy').setup({
           mappings = {
             i = { ['<C-7>'] = 'which_key' },
           },
+          file_ignore_patterns = {
+            '^node_modules/',
+            '^build/',
+            '^coverage/',
+            '%.lock',
+            '%.snap',
+          },
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--ignore-file',
+            '.gitignore',
+          },
         },
         -- pickers = {}
         extensions = {
