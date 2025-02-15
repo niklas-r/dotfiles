@@ -32,7 +32,19 @@ return {
           full = wez.nerdfonts.fa_battery_full,
         },
         tabline_a = {
-          'mode',
+          function(window)
+            local mode = 'normal'
+            local key_table = window:active_key_table()
+
+            if key_table ~= nil and key_table:find '_mode$' then
+              -- strip string '_mode' from end
+              mode = key_table:sub(1, -6)
+            elseif window:leader_is_active() then
+              mode = 'leader'
+            end
+
+            return ' ' .. mode:upper() .. ' '
+          end,
         },
         tabline_b = { 'workspace' },
         tabline_c = { ' ' },
