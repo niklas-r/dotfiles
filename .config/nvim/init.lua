@@ -673,6 +673,7 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         --
+        bashls = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -684,7 +685,7 @@ require('lazy').setup({
                 callSnippet = 'Replace',
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
@@ -703,6 +704,11 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettierd', -- Oponionated JS/TS formatter
+        'eslint_d', -- JS linter
+        'shellcheck', -- Bash linter
+        'shfmt', -- Bash formatter
+        'beautysh', -- Bash, Zsh etc formatter
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -763,6 +769,8 @@ require('lazy').setup({
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
         javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        sh = { 'shfmt' },
+        zsh = { 'beautysh' },
       },
     },
   },

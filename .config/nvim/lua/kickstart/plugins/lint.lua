@@ -12,11 +12,12 @@ return {
         javascriptreact = { 'eslint_d' },
         typescriptreact = { 'eslint_d' },
         dotenv_linter = { 'dotenv-linter' },
+        sh = { 'shellcheck' },
         -- Maybe add these in case eslint_ isn't enough
         -- yamllint = { 'yamllint' },
         -- jsonlint = { 'jsonlint' },
         -- Maybe this one
-        -- zsh = { 'zsh' },
+        zsh = { 'zsh' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
