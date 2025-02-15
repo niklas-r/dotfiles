@@ -274,6 +274,21 @@ wezterm.on('update-status', function(window, pane)
   })
 end)
 
+-- If tab has zoomed pane, show it in tab
+wezterm.on('format-tab-title', function(tab, tabs)
+  local zoomed = ''
+  if tab.active_pane.is_zoomed then
+    zoomed = '[Z] '
+  end
+
+  local index = ''
+  if #tabs > 1 then
+    index = string.format('%d:', tab.tab_index + 1)
+  end
+
+  return ' ' .. zoomed .. index .. ' ' .. tab.active_pane.title .. ' '
+end)
+
 --[[ Appearance setting for when I need to take pretty screenshots
 config.enable_tab_bar = false
 config.window_padding = {
