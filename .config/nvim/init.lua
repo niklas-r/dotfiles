@@ -817,6 +817,7 @@ require('lazy').setup({
         -- ts_ls = {},
         vtsls = {},
         eslint = {},
+        jsonls = {},
         --
         bashls = {},
 
