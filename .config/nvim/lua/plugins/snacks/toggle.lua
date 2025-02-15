@@ -1,7 +1,5 @@
 return {
   'folke/snacks.nvim',
-  priority = 1000,
-  lazy = false,
   depenencies = {
     'nabekou29/js-i18n.nvim',
     'tadaa/vimade',
