@@ -4,6 +4,9 @@ return {
     {
       'bwpge/lualine-pretty-path',
       'folke/snacks.nvim',
+      -- I use this plugin to set my theme and lualine does some shenangians with themes so
+      -- we need to wait for it to load
+      'propet/colorscheme-persist.nvim',
       -- dev = true,
     },
   },
