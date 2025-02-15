@@ -827,7 +827,18 @@ require('lazy').setup {
           -- ts_ls = {},
           vtsls = {},
           eslint = {},
-          jsonls = {},
+          jsonls = {
+            settings = {
+              json = {
+                schemas = {
+                  {
+                    fileMatch = { 'package.json' },
+                    url = 'https://json.schemastore.org/package.json',
+                  },
+                },
+              },
+            },
+          },
           --
           bashls = {},
 
