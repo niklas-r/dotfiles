@@ -393,11 +393,17 @@ require('lazy').setup({
         -- You can put your default mappings / updates / etc. in here
         --  All the info you're looking for is in `:help telescope.setup()`
         --
+        pickers = {
+          find_files = {
+            hidden = true,
+          },
+        },
         defaults = {
           mappings = {
             i = { ['<C-7>'] = 'which_key' },
           },
           file_ignore_patterns = {
+            '^.git/',
             '^node_modules/',
             '^build/',
             '^coverage/',
@@ -412,6 +418,7 @@ require('lazy').setup({
             '--line-number',
             '--column',
             '--smart-case',
+            '--hidden',
             '--ignore-file',
             '.gitignore',
           },
