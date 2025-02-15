@@ -16,12 +16,15 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
+  ui = {
+    border = 'rounded',
+  },
   checker = {
     enabled = true,
     notify = false, -- hide notification since it's displayed in the lualine
   },
   install = {
-    colorscheme = { 'tokyonight' },
+    colorscheme = { 'rose-pine' },
   },
   spec = {
     'tpope/vim-sleuth',
