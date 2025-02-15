@@ -37,14 +37,7 @@ return {
       additional_vim_regex_highlighting = { 'ruby' },
     },
     incremental_selection = {
-      -- FIXME: Disabled this because it breaks <C-i> for some reason
-      enable = false,
-      keymaps = {
-        init_selection = '<Tab>',
-        node_incremental = '<Tab>',
-        scope_incremental = false,
-        node_decremental = '<S-Tab>',
-      },
+      enable = true,
     },
     indent = { enable = true, disable = { 'ruby' } },
     textobjects = {
