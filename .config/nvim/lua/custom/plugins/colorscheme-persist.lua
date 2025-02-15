@@ -20,7 +20,8 @@ return {
       function()
         require('colorscheme-persist').picker()
       end,
-      { noremap = true, silent = true, desc = '[S]earch [C]olorscheme' },
+      desc = '[S]earch [C]olorscheme',
+      { noremap = true, silent = true },
     },
   },
 }
