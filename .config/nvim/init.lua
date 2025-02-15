@@ -557,8 +557,22 @@ require('lazy').setup {
           },
           defaults = {
             mappings = {
-              i = { ['<C-7>'] = 'which_key', ['<C-t>'] = open_with_trouble, ['<C-T>'] = add_to_trouble },
-              n = { ['<C-t>'] = open_with_trouble, ['<C-T>'] = add_to_trouble },
+              i = {
+                -- FIXME: which_key doesn't get updated with custom keybinds
+                ['<C-7>'] = 'which_key',
+                ['<C-x>'] = open_with_trouble,
+                ['<C-X>'] = add_to_trouble,
+                ['<C-d>'] = 'delete_buffer',
+                ['<C-t>'] = 'file_tab',
+                ['<C-s>'] = 'select_horizontal',
+              },
+              n = {
+                ['<C-x>'] = open_with_trouble,
+                ['<C-X>'] = add_to_trouble,
+                ['<C-d>'] = 'delete_buffer',
+                ['<C-t>'] = 'file_tab',
+                ['<C-s>'] = 'select_horizontal',
+              },
             },
             file_ignore_patterns = {
               '^.git/',
