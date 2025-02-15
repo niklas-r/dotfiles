@@ -178,6 +178,7 @@ return {
         },
         lualine_z = {
           { 'location', fmt = trunc(0, 0, 80, true) },
+          { require('util.lualine').selectionCount, fmt = trunc(0, 0, 80, true) },
         },
       },
       tabline = {
