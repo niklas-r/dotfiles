@@ -61,8 +61,6 @@ return {
       return ret
     end
 
-    local snacks = require 'snacks'
-
     -- Toggling vim.b.trouble_lualine doesn't seem to do anything and I don't really want to toggle it anyway
     -- snacks
     --   .toggle({
@@ -76,17 +74,15 @@ return {
     --   })
     --   :map '<leader>tS'
 
-    snacks
-      .toggle({
-        name = 'lualine lsp names',
-        get = function()
-          return vim.g.custom_lualine_show_lsp_names
-        end,
-        set = function(state)
-          vim.g.custom_lualine_show_lsp_names = state
-        end,
-      })
-      :map '<leader>tN'
+    Snacks.toggle({
+      name = 'lualine lsp names',
+      get = function()
+        return vim.g.custom_lualine_show_lsp_names
+      end,
+      set = function(state)
+        vim.g.custom_lualine_show_lsp_names = state
+      end,
+    }):map '<leader>tN'
 
     return {
       options = {

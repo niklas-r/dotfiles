@@ -59,7 +59,7 @@ return {
         map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
         map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
         map('n', '<leader>hb', function()
-          require('snacks').git.blame_line()
+          Snacks.git.blame_line()
         end, { desc = 'git [b]lame line' })
         map('n', '<leader>hB', function()
           -- Uses blame.nvim
