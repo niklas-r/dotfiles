@@ -30,7 +30,7 @@ local config = wezterm.config_builder()
 local font = wezterm.font_with_fallback { { family = G.font } }
 config.font = font
 config.font_rules = { { intensity = 'Bold', font = font }, { intensity = 'Normal', font = font } }
-config.font_size = 13
+config.font_size = 14
 
 -- Disable weird behavior for left alt
 config.send_composed_key_when_left_alt_is_pressed = true
