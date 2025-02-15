@@ -1,4 +1,4 @@
---[[init
+--[[
 
 =====================================================================
 ==================== READ THIS BEFORE CONTINUING ====================
@@ -165,10 +165,15 @@ vim.opt.termguicolors = true
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', function()
+  vim.cmd 'nohlsearch'
+  if package.loaded['notify'] ~= nil then
+    require('notify').dismiss { pending = true, silent = true }
+  end
+end)
 
 -- Disable inline diagnostics
-vim.diagnostic.config { virtual_text = false }
+vim.diagnostic.config { virtual_text = false, float = { border = 'rounded' } }
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -1257,7 +1262,7 @@ require('lazy').setup({
         lsp_interop = {
           enable = true,
           border = 'none',
-          floating_preview_opts = {},
+          floating_preview_opts = { border = 'rounded' },
           peek_definition_code = {
             ['<leader>dm'] = { query = '@function.outer', desc = 'Peek definition [M]ethod' },
             ['<leader>dc'] = { query = '@class.outer', desc = 'Peek definition [C]lass' },
