@@ -42,4 +42,7 @@ Temporary Items
 !/zsh/
 !/zsh/**
 !/zsh/**/*
+!/hammerspoon/
+!/hammerspoon/**
+!/hammerspoon/**/*
 
