@@ -55,5 +55,13 @@ return {
         },
       }
     end
+
+    require('dap').adapters['pwa-node'] = {
+      type = 'server',
+      host = 'localhost',
+      port = '${port}',
+      -- 💀 Make sure to update this path to point to your installation
+      args = { '~/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js', '${port}' },
+    }
   end,
 }

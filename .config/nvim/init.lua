@@ -965,9 +965,6 @@ require('lazy').setup {
           'jq', -- Fast JSON formatter and more
           'jsonlint',
           'yamllint',
-          -- DAP's
-          -- 'js-debug-adapter', -- js-debug-adapter needs to be installed with Lazy so we can run post-install scripts so it works with nvim-dap-vscode-js
-          'chrome-debug-adapter',
         })
         require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
