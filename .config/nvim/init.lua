@@ -1052,7 +1052,7 @@ require('lazy').setup({
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<CR>'] = cmp.mapping.confirm { select = false },
 
           ['<Tab>'] = vim.schedule_wrap(function(fallback)
             if cmp.visible() and has_words_before() then
