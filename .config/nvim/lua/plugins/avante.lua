@@ -26,6 +26,13 @@ return {
     --   temperature = 0.1, -- kinda creative
     --   max_tokens = 8192,
     -- },
+
+    file_selector = {
+      --- @alias FileSelectorProvider "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
+      provider = 'snacks',
+      -- Options override for custom providers, currently only works with fzf and telescope
+      -- provider_opts = {},
+    },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = 'make',
@@ -35,9 +42,11 @@ return {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     --- The below dependencies are optional,
-    'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
+    -- 'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
+    'saghen/blink.cmp', -- I'm a cool kid so I use blink for auto-completion
     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
     'zbirenbaum/copilot.lua', -- for providers='copilot'
+    'folke/snacks.nvim', -- for use with snacks picker
     -- I don't really want image pasting right now
     -- {
     --   -- support for image pasting
