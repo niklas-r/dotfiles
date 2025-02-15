@@ -1,3 +1,4 @@
+local G = require 'globals'
 local M = {}
 
 M.globalsPath = os.getenv 'HOME' .. '/.config/wezterm/globals.lua'
@@ -36,8 +37,8 @@ function M.writeLuaObject(filePath, luaObject)
   file:close()
 end
 
-function M.getColorByKey(wez, window, key)
-  local current_scheme = wez.color.get_builtin_schemes()[window:effective_config().color_scheme]
+function M.getColorByKey(wez, key)
+  local current_scheme = wez.color.get_builtin_schemes()[G.colorscheme]
 
   local key_to_color = {
     black = current_scheme.ansi[1],

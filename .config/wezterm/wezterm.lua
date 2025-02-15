@@ -1,5 +1,6 @@
 local wezterm = require 'wezterm'
 local smart_splits = wezterm.plugin.require 'https://github.com/mrjones2014/smart-splits.nvim'
+local tabline = wezterm.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
 local act = wezterm.action
 local features = require 'features'
 local utils = require 'utils'
@@ -60,6 +61,12 @@ config.default_workspace = 'main'
 -- Color scheme
 config.color_scheme = G.colorscheme
 
+-- Always for notifications, this is needed for MacOS
+config.notification_handling = 'AlwaysShow'
+
+-- Buttery smooth
+config.max_fps = 120
+
 -- Keys
 config.leader = { key = 'l', mods = 'SUPER', timeout_milliseconds = 1200 }
 config.keys = {
@@ -88,7 +95,7 @@ config.keys = {
   {
     key = 'r',
     mods = 'LEADER',
-    action = act.ActivateKeyTable { name = 'resize_pane', one_shot = false },
+    action = act.ActivateKeyTable { name = 'resize_pane_mode', one_shot = false },
   },
 
   -- Tab keybindings
@@ -113,8 +120,8 @@ config.keys = {
     },
   },
   -- Key table for moving tabs around
-  { key = 'm', mods = 'LEADER', action = act.ActivateKeyTable { name = 'move_tab', one_shot = false } },
-  -- Or shortcuts to move tab w/o move_tab table. SHIFT is for when caps lock is on
+  { key = 'm', mods = 'LEADER', action = act.ActivateKeyTable { name = 'move_tab_mode', one_shot = false } },
+  -- Or shortcuts to move tab w/o move_tab_mode table. SHIFT is for when caps lock is on
   { key = '{', mods = 'LEADER', action = act.MoveTabRelative(-1) },
   { key = '}', mods = 'LEADER', action = act.MoveTabRelative(1) },
 
@@ -131,7 +138,7 @@ for i = 1, 9 do
 end
 
 config.key_tables = {
-  resize_pane = {
+  resize_pane_mode = {
     { key = 'h', action = act.AdjustPaneSize { 'Left', 1 } },
     { key = 'j', action = act.AdjustPaneSize { 'Down', 1 } },
     { key = 'k', action = act.AdjustPaneSize { 'Up', 1 } },
@@ -139,7 +146,7 @@ config.key_tables = {
     { key = 'Escape', action = 'PopKeyTable' },
     { key = 'Enter', action = 'PopKeyTable' },
   },
-  move_tab = {
+  move_tab_mode = {
     { key = 'h', action = act.MoveTabRelative(-1) },
     { key = 'j', action = act.MoveTabRelative(-1) },
     { key = 'k', action = act.MoveTabRelative(1) },
@@ -156,148 +163,67 @@ config.status_update_interval = 1000
 config.tab_bar_at_bottom = false
 config.tab_max_width = 32
 
-wezterm.on('update-status', function(window, pane)
-  -- Workspace name
-  local stat = window:active_workspace()
-  local stat_color = utils.getColorByKey(wezterm, window, 'red')
-  local stat_icon = wezterm.nerdfonts.oct_table
+tabline.setup {
+  options = {
+    icons_enabled = true,
+    theme = G.colorscheme,
+    color_overrides = {},
+    section_separators = {
+      left = wezterm.nerdfonts.ple_lower_left_triangle,
+      right = wezterm.nerdfonts.ple_lower_right_triangle,
+    },
+    component_separators = {
+      left = wezterm.nerdfonts.ple_backslash_separator,
+      right = wezterm.nerdfonts.ple_forwardslash_separator,
+    },
+    tab_separators = {
+      left = wezterm.nerdfonts.ple_lower_left_triangle,
+      right = wezterm.nerdfonts.ple_lower_right_triangle,
+    },
+  },
+  sections = {
+    battery_to_icon = {
+      empty = { wezterm.nerdfonts.fa_battery_empty, color = { fg = utils.getColorByKey(wezterm, 'red') } },
+      quarter = { wezterm.nerdfonts.fa_battery_quarter, color = { fg = utils.getColorByKey(wezterm, 'yellow') } },
+      half = wezterm.nerdfonts.fa_battery_half,
+      three_quarters = wezterm.nerdfonts.fa_battery_three_quarters,
+      full = wezterm.nerdfonts.fa_battery_full,
+    },
+    tabline_a = {
+      'mode',
+    },
+    tabline_b = { 'workspace' },
+    tabline_c = { ' ' },
+    tab_active = {
+      'index',
+      { 'process', padding = { left = 0, right = 0 }, icons_only = true },
+      { 'parent', padding = 0, max_length = 15 },
+      '/',
+      { 'cwd', padding = { left = 0, right = 1 }, max_length = 20 },
+      { 'zoomed', padding = 0 },
+    },
+    tab_inactive = {
+      'index',
+      { 'process', padding = { left = 0, right = 0 }, icons_only = true },
+      { 'parent', padding = 0, max_length = 5 },
+      '/',
+      { 'cwd', padding = { left = 0, right = 1 }, max_length = 10 },
+    },
+    tabline_x = { 'ram', 'cpu' },
+    tabline_y = { 'datetime', 'battery' },
+    tabline_z = { 'hostname' },
+  },
+  extensions = {},
+}
 
-  -- It's a little silly to have workspace name all the time
-  -- Utilize this to display LDR or current key table name
-  if window:active_key_table() then
-    -- TODO:change stat_icon based on which active key table it is
-    stat = wezterm.pad_right(window:active_key_table(), string.len(stat))
-    stat_color = utils.getColorByKey(wezterm, window, 'green')
-  elseif window:leader_is_active() then
-    stat = wezterm.pad_right('LDR', string.len(stat))
-    stat_color = utils.getColorByKey(wezterm, window, 'magenta')
-    stat_icon = wezterm.nerdfonts.oct_rocket
-  end
-
-  local basename = function(s)
-    -- Nothing a little regex can't fix
-    return string.gsub(s, '(.*[/\\])(.*)', '%2')
-  end
-
-  -- Current working directory
-  local cwd = pane:get_current_working_dir()
-  if cwd then
-    if type(cwd) == 'userdata' then
-      -- Wezterm introduced the URL object in 20240127-113634-bbcac864
-      ---@diagnostic disable-next-line: undefined-field
-      cwd = basename(cwd.file_path)
-    else
-      -- 20230712-072601-f4abf8fd or earlier version
-      cwd = basename(cwd)
-    end
-  else
-    cwd = nil
-  end
-
-  -- Current command
-  local cmd = pane:get_foreground_process_name()
-  -- CWD and CMD could be nil (e.g. viewing log using Ctrl-Alt-l)
-  cmd = cmd and basename(cmd) or nil
-
-  -- Time
-  local time = wezterm.strftime '%H:%M'
-
-  -- user
-  local username = os.getenv 'USER' or os.getenv 'LOGNAME' or os.getenv 'USERNAME'
-
-  -- Battery info
-  local bat = wezterm.battery_info()
-  local has_battery = bat ~= nil and #bat > 0
-  local bat_percent
-  local bat_icon
-  local bat_color = ''
-  local bat_icons = {
-    [25] = wezterm.nerdfonts.fa_battery_quarter,
-    [50] = wezterm.nerdfonts.fa_battery_half,
-    [75] = wezterm.nerdfonts.fa_battery_three_quarters,
-    [100] = wezterm.nerdfonts.fa_battery_full,
-    Unknown = wezterm.nerdfonts.fa_battery_empty,
-  }
-
-  if has_battery then
-    local b = bat[1]
-    bat_percent = string.format('%.0f%%', b.state_of_charge * 100)
-    bat_icon = bat_icons.Unknown
-
-    if b.state == 'Charging' then
-      bat_color = utils.getColorByKey(wezterm, window, 'green')
-    elseif b.state_of_charge < 0.25 then
-      bat_color = utils.getColorByKey(wezterm, window, 'yellow')
-    elseif b.state_of_charge < 0.1 then
-      bat_color = utils.getColorByKey(wezterm, window, 'red')
-    end
-
-    if b.state_of_charge > 0.75 then
-      bat_icon = bat_icons[100]
-    elseif b.state_of_charge > 0.5 then
-      bat_icon = bat_icons[75]
-    elseif b.state_of_charge > 0.25 then
-      bat_icon = bat_icons[50]
-    else
-      bat_icon = bat_icons[25]
-    end
-  end
-
-  -- Left status (left of the tab line)
-  window:set_left_status(wezterm.format {
-    { Foreground = { Color = stat_color } },
-    { Text = '  ' },
-    { Text = stat_icon .. '  ' .. stat },
-    { Text = ' | ' },
-  })
-
-  -- Right status
-  window:set_right_status(wezterm.format {
-    -- Wezterm has a built-in nerd fonts
-    -- https://wezfurlong.org/wezterm/config/lua/wezterm/nerdfonts.html
-    { Text = wezterm.nerdfonts.md_account_cowboy_hat .. '  ' .. username },
-    { Text = ' | ' },
-    { Foreground = { Color = utils.getColorByKey(wezterm, window, 'yellow') } },
-    { Text = cwd and wezterm.nerdfonts.md_folder .. '  ' .. cwd or '' },
-    'ResetAttributes',
-    { Text = cwd and ' | ' or '' },
-    { Foreground = { Color = utils.getColorByKey(wezterm, window, 'blue') } },
-    -- TODO: figure out how to set icon based on the command
-    { Text = cmd and utils.getCommandIcon(wezterm, cmd) .. '  ' .. cmd or '' },
-    'ResetAttributes',
-    { Text = cmd and ' | ' or '' },
-    { Foreground = { Color = bat_color } },
-    { Text = has_battery and bat_icon .. '  ' .. bat_percent or '' },
-    'ResetAttributes',
-    { Text = has_battery and ' | ' or '' },
-    { Text = wezterm.nerdfonts.md_clock .. '  ' .. time },
-    { Text = '  ' },
-  })
-end)
-
--- If tab has zoomed pane, show it in tab
-wezterm.on('format-tab-title', function(tab, tabs)
-  local zoomed = ''
-  if tab.active_pane.is_zoomed then
-    zoomed = '[Z] '
-  end
-
-  local index = ''
-  if #tabs > 1 then
-    index = string.format('%d:', tab.tab_index + 1)
-  end
-
-  return ' ' .. zoomed .. index .. ' ' .. tab.active_tab.title .. ' '
-end)
-
---[[ Appearance setting for when I need to take pretty screenshots
+-- Appearance setting for when I need to take pretty screenshots
+--[[
 config.enable_tab_bar = false
 config.window_padding = {
   left = '0.5cell',
   right = '0.5cell',
   top = '0.5cell',
   bottom = '0cell',
-
 }
 --]]
 

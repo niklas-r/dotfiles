@@ -1,11 +1,11 @@
 return {
+  padding = {
+    left = 20,
+    top = 20,
+    bottom = 20,
+    right = 20,
+  },
   font = "CaskaydiaMono Nerd Font",
   opacity = 1,
-  colorscheme = "Tokyo Night Moon",
-  padding = {
-    bottom = 20,
-    left = 20,
-    right = 20,
-    top = 20,
-  },
+  colorscheme = "tokyonight_moon",
 }
