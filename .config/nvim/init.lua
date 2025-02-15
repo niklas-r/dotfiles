@@ -1353,7 +1353,8 @@ require('lazy').setup {
           additional_vim_regex_highlighting = { 'ruby' },
         },
         incremental_selection = {
-          enable = true,
+          -- FIXME: Disabled this because it breaks <C-i> for some reason
+          enable = false,
           keymaps = {
             init_selection = '<Tab>',
             node_incremental = '<Tab>',
