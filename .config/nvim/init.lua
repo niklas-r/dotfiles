@@ -838,8 +838,8 @@ require('lazy').setup({
     name = 'catppuccin',
     priority = 1000,
     init = function()
+      -- Dark mode is handled by auto-dark-mode.nvim
       vim.cmd.colorscheme 'catppuccin-frappe'
-      vim.cmd.hi 'Comment gui=none'
     end,
   },
   { -- You can easily change to a different colorscheme.

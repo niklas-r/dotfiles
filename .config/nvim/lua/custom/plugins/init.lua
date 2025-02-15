@@ -8,4 +8,5 @@ return {
   require 'custom.plugins.nvim-treesitter-context',
   require 'custom.plugins.tailwind-tools',
   require 'custom.plugins.gh-copilot',
+  require 'custom.plugins.auto-dark-mode',
 }
