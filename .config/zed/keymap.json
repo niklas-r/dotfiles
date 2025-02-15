@@ -1,0 +1,76 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      // "j k": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-j": "menu::SelectNext",
+      "ctrl-k": "menu::SelectPrev",
+      "ctrl-l": "menu::Confirm",
+      "ctrl-h": "menu::Cancel"
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      // Subword motions
+      "space w": "vim::NextSubwordStart",
+      "space b": "vim::PreviousSubwordStart",
+      "space e": "vim::NextSubwordEnd",
+      "space g e": "vim::PreviousSubwordEnd",
+      // Scroll and center screen
+      // FYI: due to Zed limitations, we need to do this in two passes by assigning scroll up and down to a different key binding first
+      "ctrl-shift-u": "vim::ScrollUp",
+      "ctrl-shift-d": "vim::ScrollDown",
+      "ctrl-u": ["workspace::SendKeystrokes", "ctrl-shift-u z z"],
+      "ctrl-d": ["workspace::SendKeystrokes", "ctrl-shift-d z z"],
+      // Move between matches and center screen
+      // Same limitations applies here
+      "ctrl-shift-alt-n": "vim::MoveToPrevMatch",
+      "ctrl-shift-n": "vim::MoveToNextMatch",
+      "n": ["workspace::SendKeystrokes", "ctrl-shift-n z z"],
+      "shift-n": ["workspace::SendKeystrokes", "ctrl-shift-alt-n z z"]
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      // tree-sitter related commands
+      "tab": "editor::SelectLargerSyntaxNode",
+      "shift-tab": "editor::SelectSmallerSyntaxNode"
+    }
+  },
+  {
+    "context": "OutlinePanel && not_editing",
+    "bindings": {
+      "ctrl-shift-h": "outline_panel::CollapseSelectedEntry",
+      "ctrl-shift-l": "outline_panel::ExpandSelectedEntry",
+      "ctrl-shift-j": "menu::SelectNext",
+      "ctrl-shift-k": "menu::SelectPrev"
+    }
+  },
+  // Put keybindings with space as leader key here
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "space x x": "editor::GoToDiagnostic",
+      "space x X": "editor::GoToPrevDiagnostic"
+    }
+  }
+]
