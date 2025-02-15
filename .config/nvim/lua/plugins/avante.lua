@@ -2,7 +2,13 @@ return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
   lazy = false,
-  version = '*', -- only get "stable" versions
+  -- version = '*', -- only get "stable" versions
+
+  -- Lock version until they allow copilot as the auto_suggestions_provider again
+  --
+  -- Follow discussions:
+  -- https://github.com/yetone/avante.nvim/pull/1072
+  version = '0.0.14',
   ---@class avante.Config
   opts = {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string
