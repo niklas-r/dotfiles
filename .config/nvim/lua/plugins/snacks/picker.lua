@@ -7,7 +7,7 @@ return {
   },
   keys = {
     -- stylua: ignore start
-    { "<leader>sf", function() Snacks.picker.files() end, desc = "[S]earch [F]iles" },
+    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "[S]earch [B]uffers" },
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "[S]earch [G]rep" },
     { "<leader>s:", function() Snacks.picker.command_history() end, desc = "[:] Command History" },
@@ -28,7 +28,6 @@ return {
     { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "[S]earch [K]eymaps" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "[S]earch [R]esume" },
     { "<leader>sq", function() Snacks.picker.qflist() end, desc = "[S]earch [Q]uickfix list" },
-    -- TODO: make colorschemne picker work with colorscheme-persist
     { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "[S]earch [C]olorschemes" },
     -- LSP
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "[G]oto [D]efinition" },
@@ -37,6 +36,7 @@ return {
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "[G]oto [I]mplementation" },
     { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "[G]oto T[y]pe Definition" },
     { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "[S]earch LSP [S]ymbols" },
+    { "<leader>sW", function() Snacks.picker.lsp_symbols { workspace = true } end, desc = "[S]earch LSP [W]orkspace Symbols" },
     -- stylua: ignore end
   },
   opts = {
