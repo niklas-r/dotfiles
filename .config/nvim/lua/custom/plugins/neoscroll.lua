@@ -1,6 +1,6 @@
 return {
   'karb94/neoscroll.nvim',
-  lazy = true,
+  event = 'BufReadPre',
   opts = {
     -- hide_cursor = false,
     easing = 'quadratic', -- Options: linear, quadratic, cubic, quartic, quintic, circular, sine
