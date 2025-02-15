@@ -165,11 +165,10 @@ wezterm.on('update-status', function(window, pane)
   -- Utilize this to display LDR or current key table name
   if window:active_key_table() then
     -- TODO:change stat_icon based on which active key table it is
-    stat = window:active_key_table()
+    stat = wezterm.pad_right(window:active_key_table(), string.len(stat))
     stat_color = utils.getColorByKey(wezterm, window, 'green')
-  end
-  if window:leader_is_active() then
-    stat = 'LDR'
+  elseif window:leader_is_active() then
+    stat = wezterm.pad_right('LDR', string.len(stat))
     stat_color = utils.getColorByKey(wezterm, window, 'magenta')
     stat_icon = wezterm.nerdfonts.oct_rocket
   end
