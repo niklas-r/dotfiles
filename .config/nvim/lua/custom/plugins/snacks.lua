@@ -53,6 +53,25 @@ return {
             require('lsp_lines').toggle()
           end,
         }):map '<leader>tL'
+
+        Snacks.toggle({
+          name = 'Toggle git blame line',
+          get = function()
+            return require('gitsigns.config').config.current_line_blame
+          end,
+          set = function()
+            require('gitsigns').toggle_current_line_blame()
+          end,
+        }):map '<leader>tb'
+        Snacks.toggle({
+          name = 'Toggle git show deleted',
+          get = function()
+            return require('gitsigns.config').config.show_deleted
+          end,
+          set = function()
+            require('gitsigns').toggle_deleted()
+          end,
+        }):map '<leader>td'
       end,
     })
   end,
