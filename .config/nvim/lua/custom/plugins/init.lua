@@ -10,4 +10,5 @@ return {
   require 'custom.plugins.gh-copilot',
   require 'custom.plugins.auto-dark-mode',
   require 'custom.plugins.harpoon',
+  require 'custom.plugins.trouble',
 }

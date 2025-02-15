@@ -21,10 +21,10 @@ vim.keymap.set('x', '<leader>p', [["_dP]])
 
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
 
-vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', { desc = 'Go next error' })
-vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', { desc = 'Go prev error' })
-
-vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz', { desc = 'Go next location' })
-vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz', { desc = 'Go prev location' })
+-- vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', { desc = 'Go next error' })
+-- vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', { desc = 'Go prev error' })
+--
+-- vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz', { desc = 'Go next location' })
+-- vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz', { desc = 'Go prev location' })
 
 vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
