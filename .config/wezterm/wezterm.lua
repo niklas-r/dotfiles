@@ -8,7 +8,6 @@ local config = wezterm.config_builder()
 -- Fonts
 local font = wezterm.font_with_fallback { { family = G.font } }
 config.font = font
-config.font_rules = { { intensity = 'Bold', font = font }, { intensity = 'Normal', font = font } }
 config.font_size = 14
 
 -- Disable weird behavior for left alt
