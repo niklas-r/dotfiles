@@ -10,7 +10,7 @@ return {
       variant = 'auto',
       dark_variant = 'moon',
       styles = {
-        transparency = true,
+        transparency = false,
       },
     },
   },

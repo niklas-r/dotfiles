@@ -12,7 +12,7 @@ return {
 
     -- basebg is used to make dimmed windows look better with transparent themes
     -- checkout the guide in the documentation for how to pick a good color
-    basebg = { 57, 56, 77 },
+    -- basebg = { 57, 56, 77 },
 
     -- Nicer style for inactive pane
     tint = {
