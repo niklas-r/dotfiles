@@ -1,4 +1,4 @@
-vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }
+require 'config/opts'
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
