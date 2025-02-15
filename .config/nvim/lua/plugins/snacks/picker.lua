@@ -36,7 +36,8 @@ return {
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "[G]oto [I]mplementation" },
     { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "[G]oto T[y]pe Definition" },
     { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "[S]earch LSP [S]ymbols" },
-    { "<leader>sW", function() Snacks.picker.lsp_symbols { workspace = true } end, desc = "[S]earch LSP [W]orkspace Symbols" },
+    ---@diagnostic disable-next-line: undefined-field
+    { "<leader>sW", function() Snacks.picker.lsp_workspace_symbols() end, desc = "[S]earch LSP [W]orkspace Symbols" },
     -- stylua: ignore end
   },
   opts = {
