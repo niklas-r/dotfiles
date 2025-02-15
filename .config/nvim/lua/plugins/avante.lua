@@ -6,7 +6,7 @@ return {
   ---@class avante.Config
   opts = {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string
-    provider = 'openai', -- Recommend using Claude
+    provider = 'claude', -- Recommend using Claude
     auto_suggestions_provider = 'copilot', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
