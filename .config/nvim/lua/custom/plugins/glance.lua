@@ -4,8 +4,9 @@ return {
   keys = {
     { '<leader>gr', '<CMD>Glance references<CR>', desc = '[G]lance [R]eferences' },
     { '<leader>gd', '<CMD>Glance definitions<CR>', desc = '[G]lance [D]efinitions' },
-    { '<leader>gD', '<CMD>Glance type_definitions<CR>', desc = '[G]lance [T]ype Definitions' },
+    { '<leader>gD', '<CMD>Glance type_definitions<CR>', desc = '[G]lance Type [D]efinitions' },
     { '<leader>gI', '<CMD>Glance implementations<CR>', desc = '[G]lance [I]mplementations' },
+    { '<leader>g.', '<CMD>Glance resume<CR>', desc = '[G]lance Resume' },
   },
   opts = {
     use_trouble_qf = true,
