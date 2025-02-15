@@ -32,10 +32,14 @@ Temporary Items
 # Select what to include specifically
 !/wezterm/
 !/weztern/**
+!/weztern/**/*
 !/nvim/
 !/nvim/**
+!/nvim/**/*
 !/lazygit/
 !/lazygit/**
+!/lazygit/**/*
 !/zsh/
 !/zsh/**
+!/zsh/**/*
 
