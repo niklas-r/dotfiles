@@ -9,4 +9,5 @@ return {
   require 'custom.plugins.tailwind-tools',
   require 'custom.plugins.gh-copilot',
   require 'custom.plugins.auto-dark-mode',
+  require 'custom.plugins.harpoon',
 }
