@@ -96,6 +96,17 @@ for i = 1, 9 do
   })
 end
 
+-- Override special alpha characters on Mac Swedish layout to Meta-KEY.
+-- Not the prettiest solution, I should probably fix my layout at OS level
+-- but I'm too lazy.
+for _, v in pairs { 'q', 'w', 'e', 'r', 't', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'z', 'x', 'c', 'v', 'b', 'n', 'm' } do
+  table.insert(config.keys, {
+    key = v,
+    mods = 'META',
+    action = act.SendKey { key = v, mods = 'META' },
+  })
+end
+
 config.key_tables = {
   resize_pane_mode = {
     { key = 'h', action = act.AdjustPaneSize { 'Left', 1 } },
