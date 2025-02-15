@@ -4,10 +4,7 @@ return {
     {
       'bwpge/lualine-pretty-path',
       'folke/snacks.nvim',
-      -- I use this plugin to set my theme and lualine does some shenangians with themes so
-      -- we need to wait for it to load
-      'propet/colorscheme-persist.nvim',
-      -- dev = true,
+      'AndreM222/copilot-lualine',
     },
   },
   -- config = function(_, opts)
@@ -61,19 +58,6 @@ return {
       return ret
     end
 
-    -- Toggling vim.b.trouble_lualine doesn't seem to do anything and I don't really want to toggle it anyway
-    -- snacks
-    --   .toggle({
-    --     name = 'lualine symbols',
-    --     get = function()
-    --       return vim.b.trouble_lualine ~= false
-    --     end,
-    --     set = function(state)
-    --       vim.b.trouble_lualine = state
-    --     end,
-    --   })
-    --   :map '<leader>tS'
-
     Snacks.toggle({
       name = 'lualine lsp names',
       get = function()
@@ -103,7 +87,6 @@ return {
           {
             'branch',
             fmt = trunc(70, 15, 65, true),
-            separator = '',
           },
 
           {
@@ -133,7 +116,6 @@ return {
             highlights = {
               newfile = 'LazyProgressDone',
             },
-            separator = '',
           },
         },
         lualine_x = {
@@ -152,25 +134,21 @@ return {
             cond = lazy_status.has_updates,
             -- color = { fg = '#3d59a1' },
             fmt = trunc(0, 0, 160, true), -- hide when window is < 100 columns
-            separator = '',
           },
-
-          require('util.lualine').cmp_source('copilot', ''),
-
+          {
+            'copilot',
+          },
           {
             lsp_status_all,
             fmt = trunc(0, 8, 140, false),
-            separator = '',
           },
           {
             encoding_only_if_not_utf8,
             fmt = trunc(0, 0, 140, true), -- hide when window is < 80 columns
-            separator = '',
           },
           {
             fileformat_only_if_not_unix,
             fmt = trunc(0, 0, 140, true), -- hide when window is < 80 columns
-            separator = '',
           },
         },
         lualine_y = {
