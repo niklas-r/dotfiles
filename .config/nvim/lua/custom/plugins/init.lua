@@ -5,4 +5,5 @@
 return {
   require 'custom.plugins.oil',
   require 'custom.plugins.lazygit',
+  require 'custom.plugins.nvim-treesitter-context',
 }
