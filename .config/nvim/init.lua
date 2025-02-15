@@ -216,6 +216,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Don't add DAP buffers to list of buffers
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'dap-repl',
+  callback = function(args)
+    vim.api.nvim_buf_set_option(args.buf, 'buflisted', false)
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -451,6 +459,7 @@ require('lazy').setup({
         { '<leader>t', group = '[T]oggle' },
         { '<leader>m', group = 'Harpoon [M]arks', mode = { 'n' } },
         { '<leader>u', group = '[U]nit Test', mode = { 'n' } },
+        { '<leader>ud', group = '[U]nit Test [D]ebug', mode = { 'n' } },
         { '<leader>ur', group = '[U]nit Test [R]un', mode = { 'n' } },
         { '<leader>uv', group = '[U]nit Test [V]itest', mode = { 'n' } },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
@@ -608,6 +617,7 @@ require('lazy').setup({
       library = {
         -- Load luvit types when the `vim.uv` word is found
         { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+        { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
       },
     },
   },
@@ -841,6 +851,9 @@ require('lazy').setup({
         'jq', -- Fast JSON formatter and more
         'jsonlint',
         'yamllint',
+        -- DAP's
+        -- 'js-debug-adapter', -- js-debug-adapter needs to be installed with Lazy so we can run post-install scripts so it works with nvim-dap-vscode-js
+        'chrome-debug-adapter',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -962,6 +975,7 @@ require('lazy').setup({
       'hrsh7th/cmp-path',
       -- copilot
       'zbirenbaum/copilot-cmp',
+      'rcarriga/cmp-dap',
     },
     config = function()
       -- See `:help cmp`
@@ -970,6 +984,9 @@ require('lazy').setup({
       luasnip.config.setup {}
 
       cmp.setup {
+        enabled = function()
+          return vim.api.nvim_get_option_value('buftype', {}) ~= 'prompt' or require('cmp_dap').is_dap_buffer()
+        end,
         -- Disable preselect. On enter, the first thing will be used if nothing
         -- is selected.
         preselect = cmp.PreselectMode.None,
@@ -1104,6 +1121,13 @@ require('lazy').setup({
           {},
         },
       }
+
+      -- cmp.setup.filetype({ 'dap-repl', 'dapui_watches', 'dapui_hover' }, {
+      cmp.setup.filetype({ 'dap-repl', 'dapui_watches' }, {
+        sources = {
+          { name = 'dap' },
+        },
+      })
     end,
   },
 
@@ -1377,7 +1401,7 @@ require('lazy').setup({
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
   --
-  -- require 'kickstart.plugins.debug',
+  require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',

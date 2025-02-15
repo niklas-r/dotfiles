@@ -58,13 +58,20 @@ return {
       end,
       desc = '[U]nit Test [R]un Current [F]ile',
     },
-    -- {
-    --   '<leader>ud',
-    --   function()
-    --     require('neotest').run.run { strategy = 'dap' }
-    --   end,
-    --   desc = '[U]nit Test [D]ebug Nearest Test',
-    -- },
+    {
+      '<leader>udt',
+      function()
+        require('neotest').run.run { strategy = 'dap' }
+      end,
+      desc = '[U]nit Test [D]ebug: Nearest [T]est',
+    },
+    {
+      '<leader>udl',
+      function()
+        require('neotest').run.run_last { strategy = 'dap' }
+      end,
+      desc = '[U]nit Test [D]ebug: [L]ast Test',
+    },
     {
       '<leader>ua',
       function()
