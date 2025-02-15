@@ -23,6 +23,8 @@ local ai_whichkey = function(opts)
     { 'i', desc = 'indent' },
     { 'o', desc = 'block, conditional, loop', ts = true },
     { 'q', desc = 'quote `"\'' },
+    { 'r', desc = 'return', ts = true },
+    { 'R', desc = 'regex', ts = true },
     { 't', desc = 'tag' },
     { 'u', desc = 'use/call' },
     { '{', desc = '{} block' },
@@ -94,6 +96,8 @@ return {
         },
         u = ai.gen_spec.function_call(), -- u for "Usage"
         U = ai.gen_spec.function_call { name_pattern = '[%w_]' }, -- without dot in function name
+        r = ai.gen_spec.treesitter { a = '@return.outer', i = '@return.inner' }, -- scope
+        R = ai.gen_spec.treesitter { a = '@regex.outer', i = '@regex.inner' }, -- scope
       },
     }
 
