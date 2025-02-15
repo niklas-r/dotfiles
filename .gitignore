@@ -4,6 +4,7 @@
 # Git config stuff
 !.gitignore
 !.gitconfig
+!.secret-vars-template
 
 # Select what to include specifically
 !.config/wezterm/
