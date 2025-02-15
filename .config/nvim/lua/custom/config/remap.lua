@@ -1,10 +1,15 @@
 vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+-- Move selected lines in visual mode
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selection down' })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
+
+-- Join lines and stay with cursor in same position
+vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines' })
+-- Same but produce no space
+vim.keymap.set('n', 'gJ', 'mzgJ`z', { desc = 'Join lines with no spaces' })
 
 -- Center screen when navigating
-vim.keymap.set('n', 'J', 'mzJ`z')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
