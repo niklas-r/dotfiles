@@ -15,7 +15,8 @@ return {
         -- Show hydra mode for toggles
         require('which-key').show {
           keys = '<leader>t',
-          loop = true, -- this will keep the popup open until you hit <esc>
+          -- Unfortunately the "hydra" mode is very bugged
+          -- loop = true, -- this will keep the popup open until you hit <esc>
         }
       end,
       desc = '[T]oggles',
@@ -73,7 +74,6 @@ return {
       { '<leader>ur', group = '[U]nit Test [R]un', mode = { 'n' } },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>x', group = '[X] Trouble' },
-      { '<leader>gp', group = '[G]oto [P]review' },
       { '<leader>S', group = '[S]wap' },
       { '<leader>g', group = '[G]lance' },
       { '<leader>l', group = '[L]azygit' },

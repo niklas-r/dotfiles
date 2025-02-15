@@ -1,14 +1,9 @@
+-- Used by Snacks.toggle
+vim.g.centered_layout_enabled = false
+
 return {
   'shortcuts/no-neck-pain.nvim',
   version = '*',
-  keys = {
-    -- { "<leader>ft", "<cmd>Neotree toggle<cr>", desc = "NeoTree" },
-    {
-      '<C-w>c',
-      '<cmd>NoNeckPain<cr>',
-      desc = '[C]entered mode',
-    },
-  },
   opts = {
     width = 120,
     integrations = {

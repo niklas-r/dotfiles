@@ -1,4 +1,8 @@
 --- This plugins dims panes that are not active
+
+-- Used by Snacks.toggle
+vim.g.vimade_enabled = true
+
 return {
   'tadaa/vimade',
   event = 'VeryLazy',
