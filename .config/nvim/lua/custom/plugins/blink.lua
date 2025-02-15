@@ -33,7 +33,10 @@ return {
         },
       },
       list = {
-        selection = 'manual',
+        selection = {
+          auto_insert = false,
+          preselect = false,
+        },
       },
       trigger = {
         show_on_insert_on_trigger_character = false,
