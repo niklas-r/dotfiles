@@ -535,6 +535,13 @@ require('lazy').setup {
         -- Use this to add more results without clearing the trouble list
         local add_to_trouble = require('trouble.sources.telescope').add
 
+        local fzf_opts = {
+          fuzzy = true, -- false will only do exact matching
+          override_generic_sorter = true, -- override the generic sorter
+          override_file_sorter = true, -- override the file sorter
+          case_mode = 'smart_case', -- or "ignore_case" or "respect_case" the default case_mode is "smart_case"
+        }
+
         require('telescope').setup {
           -- You can put your default mappings / updates / etc. in here
           --  All the info you're looking for is in `:help telescope.setup()`
@@ -542,6 +549,10 @@ require('lazy').setup {
           pickers = {
             find_files = {
               hidden = true,
+            },
+            -- Manually set sorter, for some reason not picked up automatically
+            lsp_dynamic_workspace_symbols = {
+              sorter = require('telescope').extensions.fzf.native_fzf_sorter(fzf_opts),
             },
           },
           defaults = {
@@ -574,6 +585,9 @@ require('lazy').setup {
           extensions = {
             ['ui-select'] = {
               require('telescope.themes').get_dropdown(),
+            },
+            extensions = {
+              fzf = fzf_opts,
             },
           },
         }
