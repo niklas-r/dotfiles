@@ -13,10 +13,8 @@ return {
         typescriptreact = { 'eslint_d' },
         dotenv_linter = { 'dotenv-linter' },
         sh = { 'shellcheck' },
-        -- Maybe add these in case eslint_ isn't enough
-        -- yamllint = { 'yamllint' },
-        -- jsonlint = { 'jsonlint' },
-        -- Maybe this one
+        yamllint = { 'yamllint' },
+        jsonlint = { 'jsonlint' },
         zsh = { 'zsh' },
       }
 

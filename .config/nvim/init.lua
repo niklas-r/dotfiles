@@ -709,6 +709,9 @@ require('lazy').setup({
         'shellcheck', -- Bash linter
         'shfmt', -- Bash formatter
         'beautysh', -- Bash, Zsh etc formatter
+        'jq', -- Fast JSON formatter and more
+        'jsonlint',
+        'yamllint',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -771,6 +774,7 @@ require('lazy').setup({
         typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
         sh = { 'shfmt' },
         zsh = { 'beautysh' },
+        json = { 'jq' },
       },
     },
   },
