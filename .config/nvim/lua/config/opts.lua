@@ -86,3 +86,5 @@ vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
 -- vim.opt.foldcolumn = 0
 -- vim.opt.foldtext = ''
+
+vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }
