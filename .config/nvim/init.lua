@@ -1004,15 +1004,18 @@ require('lazy').setup({
         formatting = {
           format = function(entry, vim_item)
             local lspkind_ok, lspkind = pcall(require, 'lspkind')
-            if not lspkind_ok then
-              vim_item.kind = (symbol_kinds[vim_item.kind] or '') .. '  ' .. vim_item.kind
-              return vim_item
-            else
-              -- From lspkind
+
+            -- Add nice icons :)
+            vim_item.kind = (symbol_kinds[vim_item.kind] or '') .. '  ' .. vim_item.kind
+
+            if lspkind_ok then
               return lspkind.cmp_format {
+                -- Add colors to Tailwind color completions
                 before = require('tailwind-tools.cmp').lspkind_format,
               }(entry, vim_item)
             end
+
+            return vim_item
           end,
         },
         snippet = {
