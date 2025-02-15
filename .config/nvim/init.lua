@@ -600,6 +600,17 @@ require('lazy').setup({
             })
           end
 
+          -- I don't understand how to use the LSP Code Lens at the moment,
+          -- might be useful in the future so I'm keeping it
+          -- if client and client.server_capabilities.codeLensProvider then
+          --   vim.api.nvim_create_autocmd({ 'CursorMoved' }, {
+          --     callback = function()
+          --       vim.lsp.codelens.refresh()
+          --     end,
+          --   })
+          --   vim.keymap.set('n', '<leader>cl', vim.lsp.codelens.run, { desc = '[C]ode [L]ens', buffer = event.buf, silent = true })
+          -- end
+
           -- The following code creates a keymap to toggle inlay hints in your
           -- code, if the language server you are using supports them
           --
