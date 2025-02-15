@@ -5,7 +5,7 @@ return {
   main = 'nvim-treesitter.configs', -- Sets main module to use for opts
   -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
   dependencies = {
-    'nvim-treesitter/nvim-treesitter-context',
+    -- 'nvim-treesitter/nvim-treesitter-context',
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
   opts = {
@@ -54,7 +54,7 @@ return {
         floating_preview_opts = { border = 'rounded' },
       },
       select = {
-        enable = true,
+        enable = false, -- disable due to usage of mini.ai
 
         -- Automatically jump forward to textobj, similar to targets.vim
         lookahead = true,
