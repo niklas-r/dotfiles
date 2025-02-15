@@ -100,7 +100,7 @@ return {
           Color = '',
           Constant = '',
           Constructor = '',
-          Copilot = '',
+          Copilot = '',
           Enum = '',
           EnumMember = '',
           Event = '',
@@ -122,7 +122,6 @@ return {
           Unit = '',
           Value = '',
           Variable = '',
-          -- star icon representing the completion of AI LLM
           AvanteCommand = '',
           AvanteFile = '',
           AvanteMention = '󰁥',
