@@ -722,6 +722,10 @@ require('lazy').setup {
             --  Useful when your language has ways of declaring types without an actual implementation.
             map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
 
+            -- Fuzzy find all the incoming and outgoing calls of a method
+            map('gC', require('telescope.builtin').lsp_incoming_calls, '[G]oto Incoming [C]alls')
+            map('gO', require('telescope.builtin').lsp_outgoing_calls, '[G]oto [O]utgoing Calls')
+
             -- Jump to the type of the word under your cursor.
             --  Useful when you're not sure what type a variable is and you want to see
             --  the definition of its *type*, not where it was *defined*.
