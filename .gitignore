@@ -1,8 +1,9 @@
 # Ignore everything
 *
 
-# Not this file though
+# Git config stuff
 !.gitignore
+!.gitconfig
 
 # Select what to include specifically
 !.config/wezterm/

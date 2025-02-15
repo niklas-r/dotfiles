@@ -1,0 +1,23 @@
+[user]
+	name = Niklas Kahn
+	email = niklas@neatminds.se
+[push]
+	autoSetupRemote = true
+[rebase]
+	updateRefs = true
+[alias]
+	please = push --force-with-lease
+	oops = commit --amend --no-edit
+[rerere]
+	enabled = true
+[fetch]
+	prune = true
+[core]
+	pager = delta
+[interactive]
+	diffFilter = delta --dark --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+[merge]
+	conflictStyle = zdiff3
