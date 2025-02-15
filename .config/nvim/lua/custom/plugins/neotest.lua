@@ -12,9 +12,10 @@ return {
   config = function(opts)
     require('neotest').setup {
       adapters = {
-        require 'neotest-vitest',
+        require 'neotest-vitest' {
+          vitestCommand = 'yarn vitest run --coverage.enabled=false',
+        },
       },
-      quickfix = { open = true },
       output = {
         enabled = true,
         open = 'botright split | resize 15',
