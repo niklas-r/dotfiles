@@ -49,13 +49,14 @@ local ai_whichkey = function(opts)
     ret[#ret + 1] = { prefix, group = name }
     for _, obj in ipairs(objects) do
       local desc = obj.desc
-      if prefix:sub(2, 2) == 'n' or prefix:sub(2, 2) == 'l' then
-        if obj.ts then
-          do
-            break
-          end -- treesitter gen specs can't be chained with next/last so we continue
-        end
-      end
+      -- keeping this, it seems to work but docs say it shouldn't, so i don't know
+      -- if prefix:sub(2, 2) == 'n' or prefix:sub(2, 2) == 'l' then
+      --   if obj.ts then
+      --     do
+      --       break
+      --     end -- treesitter gen specs can't be chained with next/last so we continue
+      --   end
+      -- end
       if prefix:sub(1, 1) == 'i' then
         desc = desc:gsub(' with ws', '')
       end
