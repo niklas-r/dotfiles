@@ -20,10 +20,11 @@ return {
       menu = {
         border = border,
         draw = {
-          columns = {
-            { 'label', 'label_description', gap = 1 },
-            { 'kind_icon', 'kind' },
-          },
+          -- columns = {
+          --   { 'label', 'label_description', gap = 1 },
+          --   { 'kind_icon', 'kind' },
+          -- },
+          treesitter = { 'lsp' },
         },
       },
       documentation = {
@@ -94,14 +95,8 @@ return {
         Variable = '',
       },
     },
-
-    -- default list of enabled providers defined so that you can extend it
-    -- elsewhere in your config, without redefining it, via `opts_extend`
     sources = {
-      -- This is for an upcoming release of blink
       default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot', 'lazydev' },
-      -- optionally disable cmdline completions
-      -- cmdline = {},
       providers = {
         copilot = {
           name = 'copilot',
@@ -124,7 +119,7 @@ return {
     },
 
     -- experimental signature help support
-    -- signature = { enabled = true },
+    signature = { enabled = false },
   },
   -- allows extending the providers array elsewhere in your config
   -- without having to redefine it
