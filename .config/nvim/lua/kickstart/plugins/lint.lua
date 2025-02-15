@@ -7,7 +7,10 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
-        eslint_d = { 'eslint_d' },
+        javascript = { 'eslint_d' },
+        typescript = { 'eslint_d' },
+        javascriptreact = { 'eslint_d' },
+        typescriptreact = { 'eslint_d' },
         dotenv_linter = { 'dotenv-linter' },
         -- Maybe add these in case eslint_ isn't enough
         -- yamllint = { 'yamllint' },
