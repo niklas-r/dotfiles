@@ -6,7 +6,7 @@ return {
   lazy = false, -- Needs to be false to work with Wezterm integration
   init = function()
     local wk = require 'which-key'
-    wk.add { '<leader>b', group = 'Swap [B]uffer' }
+    wk.add { '<leader>Sb', group = '[B]uffer' }
   end,
   opts = {
     ignored_buftypes = {
@@ -39,9 +39,9 @@ return {
     vim.keymap.set('n', '<M-k>', ss.move_cursor_up, { desc = 'Move cursor to split above' })
     vim.keymap.set('n', '<M-l>', ss.move_cursor_right, { desc = 'Move cursor to right split' })
     -- swapping buffers between windows
-    vim.keymap.set('n', '<leader>bh', ss.swap_buf_left, { desc = 'Swap buffer with left split' })
-    vim.keymap.set('n', '<leader>bj', ss.swap_buf_down, { desc = 'Swap buffer with split below' })
-    vim.keymap.set('n', '<leader>bk', ss.swap_buf_up, { desc = 'Swap buffer with split above' })
-    vim.keymap.set('n', '<leader>bl', ss.swap_buf_right, { desc = 'Swap buffer with right split' })
+    vim.keymap.set('n', '<leader>Sbh', ss.swap_buf_left, { desc = 'Swap buffer with left split' })
+    vim.keymap.set('n', '<leader>Sbj', ss.swap_buf_down, { desc = 'Swap buffer with split below' })
+    vim.keymap.set('n', '<leader>Sbk', ss.swap_buf_up, { desc = 'Swap buffer with split above' })
+    vim.keymap.set('n', '<leader>Sbl', ss.swap_buf_right, { desc = 'Swap buffer with right split' })
   end,
 }

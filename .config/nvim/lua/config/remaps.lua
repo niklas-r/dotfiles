@@ -57,6 +57,6 @@ vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 -- Keybinds which will get you cancelled
 vim.keymap.set('n', '<C-c>', 'ciw')
 
-vim.keymap.set('n', '<C-w>b', ':%bd|e#<CR>', { desc = 'Close all other [B]uffers' })
+vim.keymap.set('n', '<leader>bq', ':%bd!|e#<CR>', { desc = '[Q]uit all other buffers' })
 
 return {}

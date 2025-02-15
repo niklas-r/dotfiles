@@ -9,18 +9,6 @@ return {
       end,
       desc = 'Buffer Local Keymaps (which-key)',
     },
-    {
-      '<leader>t',
-      function()
-        -- Show hydra mode for toggles
-        require('which-key').show {
-          keys = '<leader>t',
-          -- Unfortunately the "hydra" mode is very bugged
-          -- loop = true, -- this will keep the popup open until you hit <esc>
-        }
-      end,
-      desc = '[T]oggles',
-    },
   },
   opts = {
     icons = {
@@ -68,14 +56,16 @@ return {
       { '<leader>s', group = '[S]earch' },
       { '<leader>m', group = 'Harpoon [M]arks', mode = { 'n' } },
       { '<leader>u', group = '[U]nit Test', mode = { 'n' } },
-      { '<leader>ud', group = '[U]nit Test [D]ebug', mode = { 'n' } },
-      { '<leader>ur', group = '[U]nit Test [R]un', mode = { 'n' } },
+      { '<leader>ud', group = '[D]ebug', mode = { 'n' } },
+      { '<leader>ur', group = '[R]un', mode = { 'n' } },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>x', group = '[X] Trouble' },
       { '<leader>S', group = '[S]wap' },
       { '<leader>g', group = '[G]lance' },
       { '<leader>l', group = '[L]azygit' },
       { '<leader>a', group = '[A]I' },
+      { '<leader>t', group = '[T]oggles' },
+      { '<leader>b', group = '[B]uffers' },
     },
   },
 }
