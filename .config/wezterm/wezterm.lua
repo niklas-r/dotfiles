@@ -205,6 +205,44 @@ wezterm.on('update-status', function(window, pane)
   -- user
   local username = os.getenv 'USER' or os.getenv 'LOGNAME' or os.getenv 'USERNAME'
 
+  -- Battery info
+  local bat = wezterm.battery_info()
+  local has_battery = bat ~= nil and #bat > 0
+  local bat_percent
+  local bat_icon
+  local bat_color = ''
+  local bat_icons = {
+    [25] = wezterm.nerdfonts.fa_battery_quarter,
+    [50] = wezterm.nerdfonts.fa_battery_half,
+    [75] = wezterm.nerdfonts.fa_battery_three_quarters,
+    [100] = wezterm.nerdfonts.fa_battery_full,
+    Unknown = wezterm.nerdfonts.fa_battery_empty,
+  }
+
+  if has_battery then
+    local b = bat[1]
+    bat_percent = string.format('%.0f%%', b.state_of_charge * 100)
+    bat_icon = bat_icons.Unknown
+
+    if b.state == 'Charging' then
+      bat_color = utils.getColorByKey(wezterm, window, 'green')
+    elseif b.state_of_charge < 0.25 then
+      bat_color = utils.getColorByKey(wezterm, window, 'yellow')
+    elseif b.state_of_charge < 0.1 then
+      bat_color = utils.getColorByKey(wezterm, window, 'red')
+    end
+
+    if b.state_of_charge > 0.75 then
+      bat_icon = bat_icons[100]
+    elseif b.state_of_charge > 0.5 then
+      bat_icon = bat_icons[75]
+    elseif b.state_of_charge > 0.25 then
+      bat_icon = bat_icons[50]
+    else
+      bat_icon = bat_icons[25]
+    end
+  end
+
   -- Left status (left of the tab line)
   window:set_left_status(wezterm.format {
     { Foreground = { Color = stat_color } },
@@ -224,9 +262,14 @@ wezterm.on('update-status', function(window, pane)
     'ResetAttributes',
     { Text = cwd and ' | ' or '' },
     { Foreground = { Color = utils.getColorByKey(wezterm, window, 'blue') } },
+    -- TODO: figure out how to set icon based on the command
     { Text = cmd and wezterm.nerdfonts.fa_code .. '  ' .. cmd or '' },
     'ResetAttributes',
     { Text = cmd and ' | ' or '' },
+    { Foreground = { Color = bat_color } },
+    { Text = has_battery and bat_icon .. '  ' .. bat_percent or '' },
+    'ResetAttributes',
+    { Text = has_battery and ' | ' or '' },
     { Text = wezterm.nerdfonts.md_clock .. '  ' .. time },
     { Text = '  ' },
   })
