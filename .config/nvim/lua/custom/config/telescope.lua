@@ -20,7 +20,7 @@ function M.live_multigrep(opts)
 
       -- requires ripgrep
       local args = { 'rg' }
-      if pieces[1] == 'rg' then
+      if pieces[1] then
         table.insert(args, '-e')
         table.insert(args, pieces[1])
       end
@@ -33,7 +33,6 @@ function M.live_multigrep(opts)
       return vim.tbl_flatten {
         args,
         {
-          'rg',
           '--color=never',
           '--no-heading',
           '--with-filename',
