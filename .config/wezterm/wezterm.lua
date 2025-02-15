@@ -1,34 +1,11 @@
 local wezterm = require 'wezterm'
-local smart_splits = wezterm.plugin.require 'https://github.com/mrjones2014/smart-splits.nvim'
-local tabline = wezterm.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
 local act = wezterm.action
 local features = require 'features'
-local utils = require 'utils'
 local G = require 'globals'
 
 local config = wezterm.config_builder()
 
--- Dark mode not working with current impementation of theme switcher
--- local function scheme_for_appearance(appearance)
---   if appearance:find 'Dark' then
---     return G.dark_colorscheme
---   else
---     return G.light_colorscheme
---   end
--- end
---
--- wezterm.on('window-config-reloaded', function(window, pane)
---   local overrides = window:get_config_overrides() or {}
---   local appearance = window:get_appearance()
---   local scheme = scheme_for_appearance(appearance)
---   if overrides.color_scheme ~= scheme then
---     overrides.color_scheme = scheme
---     window:set_config_overrides(overrides)
---   end
--- end)
-
 -- Fonts
-
 local font = wezterm.font_with_fallback { { family = G.font } }
 config.font = font
 config.font_rules = { { intensity = 'Bold', font = font }, { intensity = 'Normal', font = font } }
@@ -44,7 +21,6 @@ config.window_padding = G.padding
 config.window_decorations = 'RESIZE'
 config.window_close_confirmation = 'AlwaysPrompt'
 config.adjust_window_size_when_changing_font_size = false
--- config.window_frame = { font = wezterm.font_with_fallback { family = G.font, weight = 400 } }
 
 -- Dim inactive panes
 config.inactive_pane_hsb = {
@@ -163,58 +139,9 @@ config.status_update_interval = 1000
 config.tab_bar_at_bottom = false
 config.tab_max_width = 32
 
-tabline.setup {
-  options = {
-    icons_enabled = true,
-    theme = G.colorscheme,
-    color_overrides = {},
-    section_separators = {
-      left = wezterm.nerdfonts.ple_lower_left_triangle,
-      right = wezterm.nerdfonts.ple_lower_right_triangle,
-    },
-    component_separators = {
-      left = wezterm.nerdfonts.ple_backslash_separator,
-      right = wezterm.nerdfonts.ple_forwardslash_separator,
-    },
-    tab_separators = {
-      left = wezterm.nerdfonts.ple_lower_left_triangle,
-      right = wezterm.nerdfonts.ple_lower_right_triangle,
-    },
-  },
-  sections = {
-    battery_to_icon = {
-      empty = { wezterm.nerdfonts.fa_battery_empty, color = { fg = utils.getColorByKey(wezterm, 'red') } },
-      quarter = { wezterm.nerdfonts.fa_battery_quarter, color = { fg = utils.getColorByKey(wezterm, 'yellow') } },
-      half = wezterm.nerdfonts.fa_battery_half,
-      three_quarters = wezterm.nerdfonts.fa_battery_three_quarters,
-      full = wezterm.nerdfonts.fa_battery_full,
-    },
-    tabline_a = {
-      'mode',
-    },
-    tabline_b = { 'workspace' },
-    tabline_c = { ' ' },
-    tab_active = {
-      'index',
-      { 'process', padding = { left = 0, right = 0 }, icons_only = true },
-      { 'parent', padding = 0, max_length = 15 },
-      '/',
-      { 'cwd', padding = { left = 0, right = 1 }, max_length = 20 },
-      { 'zoomed', padding = 0 },
-    },
-    tab_inactive = {
-      'index',
-      { 'process', padding = { left = 0, right = 0 }, icons_only = true },
-      { 'parent', padding = 0, max_length = 5 },
-      '/',
-      { 'cwd', padding = { left = 0, right = 1 }, max_length = 10 },
-    },
-    tabline_x = { 'ram', 'cpu' },
-    tabline_y = { 'datetime', 'battery' },
-    tabline_z = { 'hostname' },
-  },
-  extensions = {},
-}
+-- Load plugins
+require('plugins/tabline').setup(wezterm)
+require('plugins/smart-splits').setup(wezterm, config)
 
 -- Appearance setting for when I need to take pretty screenshots
 --[[
@@ -226,18 +153,6 @@ config.window_padding = {
   bottom = '0cell',
 }
 --]]
-
-smart_splits.apply_to_config(config, {
-  -- directional keys to use in order of: left, down, up, right
-  direction_keys = { 'h', 'j', 'k', 'l' },
-  -- modifier keys to combine with direction_keys
-  modifiers = {
-    move = 'META', -- modifier to use for pane movement, e.g. CTRL+h to move left
-    resize = 'META|SHIFT', -- modifier to use for pane resize, e.g. META+h to resize to the left
-  },
-  -- log level to use: info, warn, error
-  log_level = 'info',
-})
 
 -- and finally, return the configuration to wezterm
 return config
