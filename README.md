@@ -1,5 +1,7 @@
 # dotfiles
 
+![Demo picture](./dotfile-images/scrsht.png)
+
 ## Submodules
 
 This project contains a few submodules. To update these, run:

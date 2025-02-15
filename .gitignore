@@ -4,7 +4,13 @@
 # Git config stuff
 !.gitignore
 !.gitconfig
+
+# Shell vars
 !.secret-vars-template
+
+# Pictures for the dotfile repo!
+!dotfile-images/
+!dotfile-images/*
 
 # Select what to include specifically
 !.config/
