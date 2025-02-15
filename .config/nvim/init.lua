@@ -1397,10 +1397,6 @@ require('lazy').setup {
             enable = true,
             border = 'none',
             floating_preview_opts = { border = 'rounded' },
-            peek_definition_code = {
-              ['<leader>dm'] = { query = '@function.outer', desc = 'Peek definition [M]ethod', mode = 'n' },
-              ['<leader>dc'] = { query = '@class.outer', desc = 'Peek definition [C]lass', mode = 'n' },
-            },
           },
           select = {
             enable = true,

@@ -1,3 +1,6 @@
+---@type blink.cmp.WindowBorder
+local border = 'rounded'
+
 return {
   'saghen/blink.cmp',
   lazy = false, -- lazy loading handled internally
@@ -15,11 +18,17 @@ return {
   opts = {
     completion = {
       menu = {
-        border = 'rounded',
+        border = border,
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind_icon', 'kind' },
+          },
+        },
       },
       documentation = {
         window = {
-          border = 'rounded',
+          border = border,
         },
       },
       list = {
@@ -55,7 +64,7 @@ return {
       -- will be removed in a future release
       use_nvim_cmp_as_default = true,
 
-      nerd_font_variant = 'mono',
+      nerd_font_variant = 'normal',
       kind_icons = {
         Class = '',
         Color = '',
@@ -119,7 +128,7 @@ return {
     },
 
     -- experimental signature help support
-    signature = { enabled = true },
+    -- signature = { enabled = true },
   },
   -- allows extending the providers array elsewhere in your config
   -- without having to redefine it
