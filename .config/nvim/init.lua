@@ -330,7 +330,6 @@ require('lazy').setup {
     { import = 'plugins' },
     -- Custom config lua files
     require 'config.filetypes',
-    require 'config.focus-split',
     require 'config.remaps',
     require 'config.autocmds',
     -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
