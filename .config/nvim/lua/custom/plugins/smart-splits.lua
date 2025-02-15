@@ -1,6 +1,13 @@
 return {
   'mrjones2014/smart-splits.nvim',
+  dependencies = {
+    'folke/which-key.nvim',
+  },
   lazy = true,
+  init = function()
+    local wk = require 'which-key'
+    wk.add { '<leader>b', group = 'Swap [B]uffer' }
+  end,
   opts = {
     ignored_buftypes = {
       'nofile',
