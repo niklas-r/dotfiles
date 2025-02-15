@@ -365,6 +365,7 @@ local symbol_kinds = {
 require('lazy').setup {
   checker = {
     enabled = true,
+    notify = false, -- hide notification since it's displayed in the lualine
   },
   spec = {
     -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
