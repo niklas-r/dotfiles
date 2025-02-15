@@ -369,6 +369,9 @@ require('lazy').setup {
     enabled = true,
     notify = false, -- hide notification since it's displayed in the lualine
   },
+  install = {
+    colorscheme = { 'tokyonight' },
+  },
   spec = {
     -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
     'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -493,6 +496,7 @@ require('lazy').setup {
           { '<leader>S', group = '[S]wap' },
           { '<leader>g', group = '[G]lance' },
           { '<leader>l', group = '[L]azygit' },
+          { '<leader>a', group = '[A]I' },
         },
       },
     },
