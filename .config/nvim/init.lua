@@ -167,6 +167,9 @@ vim.opt.termguicolors = true
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+-- Disable inline diagnostics
+vim.diagnostic.config { virtual_text = false }
+
 -- Diagnostic keymaps
 -- vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -295,6 +298,44 @@ local ai_whichkey = function(opts)
     end
   end
   require('which-key').add(ret, { notify = false })
+end
+
+-- Icons to use in the completion menu.
+local symbol_kinds = {
+  Class = '',
+  Color = '',
+  Constant = '',
+  Constructor = '',
+  Copilot = '',
+  Enum = '',
+  EnumMember = '',
+  Event = '',
+  Field = '',
+  File = '',
+  Folder = '',
+  Function = '',
+  Interface = '',
+  Keyword = '',
+  Method = '',
+  Module = '',
+  Operator = '',
+  Property = '',
+  Reference = '',
+  Snippet = '',
+  Struct = '',
+  Text = '',
+  TypeParameter = '',
+  Unit = '',
+  Value = '',
+  Variable = '',
+}
+
+local has_words_before = function()
+  if vim.api.nvim_buf_get_option(0, 'buftype') == 'prompt' then
+    return false
+  end
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match '^%s*$' == nil
 end
 
 -- [[ Configure and install plugins ]]
@@ -752,6 +793,7 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
         vtsls = {},
+        eslint = {},
         --
         bashls = {},
 
@@ -878,6 +920,7 @@ require('lazy').setup({
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',
+    version = false,
     event = 'InsertEnter',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
@@ -911,6 +954,8 @@ require('lazy').setup({
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      -- copilot
+      'zbirenbaum/copilot-cmp',
     },
     config = function()
       -- See `:help cmp`
@@ -919,12 +964,31 @@ require('lazy').setup({
       luasnip.config.setup {}
 
       cmp.setup {
+        -- Disable preselect. On enter, the first thing will be used if nothing
+        -- is selected.
+        preselect = cmp.PreselectMode.None,
+        -- Add icons to the completion menu.
+        formatting = {
+          format = function(_, vim_item)
+            vim_item.kind = (symbol_kinds[vim_item.kind] or '') .. '  ' .. vim_item.kind
+            return vim_item
+          end,
+        },
         snippet = {
           expand = function(args)
             luasnip.lsp_expand(args.body)
           end,
         },
-        completion = { completeopt = 'menu,menuone,noinsert' },
+        window = {
+          -- Make the completion menu bordered.
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
+        },
+        view = {
+          -- Explicitly request documentation.
+          docs = { auto_open = false },
+        },
+        completion = { completeopt = 'menu,menuone,noselect' },
 
         -- For an understanding of why these mappings were
         -- chosen, you will need to read `:help ins-completion`
@@ -948,8 +1012,31 @@ require('lazy').setup({
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
           ['<CR>'] = cmp.mapping.confirm { select = true },
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+
+          ['<Tab>'] = vim.schedule_wrap(function(fallback)
+            if cmp.visible() and has_words_before() then
+              cmp.select_next_item { behavior = cmp.SelectBehavior.Select }
+            else
+              fallback()
+            end
+          end),
+          ['<S-Tab>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.expand_or_locally_jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { 'i', 's' }),
+          -- Open docs manually, useful for Copilot completions
+          ['<C-d>'] = function()
+            if cmp.visible_docs() then
+              cmp.close_docs()
+            else
+              cmp.open_docs()
+            end
+          end,
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -978,17 +1065,37 @@ require('lazy').setup({
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
-        sources = {
+        sorting = {
+          priority_weight = 2,
+          comparators = {
+            require('copilot_cmp.comparators').prioritize,
+
+            -- Below is the default comparitor list and order for nvim-cmp
+            cmp.config.compare.offset,
+            -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            cmp.config.compare.locality,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+          },
+        },
+        sources = cmp.config.sources {
           {
             name = 'lazydev',
             -- set group index to 0 to skip loading LuaLS completions as lazydev recommends it
             group_index = 0,
           },
+          { name = 'copilot' },
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
           { name = 'snippets', keyword_length = 3 },
           { name = 'path' },
-          { name = 'buffer' },
+          { { name = 'buffer' } },
+          {},
         },
       }
     end,
@@ -1069,14 +1176,14 @@ require('lazy').setup({
         use_icons = vim.g.have_nerd_font,
         content = {
           active = function()
-            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
-            local git = MiniStatusline.section_git { trunc_width = 40 }
-            local diff = MiniStatusline.section_diff { trunc_width = 75 }
-            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
-            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
-            local filename = MiniStatusline.section_filename { trunc_width = 140 }
-            local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
-            local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+            local mode, mode_hl = statusline.section_mode { trunc_width = 120 }
+            local git = statusline.section_git { trunc_width = 40 }
+            local diff = statusline.section_diff { trunc_width = 75 }
+            local diagnostics = statusline.section_diagnostics { trunc_width = 75 }
+            local lsp = statusline.section_lsp { trunc_width = 75 }
+            local filename = statusline.section_filename { trunc_width = 140 }
+            local fileinfo = statusline.section_fileinfo { trunc_width = 120 }
+            local search = statusline.section_searchcount { trunc_width = 75 }
             local macro = vim.g.macro_recording
 
             return MiniStatusline.combine_groups {
