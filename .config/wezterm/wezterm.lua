@@ -47,7 +47,7 @@ config.inactive_pane_hsb = {
 }
 
 -- Keys
-config.leader = { key = "Space", mods = "CTRL", timeout_milliseconds = 1000 }
+config.leader = { key = "Space", mods = "SHIFT", timeout_milliseconds = 1000 }
 config.keys = {
 	-- Send C-Space when pressing C-Space twice
 	{ key = "Space", mods = "LEADER|CTRL", action = act.SendKey({ key = "Space", mods = "CTRL" }) },
