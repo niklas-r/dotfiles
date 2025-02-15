@@ -30,19 +30,19 @@ Temporary Items
 *
 
 # Select what to include specifically
-!/wezterm/
-!/weztern/**
-!/weztern/**/*
-!/nvim/
-!/nvim/**
-!/nvim/**/*
-!/lazygit/
-!/lazygit/**
-!/lazygit/**/*
-!/zsh/
-!/zsh/**
-!/zsh/**/*
-!/hammerspoon/
-!/hammerspoon/**
-!/hammerspoon/**/*
+!/.config/wezterm/
+!/.config/weztern/**
+!/.config/weztern/**/*
+!/.config/nvim/
+!/.config/nvim/**
+!/.config/nvim/**/*
+!/.config/lazygit/
+!/.config/lazygit/**
+!/.config/lazygit/**/*
+!/.config/zsh/
+!/.config/zsh/**
+!/.config/zsh/**/*
+!/.config/hammerspoon/
+!/.config/hammerspoon/**
+!/.config/hammerspoon/**/*
 
