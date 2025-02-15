@@ -5,6 +5,10 @@
 return {
   {
     'lewis6991/gitsigns.nvim',
+    dependencies = {
+      'folke/snacks.nvim',
+      'FabijanZulj/blame.nvim',
+    },
     opts = {
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
@@ -47,7 +51,13 @@ return {
         map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
         map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
         map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
-        map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
+        map('n', '<leader>hb', function()
+          require('snacks').git.blame_line()
+        end, { desc = 'git [b]lame line' })
+        map('n', '<leader>hB', function()
+          -- Uses blame.nvim
+          vim.cmd 'BlameToggle window'
+        end, { desc = 'git [B]lame file' })
         map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
         map('n', '<leader>hD', function()
           gitsigns.diffthis '@'
