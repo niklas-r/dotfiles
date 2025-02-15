@@ -102,7 +102,7 @@ config.keys = {
       description = wezterm.format {
         { Attribute = { Intensity = 'Bold' } },
         { Foreground = { AnsiColor = 'Fuchsia' } },
-        { Text = 'Renaming Tab Title...:' },
+        { Text = 'Enter new name for tab:' },
       },
       action = wezterm.action_callback(function(window, _, line)
         if line then
@@ -286,7 +286,7 @@ wezterm.on('format-tab-title', function(tab, tabs)
     index = string.format('%d:', tab.tab_index + 1)
   end
 
-  return ' ' .. zoomed .. index .. ' ' .. tab.active_pane.title .. ' '
+  return ' ' .. zoomed .. index .. ' ' .. tab.active_tab.title .. ' '
 end)
 
 --[[ Appearance setting for when I need to take pretty screenshots
