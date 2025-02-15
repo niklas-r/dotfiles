@@ -7,6 +7,13 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
+        eslint_d = { 'eslint_d' },
+        dotenv_linter = { 'dotenv-linter' },
+        -- Maybe add these in case eslint_ isn't enough
+        -- yamllint = { 'yamllint' },
+        -- jsonlint = { 'jsonlint' },
+        -- Maybe this one
+        -- zsh = { 'zsh' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
