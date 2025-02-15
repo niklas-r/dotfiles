@@ -666,7 +666,7 @@ require('lazy').setup {
         vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
         vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
         -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-        vim.keymap.set('n', '<leader>sg', require('custom.config.telescope').live_multigrep, { desc = '[S]earch by Multi[G]rep' })
+        vim.keymap.set('n', '<leader>sg', require('config.telescope').live_multigrep, { desc = '[S]earch by Multi[G]rep' })
         vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -1536,12 +1536,12 @@ require('lazy').setup {
     --    This is the easiest way to modularize your config.
     --
     --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-    { import = 'custom.plugins' },
+    { import = 'plugins' },
     -- Custom config lua files
-    require 'custom.config.filetypes',
-    require 'custom.config.focus-split',
-    require 'custom.config.remaps',
-    require 'custom.config.autocmds',
+    require 'config.filetypes',
+    require 'config.focus-split',
+    require 'config.remaps',
+    require 'config.autocmds',
     -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
     -- Or use telescope!
     -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
