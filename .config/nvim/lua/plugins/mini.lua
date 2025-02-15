@@ -15,13 +15,13 @@ local ai_whichkey = function(opts)
     { '`', desc = '` string' },
     { 'a', desc = 'argument' },
     { 'b', desc = ')]} block' },
-    { 'c', desc = 'class' },
+    { 'c', desc = 'class', ts = true },
     { 'd', desc = 'digit(s)' },
     { 'e', desc = 'CamelCase / snake_case' },
-    { 'm', desc = 'method' },
+    { 'm', desc = 'method', ts = true },
     { 'g', desc = 'entire file' },
     { 'i', desc = 'indent' },
-    { 'o', desc = 'block, conditional, loop' },
+    { 'o', desc = 'block, conditional, loop', ts = true },
     { 'q', desc = 'quote `"\'' },
     { 't', desc = 'tag' },
     { 'u', desc = 'use/call' },
@@ -47,6 +47,13 @@ local ai_whichkey = function(opts)
     ret[#ret + 1] = { prefix, group = name }
     for _, obj in ipairs(objects) do
       local desc = obj.desc
+      if prefix:sub(2, 2) == 'n' or prefix:sub(2, 2) == 'l' then
+        if obj.ts then
+          do
+            break
+          end -- treesitter gen specs can't be chained with next/last so we continue
+        end
+      end
       if prefix:sub(1, 1) == 'i' then
         desc = desc:gsub(' with ws', '')
       end
@@ -59,7 +66,9 @@ end
 return {
   'echasnovski/mini.nvim',
   event = 'VeryLazy',
-
+  dependencies = {
+    'nvim-treesitter/nvim-treesitter-textobjects',
+  },
   config = function()
     local ai = require 'mini.ai'
     -- Better Around/Inside textobjects
