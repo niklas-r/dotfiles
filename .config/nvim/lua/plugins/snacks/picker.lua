@@ -7,9 +7,9 @@ return {
   },
   keys = {
     -- stylua: ignore start
-    -- { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
+    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
     ---@diagnostic disable-next-line: undefined-field
-    { "<leader>sf", function() Snacks.picker.smart() end, desc = "[S]earch [F]iles" },
+    { "<leader>sF", function() Snacks.picker.smart() end, desc = "[S]earch [F]iles Smart" },
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "[S]earch [B]uffers" },
     -- utilities
     { "<leader>s:", function() Snacks.picker.command_history() end, desc = "[:] Command History" },
