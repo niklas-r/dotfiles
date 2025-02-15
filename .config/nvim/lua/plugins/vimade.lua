@@ -19,5 +19,12 @@ return {
       fg = { rgb = { 200, 200, 200 }, intensity = 0.5 },
     },
     fadelevel = 0.6,
+    blocklist = {
+      default = {
+        buf_opts = {
+          buftype = { 'acwrite', 'help', 'nofile', 'nowrite', 'quickfix', 'terminal', 'prompt' },
+        },
+      },
+    },
   },
 }
