@@ -112,13 +112,7 @@ return {
         goto_next_start = {
           [']m'] = { query = '@function.outer', desc = 'Next [M]ethod' },
           [']c'] = { query = '@class.outer', desc = 'Next [C]lass' },
-          --
-          -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
           [']o'] = { query = '@loop.*', desc = 'Next L[o]op' },
-          -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-          --
-          -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-          -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
           [']s'] = { query = '@local.scope', query_group = 'locals', desc = 'Next [S]cope' },
           [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next [F]old' },
         },
@@ -129,6 +123,9 @@ return {
         goto_previous_start = {
           ['[m'] = { query = '@function.outer', desc = 'Prev [M]ethod' },
           ['[c'] = { query = '@class.outer', desc = 'Prev [C]lass' },
+          ['[o'] = { query = '@loop.*', desc = 'Prev L[o]op' },
+          ['[s'] = { query = '@local.scope', query_group = 'locals', desc = 'Prev [S]cope' },
+          ['[z'] = { query = '@fold', query_group = 'folds', desc = 'Prev [F]old' },
         },
         goto_previous_end = {
           ['[M'] = { query = '@function.outer', desc = 'Prev [M]ethod end' },
