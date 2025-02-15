@@ -185,8 +185,8 @@ vim.keymap.set('n', '<Esc>', function()
   if package.loaded['notify'] ~= nil then
     require('notify').dismiss { pending = true, silent = true }
   end
-  if Snacks ~= nil then
-    Snacks.notifier.hide()
+  if require 'snacks' ~= nil then
+    require('snacks').notifier.hide()
   end
 end)
 
