@@ -38,6 +38,21 @@ return {
           processId = require('dap.utils').pick_process,
           cwd = '${workspaceFolder}',
         },
+        {
+          type = 'pwa-chrome',
+          request = 'launch',
+          name = 'Lanch Chrome (pwa-chrome, select port)',
+          -- program = '${file}',
+          -- cwd = vim.fn.getcwd(),
+          -- sourceMaps = true,
+          port = function()
+            return vim.fn.input('Select port: ', 5173)
+          end,
+          url = 'http://localhost:${port}',
+          webRoot = function()
+            return vim.fn.input('Select web root:', '${workspaceFolder}/src')
+          end,
+        },
       }
     end
   end,
