@@ -103,6 +103,15 @@ return {
         enabled = true,
       },
     },
+    scroll = {
+      animate = {
+        duration = {
+          steps = 10,
+          total = 120,
+        },
+        easing = 'inQuad',
+      },
+    },
     dashboard = {
       width = 60,
       row = nil, -- dashboard position. nil for center
