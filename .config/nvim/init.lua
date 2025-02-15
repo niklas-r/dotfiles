@@ -1028,9 +1028,10 @@ require('lazy').setup({
             return MiniStatusline.combine_groups {
               { hl = mode_hl, strings = { mode } },
               { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
-              '%<', -- Mark general truncate point
+              { hl = '', strings = { '%<' } }, -- Mark general truncate point
+              '%=', -- End left alignment, start center alignment
               { hl = 'MiniStatuslineFilename', strings = { filename } },
-              '%=', -- End left alignment
+              '%=', -- End center alignment, start right alignment
               { hl = 'MiniStatuslineFilename', strings = { macro } },
               { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
               { hl = mode_hl, strings = { search, '%2l:%-2v' } },
