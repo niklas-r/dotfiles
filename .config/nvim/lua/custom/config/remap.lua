@@ -39,3 +39,5 @@ local function quickfix()
 end
 
 vim.keymap.set('n', '<leader>qf', quickfix, { noremap = true, silent = true })
+
+return {}
