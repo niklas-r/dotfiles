@@ -60,13 +60,13 @@ config.default_workspace = 'main'
 config.color_scheme = G.colorscheme
 
 -- Keys
-config.leader = { key = 'Space', mods = 'SHIFT', timeout_milliseconds = 1000 }
+config.leader = { key = 'phys:Space', mods = 'CTRL', timeout_milliseconds = 1000 }
 config.keys = {
-  -- Send C-Space when pressing C-Space twice
-  { key = 'Space', mods = 'LEADER|SHIFT', action = act.SendKey { key = 'Space', mods = 'CTRL' } },
+  -- Send keycode for leader when pressing leader twice
+  { key = config.leader.key, mods = 'LEADER|' .. config.leader.mods, action = act.SendKey { key = config.leader.key, mods = config.leader.mods } },
   { key = 'c', mods = 'LEADER', action = act.ActivateCopyMode },
   { key = 's', mods = 'LEADER', action = act.QuickSelect },
-  { key = 'phys:Space', mods = 'LEADER', action = act.ActivateCommandPalette },
+  { key = 'phys:Space', mods = 'LEADER|CTRL', action = act.ActivateCommandPalette },
 
   -- Switchers
   { key = 'k', mods = 'LEADER', action = wezterm.action_callback(features.theme_switcher) },
