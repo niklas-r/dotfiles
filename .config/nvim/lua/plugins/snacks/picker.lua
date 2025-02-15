@@ -7,18 +7,24 @@ return {
   },
   keys = {
     -- stylua: ignore start
-    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
+    -- { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
+    ---@diagnostic disable-next-line: undefined-field
+    { "<leader>sf", function() Snacks.picker.smart() end, desc = "[S]earch [F]iles" },
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "[S]earch [B]uffers" },
-    { "<leader>sg", function() Snacks.picker.grep() end, desc = "[S]earch [G]rep" },
+    -- utilities
     { "<leader>s:", function() Snacks.picker.command_history() end, desc = "[:] Command History" },
+    ---@diagnostic disable-next-line: undefined-field
+    { "<leader>su", function() Snacks.picker.undo() end, desc = "[S]earch [U]ndo tree" },
     -- git
     { "<leader>sG", function() Snacks.picker.git_log() end, desc = "[S]earch [G]it Log" },
     { "<leader>sS", function() Snacks.picker.git_status() end, desc = "[S]earch [G]it Status" },
     -- find
+    ---@diagnostic disable-next-line: assign-type-mismatch
     { "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath "config" }) end, desc = "[S]earch [N]eovim files" },
     { "<leader>sp", function() Snacks.picker.files({ cwd = vim.fn.stdpath "data" .. "/lazy" }) end, desc = "[S]earch [P]lugin Files" },
     { "<leader>s.", function() Snacks.picker.recent() end, desc = "[S]earch Recent Files [.]" },
-  -- Grep
+    -- Grep
+    { "<leader>sg", function() Snacks.picker.grep() end, desc = "[S]earch [G]rep" },
     { "<leader>sb", function() Snacks.picker.lines() end, desc = "[S]earch [B]uffer Lines" },
     { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "[S]earch Open [B]uffers" },
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "[S]earch current [W]ord (or selection)", mode = { "n", "x" } },
