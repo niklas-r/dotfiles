@@ -20,16 +20,16 @@ vim.keymap.set('n', '<leader>Y', [["+Y]], { desc = 'Yank line to clipboard' })
 -- Format buffer
 vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, { desc = 'Format buffer' })
 
-vim.keymap.set('x', '<leader>p', [["_dP]])
+-- Paste over selection and keep reg unchanged
+vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over selection' })
 
-vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d')
+vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Black hole delete' })
 
--- vim.keymap.set('n', '<C-k>', '<cmd>cnext<CR>zz', { desc = 'Go next error' })
--- vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', { desc = 'Go prev error' })
---
--- vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz', { desc = 'Go next location' })
--- vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz', { desc = 'Go prev location' })
+-- Don't start a macro by mistake ever again...
+vim.keymap.set('n', 'q', '<Nop>')
+vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 
-vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+-- Macros which will get you cancelled
+vim.keymap.set('n', '<C-c>', 'ciw')
 
 return {}
