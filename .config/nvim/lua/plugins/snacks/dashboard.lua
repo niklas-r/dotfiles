@@ -2,9 +2,6 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
-  depenencies = {
-    'folke/which-key.nvim',
-  },
   keys = {
     {
       '<leader>!',

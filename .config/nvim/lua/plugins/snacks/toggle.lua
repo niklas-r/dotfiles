@@ -3,7 +3,6 @@ return {
   priority = 1000,
   lazy = false,
   depenencies = {
-    'folke/which-key.nvim',
     'nabekou29/js-i18n.nvim',
     'tadaa/vimade',
   },

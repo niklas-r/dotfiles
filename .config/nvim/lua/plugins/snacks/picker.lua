@@ -2,9 +2,6 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
-  depenencies = {
-    'folke/which-key.nvim',
-  },
   keys = {
     -- stylua: ignore start
     { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
