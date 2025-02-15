@@ -1,11 +1,12 @@
 local function toggleColumnInfo()
-  if vim.g.oil_columns == nil then
-    vim.g.oil_columns = 2
+  if vim.g.oil_columns == 4 then
+    vim.g.oil_columns = 1
+  else
+    vim.g.oil_columns = vim.g.oil_columns + 1
   end
 
   ---@module 'oil'
   ---@type oil.ColumnSpec[]
-
   local selectedCols = { 'icon' } -- Always show icon
 
   if vim.g.oil_columns == 1 then
@@ -20,11 +21,6 @@ local function toggleColumnInfo()
 
   require('oil').set_columns(selectedCols)
 
-  if vim.g.oil_columns == 4 then
-    vim.g.oil_columns = 1
-  else
-    vim.g.oil_columns = vim.g.oil_columns + 1
-  end
 end
 
 return {
@@ -38,7 +34,6 @@ return {
     view_options = {
       show_hidden = true,
     },
-    columns = {},
     default_file_explorer = true,
     keymaps = {
       -- Custom keymaps for splits so it aligns with the rest of my setup
@@ -70,4 +65,8 @@ return {
   keys = {
     { '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' } },
   },
+  config = function(_, opts)
+    vim.g.oil_columns = 1
+    require('oil').setup(opts)
+  end,
 }
