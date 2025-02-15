@@ -160,6 +160,21 @@ vim.opt.scrolloff = 10
 -- Enable 24-bit colour which is required for vim-notify
 vim.opt.termguicolors = true
 
+-- Set default code folding to depend on Treesitter
+vim.opt.foldenable = true
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+
+-- Optional
+-- Show fold in side column
+vim.opt.foldcolumn = '1' -- '0' is not bad
+-- Folds with higher level than this will be closed with zm, zM, zR etc.
+vim.opt.foldlevel = 99
+-- Sets the foldlevel when starting to edit another buffer
+vim.opt.foldlevelstart = 99
+-- vim.opt.foldcolumn = 0
+-- vim.opt.foldtext = ''
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -575,6 +590,16 @@ require('lazy').setup {
             find_files = {
               hidden = true,
             },
+            buffer = {
+              mappings = {
+                i = {
+                  ['<C-d>'] = 'delete_buffer',
+                },
+                n = {
+                  ['<C-d>'] = 'delete_buffer',
+                },
+              },
+            },
             -- Manually set sorter, for some reason not picked up automatically
             lsp_dynamic_workspace_symbols = {
               sorter = require('telescope').extensions.fzf.native_fzf_sorter(fzf_opts),
@@ -587,14 +612,12 @@ require('lazy').setup {
                 ['<C-7>'] = 'which_key',
                 ['<C-x>'] = open_with_trouble,
                 ['<C-X>'] = add_to_trouble,
-                ['<C-d>'] = 'delete_buffer',
                 ['<C-t>'] = 'file_tab',
                 ['<C-s>'] = 'select_horizontal',
               },
               n = {
                 ['<C-x>'] = open_with_trouble,
                 ['<C-X>'] = add_to_trouble,
-                ['<C-d>'] = 'delete_buffer',
                 ['<C-t>'] = 'file_tab',
                 ['<C-s>'] = 'select_horizontal',
               },
@@ -642,7 +665,8 @@ require('lazy').setup {
         vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
         vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
         vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+        -- vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+        vim.keymap.set('n', '<leader>sg', require('custom.config.telescope').live_multigrep, { desc = '[S]earch by Multi[G]rep' })
         vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
@@ -932,7 +956,6 @@ require('lazy').setup {
           'stylua', -- Used to format Lua code
           -- 'prettierd', -- Until this bug is solved I can't use it https://github.com/fsouza/prettierd/issues/352
           'prettier',
-          'shfmt', -- Bash formatter
           'beautysh', -- Bash, Zsh etc formatter
           'jq', -- Fast JSON formatter and more
           'jsonlint',
@@ -1020,7 +1043,7 @@ require('lazy').setup {
             'prettier',
             stop_after_first = true,
           },
-          sh = { 'shfmt' },
+          sh = { 'beautysh' },
           zsh = { 'beautysh' },
           json = { 'jq' },
         },
@@ -1263,7 +1286,7 @@ require('lazy').setup {
         --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
         --  - ci'  - [C]hange [I]nside [']quote
         local ai_opts = {
-          n_lines = 500,
+          n_liness = 500,
           custom_textobjects = {
             o = ai.gen_spec.treesitter { -- code block
               a = { '@block.outer', '@conditional.outer', '@loop.outer' },
@@ -1520,9 +1543,11 @@ require('lazy').setup {
     --
     --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
     { import = 'custom.plugins' },
-    -- Same with custom config lua files
-    { import = 'custom.config' },
-    --
+    -- Custom config lua files
+    require 'custom.config.filetypes',
+    require 'custom.config.focus-split',
+    require 'custom.config.remaps',
+    require 'custom.config.autocmds',
     -- For additional information with loading, sourcing and examples see `:help lazy.nvim-🔌-plugin-spec`
     -- Or use telescope!
     -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
