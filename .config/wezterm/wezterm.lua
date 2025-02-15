@@ -61,13 +61,13 @@ config.default_workspace = 'main'
 config.color_scheme = G.colorscheme
 
 -- Keys
-config.leader = { key = 'phys:Space', mods = 'CTRL', timeout_milliseconds = 1000 }
+config.leader = { key = 'l', mods = 'SUPER', timeout_milliseconds = 1200 }
 config.keys = {
   -- Send keycode for leader when pressing leader twice
   { key = config.leader.key, mods = 'LEADER|' .. config.leader.mods, action = act.SendKey { key = config.leader.key, mods = config.leader.mods } },
   { key = 'c', mods = 'LEADER', action = act.ActivateCopyMode },
   { key = 's', mods = 'LEADER', action = act.QuickSelect },
-  { key = 'phys:Space', mods = 'LEADER|CTRL', action = act.ActivateCommandPalette },
+  { key = 'phys:Space', mods = 'LEADER', action = act.ActivateCommandPalette },
 
   -- Switchers
   { key = 'k', mods = 'LEADER', action = wezterm.action_callback(features.theme_switcher) },
@@ -306,8 +306,8 @@ smart_splits.apply_to_config(config, {
   direction_keys = { 'h', 'j', 'k', 'l' },
   -- modifier keys to combine with direction_keys
   modifiers = {
-    move = 'CTRL', -- modifier to use for pane movement, e.g. CTRL+h to move left
-    resize = 'META', -- modifier to use for pane resize, e.g. META+h to resize to the left
+    move = 'META', -- modifier to use for pane movement, e.g. CTRL+h to move left
+    resize = 'META|SHIFT', -- modifier to use for pane resize, e.g. META+h to resize to the left
   },
   -- log level to use: info, warn, error
   log_level = 'info',
