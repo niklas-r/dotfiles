@@ -1,44 +1,46 @@
--- Pull in the wezterm API
 local wezterm = require 'wezterm'
 local act = wezterm.action
+local features = require 'features'
+local G = require 'globals'
 
--- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
+-- local function scheme_for_appearance(appearance)
+--   if appearance:find 'Dark' then
+--     return G.dark_colorscheme
+--   else
+--     return G.light_colorscheme
+--   end
+-- end
+--
+-- wezterm.on('window-config-reloaded', function(window, pane)
+--   local overrides = window:get_config_overrides() or {}
+--   local appearance = window:get_appearance()
+--   local scheme = scheme_for_appearance(appearance)
+--   if overrides.color_scheme ~= scheme then
+--     overrides.color_scheme = scheme
+--     window:set_config_overrides(overrides)
+--   end
+-- end)
 
-local function scheme_for_appearance(appearance)
-  if appearance:find 'Dark' then
-    return 'Catppuccin Frappe'
-  else
-    return 'Catppuccin Latte'
-  end
-end
+-- Fonts
 
-wezterm.on('window-config-reloaded', function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  local appearance = window:get_appearance()
-  local scheme = scheme_for_appearance(appearance)
-  if overrides.color_scheme ~= scheme then
-    overrides.color_scheme = scheme
-    window:set_config_overrides(overrides)
-  end
-end)
-
-config.font = wezterm.font 'CaskaydiaMono Nerd Font'
+local font = wezterm.font_with_fallback { { family = G.font } }
+config.font = font
+config.font_rules = { { intensity = 'Bold', font = font }, { intensity = 'Normal', font = font } }
 config.font_size = 13
 
 -- Disable weird behavior for left alt
 config.send_composed_key_when_left_alt_is_pressed = true
 
--- Based on config from Theo P
--- https://github.com/theopn/dotfiles/blob/main/wezterm/wezterm.lua
-
-config.window_background_opacity = 0.9
+-- Window
+config.window_background_opacity = G.opacity
+config.macos_window_background_blur = 50
+config.window_padding = G.padding
 config.window_decorations = 'RESIZE'
 config.window_close_confirmation = 'AlwaysPrompt'
--- config.scrollback_lines = 3000
-config.default_workspace = 'main'
+config.adjust_window_size_when_changing_font_size = false
+config.window_frame = { font = wezterm.font_with_fallback { family = G.font, weight = 400 } }
 
 -- Dim inactive panes
 config.inactive_pane_hsb = {
@@ -46,14 +48,27 @@ config.inactive_pane_hsb = {
   brightness = 0.5,
 }
 
+-- Cursor
+config.hide_mouse_cursor_when_typing = true
+
+-- Workspaces
+config.default_workspace = 'main'
+
+-- Color scheme
+config.color_scheme = G.colorscheme
+
 -- Keys
 config.leader = { key = 'Space', mods = 'SHIFT', timeout_milliseconds = 1000 }
 config.keys = {
   -- Send C-Space when pressing C-Space twice
-  { key = 'Space', mods = 'LEADER|CTRL', action = act.SendKey { key = 'Space', mods = 'CTRL' } },
+  { key = 'Space', mods = 'LEADER|SHIFT', action = act.SendKey { key = 'Space', mods = 'CTRL' } },
   { key = 'c', mods = 'LEADER', action = act.ActivateCopyMode },
   { key = 's', mods = 'LEADER', action = act.QuickSelect },
   { key = 'phys:Space', mods = 'LEADER', action = act.ActivateCommandPalette },
+
+  -- Switchers
+  { key = 'k', mods = 'LEADER', action = wezterm.action_callback(features.theme_switcher) },
+  { key = 'f', mods = 'LEADER', action = wezterm.action_callback(features.font_switcher) },
 
   -- Pane keybindings
   { key = 'd', mods = 'CMD|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },
