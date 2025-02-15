@@ -633,13 +633,6 @@ require('lazy').setup {
     --     end,
     --   },
 
-    -- Current color scheme is being set by colorscheme-persist
-    -- Remember to add the color scheme to colorscheme-persist dependencies
-    { 'catppuccin/nvim', priority = 1000 },
-    { 'folke/tokyonight.nvim', priority = 1000 },
-    { 'rebelot/kanagawa.nvim', priority = 1000 },
-    { 'shatur/neovim-ayu', priority = 1000 },
-
     -- Highlight todo, notes, etc in comments
     { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
