@@ -705,8 +705,9 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'prettierd', -- Oponionated JS/TS formatter
-        'eslint_d', -- JS linter
+        -- 'prettierd', -- Until this bug is solved I can't use it https://github.com/fsouza/prettierd/issues/352
+        'prettier',
+        'eslint_d', -- ESLint daemon, faster than eslint
         'shellcheck', -- Bash linter
         'shfmt', -- Bash formatter
         'beautysh', -- Bash, Zsh etc formatter
@@ -769,10 +770,26 @@ require('lazy').setup({
         -- python = { "isort", "black" },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        javascript = { 'prettierd', 'prettier', stop_after_first = true },
-        typescript = { 'prettierd', 'prettier', stop_after_first = true },
-        javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        javascript = {
+          --'prettierd',
+          'prettier',
+          stop_after_first = true,
+        },
+        typescript = {
+          --'prettierd',
+          'prettier',
+          stop_after_first = true,
+        },
+        javascriptreact = {
+          -- 'prettierd',
+          'prettier',
+          stop_after_first = true,
+        },
+        typescriptreact = {
+          -- 'prettierd',
+          'prettier',
+          stop_after_first = true,
+        },
         sh = { 'shfmt' },
         zsh = { 'beautysh' },
         json = { 'jq' },
