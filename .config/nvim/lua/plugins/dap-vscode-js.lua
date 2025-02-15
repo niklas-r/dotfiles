@@ -1,3 +1,16 @@
+--- Gets a path to a package in the Mason registry.
+--- Prefer this to `get_package`, since the package might not always be
+--- available yet and trigger errors.
+---@param pkg string
+---@param path? string
+local function get_pkg_path(pkg, path)
+  pcall(require, 'mason')
+  local root = vim.env.MASON or (vim.fn.stdpath 'data' .. '/mason')
+  path = path or ''
+  local ret = root .. '/packages/' .. pkg .. '/' .. path
+  return ret
+end
+
 return {
   'mxsdev/nvim-dap-vscode-js',
   lazy = true,
@@ -27,6 +40,7 @@ return {
         {
           type = 'pwa-node',
           request = 'launch',
+          port = '${port}',
           name = 'Launch file',
           program = '${file}',
           cwd = '${workspaceFolder}',
@@ -34,6 +48,7 @@ return {
         {
           type = 'pwa-node',
           request = 'attach',
+          port = '${port}',
           name = 'Attach',
           processId = require('dap.utils').pick_process,
           cwd = '${workspaceFolder}',
@@ -60,8 +75,13 @@ return {
       type = 'server',
       host = 'localhost',
       port = '${port}',
-      -- 💀 Make sure to update this path to point to your installation
-      args = { '~/.local/share/nvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js', '${port}' },
+      executable = {
+        command = 'node',
+        args = {
+          get_pkg_path('js-debug-adapter', '/js-debug/src/dapDebugServer.js'),
+          '${port}',
+        },
+      },
     }
   end,
 }

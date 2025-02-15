@@ -1,17 +1,17 @@
+-- Don't add DAP buffers to list of buffers
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'dap-repl',
+  callback = function(args)
+    vim.api.nvim_set_option_value('buflisted', false, { buffer = args.buf })
+  end,
+})
+
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
   callback = function()
     vim.highlight.on_yank()
-  end,
-})
-
--- Don't add DAP buffers to list of buffers
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'dap-repl',
-  callback = function(args)
-    vim.api.nvim_set_option_value('buflisted', false, { buffer = args.buf })
   end,
 })
 
