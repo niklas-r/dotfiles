@@ -26,3 +26,5 @@ vim.keymap.set('n', '<C-j>', '<cmd>cprev<CR>zz', { desc = 'Go prev error' })
 
 vim.keymap.set('n', '<leader>k', '<cmd>lnext<CR>zz', { desc = 'Go next location' })
 vim.keymap.set('n', '<leader>j', '<cmd>lprev<CR>zz', { desc = 'Go prev location' })
+
+vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
