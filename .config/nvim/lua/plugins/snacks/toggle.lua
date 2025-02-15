@@ -4,6 +4,7 @@ return {
   lazy = false,
   depenencies = {
     'folke/which-key.nvim',
+    'nabekou29/js-i18n.nvim',
     'tadaa/vimade',
   },
   opts = {
@@ -88,6 +89,24 @@ return {
             vim.g.centered_layout_enabled = state
           end,
         }):map '<leader>tc'
+
+        -- Various
+        Snacks.toggle({
+          name = 'i18n virtual text',
+          get = function()
+            return vim.g.js_i18n_enabled
+          end,
+          set = function(state)
+            vim.g.js_i18n_enabled = state
+            if state then
+              vim.cmd 'I18nVirtualTextEnable'
+              vim.cmd 'I18nDiagnosticEnable'
+            else
+              vim.cmd 'I18nVirtualTextDisable'
+              vim.cmd 'I18nDiagnosticDisable'
+            end
+          end,
+        }):map '<leader>ti'
       end,
     })
   end,
