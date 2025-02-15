@@ -61,4 +61,13 @@ function M.getColorByKey(wez, window, key)
   return key_to_color[key]
 end
 
+function M.getCommandIcon(wez, cmd)
+  if cmd == 'nvim' then
+    return wez.nerdfonts.linux_neovim
+  elseif string.find(cmd, 'git') then
+    return wez.nerdfonts.oct_git_branch
+  end
+  return wez.nerdfonts.fa_code
+end
+
 return M

@@ -262,7 +262,7 @@ wezterm.on('update-status', function(window, pane)
     { Text = cwd and ' | ' or '' },
     { Foreground = { Color = utils.getColorByKey(wezterm, window, 'blue') } },
     -- TODO: figure out how to set icon based on the command
-    { Text = cmd and wezterm.nerdfonts.fa_code .. '  ' .. cmd or '' },
+    { Text = cmd and utils.getCommandIcon(wezterm, cmd) .. '  ' .. cmd or '' },
     'ResetAttributes',
     { Text = cmd and ' | ' or '' },
     { Foreground = { Color = bat_color } },
