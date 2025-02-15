@@ -20,7 +20,12 @@ local function toggleColumnInfo()
   end
 
   require('oil').set_columns(selectedCols)
+end
 
+local function openInFinder()
+  local current_path = vim.fn.expand '%:h'
+  local clean_path = current_path:gsub('^oil://', '', 1)
+  vim.cmd('silent !open ' .. clean_path)
 end
 
 return {
@@ -42,6 +47,9 @@ return {
 
       -- Custom keymap for toggling more columns/"information"
       ['<C-i>'] = { toggleColumnInfo, desc = 'Toggle more column information' },
+
+      -- Custom keypmap to reveal directory in Finder for MacOS
+      ['gf'] = { openInFinder, desc = 'Reveal in Finder' },
 
       -- These are all default keymaps
       ['g?'] = { 'actions.show_help', mode = 'n' },
