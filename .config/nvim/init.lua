@@ -315,6 +315,8 @@ require('lazy').setup({
         },
       },
 
+      preset = 'modern',
+
       -- Document existing key chains
       spec = {
         { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
