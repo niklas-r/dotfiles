@@ -51,6 +51,10 @@ return {
         map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
         map('n', '<leader>hp', gitsigns.preview_hunk_inline, { desc = 'git [p]review hunk inline' })
         map('n', '<leader>hP', gitsigns.preview_hunk, { desc = 'git [P]review hunk' })
+        map('n', '<leader>hQ', function()
+          gitsigns.setqflist 'all'
+        end, { desc = 'git [Q]uickfix list all changes' })
+        map('n', '<leader>hq', gitsigns.setqflist, { desc = 'git [q]uickfix list current buffer' })
         map('n', '<leader>hb', function()
           Snacks.git.blame_line()
         end, { desc = 'git [b]lame line' })
@@ -63,6 +67,7 @@ return {
           gitsigns.diffthis '@'
         end, { desc = 'git [D]iff against last commit' })
       end,
+      -- This will open up Trouble instead of loclist and quickfixlist
       trouble = true,
     },
   },
