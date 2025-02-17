@@ -32,6 +32,7 @@ return {
         Snacks.toggle({
           name = 'LSP Lines',
           get = function()
+            ---@diagnostic disable-next-line: undefined-field
             return vim.diagnostic.config().virtual_lines
           end,
           set = function()
@@ -48,17 +49,7 @@ return {
           set = function()
             require('gitsigns').toggle_current_line_blame()
           end,
-        }):map '<leader>tB'
-
-        Snacks.toggle({
-          name = 'git show deleted',
-          get = function()
-            return require('gitsigns.config').config.show_deleted
-          end,
-          set = function()
-            require('gitsigns').toggle_deleted()
-          end,
-        }):map '<leader>td'
+        }):map '<leader>tb'
 
         -- Buffer effects
         Snacks.toggle({
