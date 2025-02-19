@@ -21,10 +21,6 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      -- Fidget is used to show LSP progress in the bottom right
-      -- but I use Noice for that instead
-      -- { 'j-hui/fidget.nvim', opts = {} },
-
       -- Allows extra capabilities provided by blink-cmp
       'saghen/blink.cmp',
       'dmmulroy/ts-error-translator.nvim',
