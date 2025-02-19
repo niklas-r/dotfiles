@@ -18,6 +18,7 @@ return {
       'c',
       'diff',
       'html',
+      'css',
       'lua',
       'luadoc',
       'markdown',
@@ -26,6 +27,7 @@ return {
       'vim',
       'vimdoc',
       'gitignore',
+      'regex',
     },
     -- Autoinstall languages that are not installed
     auto_install = true,
