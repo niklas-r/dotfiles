@@ -103,7 +103,6 @@ return {
       local servers = {
         -- ts_ls = {},
         vtsls = {},
-        eslint = {},
         jsonls = {
           settings = {
             json = {
@@ -135,8 +134,8 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        -- 'prettierd', -- Until this bug is solved I can't use it https://github.com/fsouza/prettierd/issues/352
-        'prettier',
+        'prettierd',
+        'eslint_d',
         'beautysh', -- Bash, Zsh etc formatter
         'jq', -- Fast JSON formatter and more
         'jsonlint',

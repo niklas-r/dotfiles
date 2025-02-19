@@ -1,3 +1,8 @@
+local js_settings = {
+  'prettierd',
+  'eslint_d',
+  stop_after_first = true,
+}
 return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -37,26 +42,10 @@ return {
       -- python = { "isort", "black" },
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
-      javascript = {
-        --'prettierd',
-        'prettier',
-        stop_after_first = true,
-      },
-      typescript = {
-        --'prettierd',
-        'prettier',
-        stop_after_first = true,
-      },
-      javascriptreact = {
-        -- 'prettierd',
-        'prettier',
-        stop_after_first = true,
-      },
-      typescriptreact = {
-        -- 'prettierd',
-        'prettier',
-        stop_after_first = true,
-      },
+      javascript = js_settings,
+      typescript = js_settings,
+      javascriptreact = js_settings,
+      typescriptreact = js_settings,
       sh = { 'beautysh' },
       zsh = { 'beautysh' },
       json = { 'jq' },
