@@ -102,7 +102,7 @@ return {
       -- Place languages servers to be installed here
       local servers = {
         -- ts_ls = {},
-        vtsls = {},
+        -- vtsls = {},
         jsonls = {
           settings = {
             json = {
