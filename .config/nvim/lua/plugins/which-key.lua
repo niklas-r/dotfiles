@@ -66,6 +66,13 @@ return {
       { '<leader>a', group = '[A]I' },
       { '<leader>t', group = '[T]oggles' },
       { '<leader>b', group = '[B]uffers' },
+      { '<leader><tab>', group = '[T]abs' },
+      { '<leader>q', group = '[Q]uit/session' },
+      { '[', group = 'Prev' },
+      { ']', group = 'Next' },
+      { 'g', group = 'Goto' },
+      { 'gs', group = 'Surround' },
+      { 'z', group = 'Fold' },
     },
   },
 }

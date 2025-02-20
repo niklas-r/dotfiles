@@ -1,4 +1,4 @@
-require 'config/opts'
+require 'config.opts'
 require 'config.filetypes'
 require 'config.remaps'
 require 'config.autocmds'
