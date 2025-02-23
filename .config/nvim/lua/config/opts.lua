@@ -72,19 +72,22 @@ vim.opt.scrolloff = 10
 -- Enable 24-bit colour
 vim.opt.termguicolors = true
 
-vim.opt.foldenable = true
-vim.opt.foldmethod = 'syntax'
 vim.opt.statuscolumn = [[%!v:lua.require'snacks.statuscolumn'.get()]]
 
--- Optional
--- Show fold in side column
+-- Fold inspired by LazyVim
+vim.opt.foldenable = true
+vim.opt.fillchars = {
+  foldopen = '',
+  foldclose = '',
+  fold = ' ',
+  foldsep = ' ',
+  diff = '╱',
+  eob = ' ',
+}
 vim.opt.foldcolumn = '1' -- '0' is not bad
--- Folds with higher level than this will be closed with zm, zM, zR etc.
 vim.opt.foldlevel = 99
--- Sets the foldlevel when starting to edit another buffer
-vim.opt.foldlevelstart = 99
--- vim.opt.foldcolumn = 0
--- vim.opt.foldtext = ''
+vim.opt.smoothscroll = true
+vim.opt.foldtext = ''
 
 -- Remove annoying inline diagnostics text. Using Trouble and Lsp Lines plugins instead
 vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }
