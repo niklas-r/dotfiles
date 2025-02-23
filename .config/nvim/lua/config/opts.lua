@@ -61,7 +61,7 @@ vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
+vim.opt.inccommand = 'nosplit'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
@@ -69,7 +69,7 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
--- Enable 24-bit colour which is required for vim-notify
+-- Enable 24-bit colour
 vim.opt.termguicolors = true
 
 vim.opt.foldenable = true
@@ -85,6 +85,10 @@ vim.opt.foldlevelstart = 99
 -- vim.opt.foldcolumn = 0
 -- vim.opt.foldtext = ''
 
+-- Remove annoying inline diagnostics text. Using Trouble and Lsp Lines plugins instead
 vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }
 
+-- Use ripgrep for grepping
+vim.opt.grepformat = '%f:%l:%c:%m'
+vim.opt.grepprg = 'rg --vimgrep'
 return {}
