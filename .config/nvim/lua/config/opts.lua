@@ -74,6 +74,7 @@ vim.opt.termguicolors = true
 
 vim.opt.foldenable = true
 vim.opt.foldmethod = 'syntax'
+vim.opt.statuscolumn = [[%!v:lua.require'snacks.statuscolumn'.get()]]
 
 -- Optional
 -- Show fold in side column
