@@ -1,11 +1,11 @@
 return {
-  opacity = 1,
-  colorscheme = "Tokyo Night Moon",
+  colorscheme = 'Rosé Pine Moon (base16)',
   padding = {
-    bottom = 20,
     top = 20,
+    bottom = 20,
     right = 20,
     left = 20,
   },
-  font = "Maple Mono NF",
+  font = 'Maple Mono NF',
+  opacity = 0.8,
 }
