@@ -7,6 +7,9 @@ return {
     keywords = {
       TEST = { icon = '⏲ ', color = 'test', alt = false },
     },
+    colors = {
+      test = { 'DiagnosticHint', '#FF00FF' },
+    },
   },
   -- Add snacks pickers
   keys = {
