@@ -7,7 +7,8 @@ return {
     'nvim-treesitter/nvim-treesitter',
     'nvim-lua/plenary.nvim',
   },
-  event = { 'BufReadPre', 'BufNewFile' },
+  lazy = true,
+  ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
   opts = {
     primary_language = { 'en' }, -- The default language to display (initial setting for displaying virtual text, etc.)
     translation_source = { '**/{locales,messages}/**/*.json' }, -- Pattern for translation resources

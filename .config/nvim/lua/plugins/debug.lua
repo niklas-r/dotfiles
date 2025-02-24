@@ -25,6 +25,7 @@ return {
     -- 'leoluz/nvim-dap-go',
     'mxsdev/nvim-dap-vscode-js',
   },
+  lazy = true,
   keys = function(_, keys)
     local dap = require 'dap'
     local dapui = require 'dapui'
