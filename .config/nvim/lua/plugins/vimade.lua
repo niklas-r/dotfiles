@@ -22,7 +22,7 @@ return {
     blocklist = {
       default = {
         buf_opts = {
-          buftype = { 'acwrite', 'help', 'nofile', 'nowrite', 'quickfix', 'terminal', 'prompt' },
+          buftype = { 'acwrite', 'help', 'nofile', 'nowrite', 'quickfix', 'terminal', 'prompt', 'bigfile' },
         },
       },
     },

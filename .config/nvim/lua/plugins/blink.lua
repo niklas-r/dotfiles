@@ -28,8 +28,8 @@ return {
   },
   {
     'saghen/blink.cmp',
-    lazy = false, -- lazy loading handled internally
-    -- optional: provides snippets for the snippet source
+
+    event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
       'giuxtaposition/blink-cmp-copilot',
