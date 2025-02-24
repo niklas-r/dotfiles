@@ -103,6 +103,7 @@ return {
       local servers = {
         -- ts_ls = {},
         -- vtsls = {},
+        eslint = {}, -- Using ESLint LSP for code actions
         jsonls = {
           settings = {
             json = {
@@ -134,8 +135,7 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
-        'prettierd',
-        'eslint_d',
+        'prettierd', -- Using prettierd with conform.nvim for faster formatting
         'beautysh', -- Bash, Zsh etc formatter
         'jq', -- Fast JSON formatter and more
         'jsonlint',

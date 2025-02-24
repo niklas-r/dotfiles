@@ -1,7 +1,5 @@
 local js_settings = {
   'prettierd',
-  'eslint_d',
-  stop_after_first = true,
 }
 return {
   'stevearc/conform.nvim',
