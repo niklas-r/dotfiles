@@ -88,9 +88,9 @@ vim.opt.foldcolumn = '1' -- '0' is not bad
 vim.opt.foldlevel = 99
 vim.opt.smoothscroll = true
 -- Setting foldexpr settings through auto command for better performance
--- vim.opt.foldexpr = "v:lua.require'utils.foldexpr'.foldexpr()"
--- vim.opt.foldmethod = 'expr'
 vim.opt.foldtext = ''
+-- Setting this will allow foldexpr (among others) to use more memory
+vim.opt.maxmempattern = 500000
 
 -- Remove annoying inline diagnostics text. Using Trouble and Lsp Lines plugins instead
 vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }

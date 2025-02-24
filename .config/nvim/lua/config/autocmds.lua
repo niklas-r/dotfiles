@@ -36,18 +36,28 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
 
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   callback = function()
-    if package.loaded['nvim-treesitter.parsers'] == nil or require 'nvim-treesitter.parsers' == nil then
-      return
-    end
+    local buf = vim.api.nvim_get_current_buf()
 
-    -- check if treesitter has parser
-    if require('nvim-treesitter.parsers').has_parser() then
-      -- use treesitter folding
-      vim.opt.foldexpr = "v:lua.require'utils.foldexpr'.foldexpr()"
-      vim.opt.foldmethod = 'expr'
-    else
-      -- use alternative foldmethod
-      vim.opt.foldmethod = 'syntax'
+    if vim.b[buf].ts_folds == nil then
+      -- as long as we don't have a filetype, don't bother
+      -- checking if treesitter is available (it won't)
+      if vim.bo[buf].filetype == '' then
+        return
+      end
+
+      if vim.bo[buf].filetype:find '\b(dashboard|bigfile)' then
+        vim.b[buf].ts_folds = false
+        vim.opt_local.foldmethod = 'manual'
+      else
+        vim.b[buf].ts_folds = pcall(vim.treesitter.get_parser, buf)
+
+        if vim.b[buf].ts_folds then
+          vim.opt_local.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+          vim.opt_local.foldmethod = 'expr'
+        else
+          vim.opt_local.foldmethod = 'syntax'
+        end
+      end
     end
   end,
 })
