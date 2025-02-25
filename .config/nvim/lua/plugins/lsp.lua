@@ -102,7 +102,7 @@ return {
       -- Place languages servers to be installed here
       local servers = {
         -- ts_ls = {},
-        -- vtsls = {},
+        vtsls = {},
         eslint = {}, -- Using ESLint LSP for code actions
         jsonls = {
           settings = {
