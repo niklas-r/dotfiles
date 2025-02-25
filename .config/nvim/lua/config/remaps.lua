@@ -62,6 +62,8 @@ vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 
 -- Keybinds which will get you cancelled
 vim.keymap.set('n', '<C-c>', 'ciw')
+vim.keymap.set('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save current buffer' })
+vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all buffers' })
 
 -- Add undo break-points
 vim.keymap.set('i', ',', ',<c-g>u')
