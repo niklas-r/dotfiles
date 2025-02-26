@@ -99,12 +99,12 @@ return {
       swap = {
         enable = true,
         swap_next = {
-          ['<leader>Sp'] = { query = '@parameter.inner', desc = '[S]wap with next [P]arameter' },
-          ['<leader>Sm'] = { query = '@function.outer', desc = '[S]wap with next [M]ethod' },
+          ['<leader>wpl'] = { query = '@parameter.inner', desc = '' },
+          ['<leader>wmj'] = { query = '@function.outer', desc = '' },
         },
         swap_previous = {
-          ['<leader>SP'] = { query = '@parameter.inner', desc = '[S]wap with prev [P]arameter' },
-          ['<leader>SM'] = { query = '@function.outer', desc = '[S]wap with prev [M]ethod' },
+          ['<leader>wph'] = { query = '@parameter.inner', desc = '' },
+          ['<leader>wmk'] = { query = '@function.outer', desc = '' },
         },
       },
       move = {
