@@ -1,3 +1,20 @@
+local js_symbols = {
+  'Class',
+  'Constructor',
+  'Enum',
+  'Function',
+  'Interface',
+  'Method',
+  'Module',
+  'Namespace',
+  'Package',
+  'Struct',
+  'Trait',
+  -- extras
+  'Variable',
+  'Constant',
+}
+
 return {
   'folke/snacks.nvim',
   keys = {
@@ -15,8 +32,8 @@ return {
     { "<leader>sS", function() Snacks.picker.git_status() end, desc = "[S]earch [G]it Status" },
     -- find
     ---@diagnostic disable-next-line: assign-type-mismatch
-    { "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath "config" }) end, desc = "[S]earch [N]eovim files" },
-    { "<leader>sp", function() Snacks.picker.files({ cwd = vim.fn.stdpath "data" .. "/lazy" }) end, desc = "[S]earch [P]lugin Files" },
+    { "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath "config", title = "Neovim config files" }) end, desc = "[S]earch [N]eovim files" },
+    { "<leader>sp", function() Snacks.picker.files({ cwd = vim.fn.stdpath "data" .. "/lazy", title = "Lazy plugin files" }) end, desc = "[S]earch [P]lugin Files" },
     { "<leader>s.", function() Snacks.picker.recent() end, desc = "[S]earch Recent Files [.]" },
     -- Grep
     { "<leader>sg", function() Snacks.picker.grep() end, desc = "[S]earch [G]rep" },
@@ -36,9 +53,23 @@ return {
     { "gD", function() Snacks.picker.lsp_declarations() end, nowait = true, desc = "[G]oto [D]eclarations" },
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "[G]oto [I]mplementation" },
     { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "[G]oto T[y]pe Definition" },
-    { "<leader>ss", function() Snacks.picker.lsp_symbols() end, desc = "[S]earch LSP [S]ymbols" },
+    { "<leader>ss", function() Snacks.picker.lsp_symbols {
+      filter = {
+        typescript = js_symbols,
+        typescriptreact = js_symbols,
+        javascript = js_symbols,
+        javascriptreact = js_symbols,
+      },
+    } end, desc = "[S]earch LSP [S]ymbols" },
     ---@diagnostic disable-next-line: undefined-field
-    { "<leader>sW", function() Snacks.picker.lsp_workspace_symbols() end, desc = "[S]earch LSP [W]orkspace Symbols" },
+    { "<leader>sW", function() Snacks.picker.lsp_workspace_symbols {
+      filter = {
+        typescript = js_symbols,
+        typescriptreact = js_symbols,
+        javascript = js_symbols,
+        javascriptreact = js_symbols,
+      },
+    } end, desc = "[S]earch LSP [W]orkspace Symbols" },
     -- stylua: ignore end
   },
   opts = {
