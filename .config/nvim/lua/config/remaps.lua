@@ -49,7 +49,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>y', [["+y]], { desc = 'Yank selection to c
 vim.keymap.set('n', '<leader>Y', [["+Y]], { desc = 'Yank line to clipboard' })
 
 -- Format buffer
-vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, { desc = 'Format buffer' })
+-- vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format, { desc = 'Format buffer' })
 
 -- Paste over selection and keep reg unchanged
 vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over selection' })
@@ -63,7 +63,7 @@ vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 -- Keybinds which will get you cancelled
 vim.keymap.set('n', '<C-c>', 'ciw')
 vim.keymap.set('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save current buffer' })
-vim.keymap.set('n', '<C-S>', '<cmd>wa<cr>', { desc = 'Save all buffers' })
+vim.keymap.set('n', '<C-S-s>', '<cmd>wa<cr>', { desc = 'Save all buffers' })
 
 -- Add undo break-points
 vim.keymap.set('i', ',', ',<c-g>u')
@@ -86,17 +86,22 @@ vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit All' })
 vim.keymap.set('n', '<leader>qw', '<cmd>wqa<cr>', { desc = 'Save and Quit All' })
 
 -- tabs
-vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = 'Last Tab' })
-vim.keymap.set('n', '<leader><tab>o', '<cmd>tabonly<cr>', { desc = 'Close Other Tabs' })
-vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = 'First Tab' })
-vim.keymap.set('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', { desc = 'New Tab' })
-vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
-vim.keymap.set('n', '<leader><tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
-vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
+vim.keymap.set('n', '<leader><tab>l', '<cmd>tablast<cr>', { desc = '[L]ast Tab' })
+vim.keymap.set('n', '<leader><tab>o', '<cmd>tabonly<cr>', { desc = 'Close [O]ther Tabs' })
+vim.keymap.set('n', '<leader><tab>f', '<cmd>tabfirst<cr>', { desc = '[F]irst Tab' })
+vim.keymap.set('n', '<leader><tab><tab>', '<cmd>tabnew<cr>', { desc = 'New [Tab]' })
+vim.keymap.set('n', '<leader><tab>]', '<cmd>tabnext<cr>', { desc = '[N]ext Tab' })
+vim.keymap.set('n', '<leader><tab>n', '<cmd>tabnext<cr>', { desc = '[N]ext Tab' })
+vim.keymap.set('n', '<leader><tab>q', '<cmd>tabclose<cr>', { desc = '[Q]uit Tab' })
+vim.keymap.set('n', '<leader><tab>[', '<cmd>tabprevious<cr>', { desc = '[P]revious Tab' })
+vim.keymap.set('n', '<leader><tab>p', '<cmd>tabprevious<cr>', { desc = '[P]revious Tab' })
 
 -- buffers
 vim.keymap.set('n', '[b', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 vim.keymap.set('n', ']b', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<leader>bq', ':%bd!|e#<CR>', { desc = '[Q]uit all other buffers' })
+vim.keymap.set('n', '<leader>bo', ':%bd!|e#<CR>', { desc = 'Close [O]ther Buffers' })
+
+-- file
+vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = '[N]ew File' })
 
 return {}

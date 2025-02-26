@@ -60,6 +60,7 @@ return {
       { '<leader>ur', group = '[R]un', mode = { 'n' } },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>x', group = '[X] Trouble' },
+      { '<leader>f', group = '[F]ile' },
       { '<leader>S', group = '[S]wap' },
       { '<leader>g', group = '[G]lance' },
       { '<leader>l', group = '[L]azygit' },
