@@ -34,6 +34,15 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
   end,
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'dotenv',
+  callback = function()
+    vim.schedule(function()
+      vim.bo.syntax = 'conf'
+    end)
+  end,
+})
+
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   callback = function()
     local buf = vim.api.nvim_get_current_buf()
