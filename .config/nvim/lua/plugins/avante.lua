@@ -3,35 +3,24 @@ return {
   event = 'VeryLazy',
   lazy = false,
   version = '*', -- only get "stable" versions
-
-  -- Avante >0.0.14 doesn't allow "copilot" as a provider anymore.
-  -- If you want to use copilot you need to downgrade to 0.0.14 for now.
-  --
-  -- Follow discussions:
-  -- https://github.com/yetone/avante.nvim/pull/1072
-  -- version = '0.0.14',
   ---@class avante.Config
   opts = {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string
     provider = 'claude', -- Recommend using Claude
     auto_suggestions_provider = 'claude-haiku', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-    -- This is a setup to use sonnet with copilot provider, possible with <= 0.0.14
-    -- auto_suggestions_provider = 'copilot', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-    -- copilot = {
-    --   endpoint = 'https://api.githubcopilot.com/',
-    --   model = 'claude-3.5-sonnet',
-    --   proxy = nil, -- [protocol://]host[:port] Use this proxy
-    --   allow_insecure = false, -- Do not allow insecure server connections
-    --   timeout = 30000, -- Timeout in milliseconds
-    --   temperature = 0.1, -- kinda creative
-    --   max_tokens = 8192,
-    -- },
-
     file_selector = {
       --- @alias FileSelectorProvider "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
       provider = 'snacks',
       -- Options override for custom providers, currently only works with fzf and telescope
       -- provider_opts = {},
+    },
+    claude = {
+      endpoint = 'https://api.anthropic.com',
+      model = 'claude-3-7-sonnet-20250219',
+      timeout = 30000, -- Timeout in milliseconds
+      temperature = 0,
+      max_tokens = 8000,
+      disable_tools = true, -- Disable tools for now (it's enabled by default) as it's causing rate-limit problems with Claude, see more here: https://github.com/yetone/avante.nvim/issues/1384
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
