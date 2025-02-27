@@ -69,6 +69,14 @@ return {
           show_on_insert_on_trigger_character = false,
         },
       },
+      cmdline = {
+        completion = {
+          menu = {
+            auto_show = true,
+          },
+          ghost_text = { enabled = true },
+        },
+      },
 
       keymap = {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
