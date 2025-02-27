@@ -34,6 +34,7 @@ return {
       'rafamadriz/friendly-snippets',
       'giuxtaposition/blink-cmp-copilot',
       'saghen/blink.compat',
+      'Kaiser-Yang/blink-cmp-avante',
     },
 
     -- use a release tag to download pre-built binaries
@@ -122,9 +123,6 @@ return {
           Unit = '',
           Value = '',
           Variable = '',
-          AvanteCommand = '',
-          AvanteFile = '',
-          AvanteMention = '󰁥',
         },
       },
       sources = {
@@ -135,9 +133,7 @@ return {
           'buffer',
           'copilot',
           'lazydev',
-          'avante_commands',
-          'avante_files',
-          'avante_mentions',
+          'avante',
         },
         providers = {
           copilot = {
@@ -150,32 +146,27 @@ return {
             end,
           },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
-          avante_commands = {
-            name = 'avante_commands',
-            module = 'blink.compat.source',
-            score_offset = 90, -- show at a higher priority than lsp
-            opts = {},
-            transform_items = function(_, items)
-              return add_completion_kind_item('AvanteCommand', items)
-            end,
-          },
-          avante_files = {
-            name = 'avante_files',
-            module = 'blink.compat.source',
-            score_offset = 100, -- show at a higher priority than lsp
-            opts = {},
-            transform_items = function(_, items)
-              return add_completion_kind_item('AvanteFile', items)
-            end,
-          },
-          avante_mentions = {
-            name = 'avante_mentions',
-            module = 'blink.compat.source',
-            score_offset = 110, -- show at a higher priority than lsp
-            opts = {},
-            transform_items = function(_, items)
-              return add_completion_kind_item('AvanteMention', items)
-            end,
+          avante = {
+            module = 'blink-cmp-avante',
+            name = 'Avante',
+            opts = {
+              kind_icons = {
+                AvanteCmd = '',
+                AvanteMention = '',
+              },
+              avante = {
+                command = {
+                  get_kind_name = function(_)
+                    return 'AvanteCmd'
+                  end,
+                },
+                mention = {
+                  get_kind_name = function(_)
+                    return 'AvanteMention'
+                  end,
+                },
+              },
+            },
           },
         },
       },
