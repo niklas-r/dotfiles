@@ -95,6 +95,16 @@ return {
             end
           end,
         }):map '<leader>ti'
+
+        Snacks.toggle({
+          name = 'auto-completion',
+          get = function()
+            return vim.g.blink_cmp_enabled
+          end,
+          set = function(state)
+            vim.g.blink_cmp_enabled = state
+          end,
+        }):map '<leader>ta'
       end,
     })
   end,

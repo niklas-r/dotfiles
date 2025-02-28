@@ -15,9 +15,18 @@ return {
     -- use a release tag to download pre-built binaries
     version = '*',
 
+    config = function(_, opts)
+      vim.g.blink_cmp_enabled = true
+
+      require('blink.cmp').setup(opts)
+    end,
+
     ---@module 'blink.cmp'
     ---@type blink.cmp.Config
     opts = {
+      enabled = function()
+        return vim.g.blink_cmp_enabled
+      end,
       completion = {
         menu = {
           border = border,
