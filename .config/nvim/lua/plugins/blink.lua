@@ -2,16 +2,6 @@
 local border = 'rounded'
 
 return {
-  -- add blink.compat to be used with Avante commands
-  {
-    'saghen/blink.compat',
-    -- use the latest release, via version = '*', if you also use the latest release for blink.cmp
-    version = '*',
-    -- lazy.nvim will automatically load the plugin when it's required by blink.cmp
-    lazy = true,
-    -- make sure to set opts so that lazy.nvim calls blink.compat's setup
-    opts = {},
-  },
   {
     'saghen/blink.cmp',
 
@@ -19,7 +9,6 @@ return {
     dependencies = {
       'rafamadriz/friendly-snippets',
       'fang2hou/blink-copilot',
-      'saghen/blink.compat',
       'Kaiser-Yang/blink-cmp-avante',
     },
 
