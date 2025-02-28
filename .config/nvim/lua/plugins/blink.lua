@@ -1,20 +1,6 @@
 ---@type blink.cmp.WindowBorder
 local border = 'rounded'
 
----@param new_item string
----@param items blink.cmp.CompletionItem[]
----@return blink.cmp.CompletionItem[]
-local add_completion_kind_item = function(new_item, items)
-  local CompletionItemKind = require('blink.cmp.types').CompletionItemKind
-  local kind_idx = #CompletionItemKind + 1
-  CompletionItemKind[kind_idx] = new_item
-
-  for _, item in ipairs(items) do
-    item.kind = kind_idx
-  end
-  return items
-end
-
 return {
   -- add blink.compat to be used with Avante commands
   {
@@ -32,7 +18,7 @@ return {
     event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
-      'giuxtaposition/blink-cmp-copilot',
+      'fang2hou/blink-copilot',
       'saghen/blink.compat',
       'Kaiser-Yang/blink-cmp-avante',
     },
@@ -146,12 +132,11 @@ return {
         providers = {
           copilot = {
             name = 'copilot',
-            module = 'blink-cmp-copilot',
-            score_offset = 120,
+            module = 'blink-copilot',
+            score_offset = 100,
             async = true,
-            transform_items = function(_, items)
-              return add_completion_kind_item('Copilot', items)
-            end,
+            -- Optional settings
+            -- opts = { },
           },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
           avante = {
