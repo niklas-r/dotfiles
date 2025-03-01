@@ -54,7 +54,18 @@ return {
         },
       },
       cmdline = {
+        keymap = {
+          ['<CR>'] = { 'accept_and_enter', 'fallback' },
+          ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+          ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+        },
         completion = {
+          list = {
+            selection = {
+              auto_insert = false,
+              preselect = false,
+            },
+          },
           menu = {
             auto_show = true,
           },
