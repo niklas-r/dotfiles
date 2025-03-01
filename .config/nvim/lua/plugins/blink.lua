@@ -25,7 +25,10 @@ return {
     ---@type blink.cmp.Config
     opts = {
       enabled = function()
-        return vim.g.blink_cmp_enabled
+        return not vim.tbl_contains({ 'bigfile', 'dotenv' }, vim.bo.filetype)
+          and vim.g.blink_cmp_enabled
+          and vim.bo.buftype ~= 'prompt'
+          and vim.b.completion ~= false
       end,
       completion = {
         menu = {
