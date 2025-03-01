@@ -15,6 +15,7 @@ git submodule update --init --recursive
 ## Required tools
 
 ### Font
+
 You need a Nerdfont for the best experience.
 
 I like to change things up quite often, I currently use [Maple Mono](https://github.com/subframe7536/maple-font)
@@ -24,6 +25,7 @@ I like to change things up quite often, I currently use [Maple Mono](https://git
 My current terminal of choice is [Wezterm](https://wezterm.org). Checkout my config in [`.config/wezterm`](./.config/wezterm)!
 
 ### Shell
+
 I use [`zsh`](https://www.zsh.org/) with [`Prezto`](https://github.com/sorin-ionescu/prezto) and [`antidote`](https://antidote.sh/).
 
 ### Package managers
@@ -48,3 +50,6 @@ I use a lot of CLI tools, here's a list of the stuff I remembered installing. Mo
 - [jq](https://github.com/jqlang/jq)
 - [tldr](https://github.com/tldr-pages/tldr)
 
+### Container tools
+
+- [Orbstack](https://orbstack.dev/)
