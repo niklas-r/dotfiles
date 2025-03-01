@@ -31,5 +31,6 @@ return {
   opts = {
     statuscolumn = { enabled = true },
     image = {},
+    scope = {},
   },
 }

@@ -20,7 +20,6 @@ local ai_whichkey = function(opts)
     { 'e', desc = 'CamelCase / snake_case' },
     { 'm', desc = 'method', ts = true },
     { 'g', desc = 'entire file' },
-    { 'i', desc = 'indent' },
     { 'o', desc = 'block, conditional, loop', ts = true },
     { 'q', desc = 'quote `"\'' },
     { 'r', desc = 'return', ts = true },
