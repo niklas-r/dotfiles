@@ -134,7 +134,10 @@ return {
             score_offset = 100,
             async = true,
             -- Optional settings
-            -- opts = { },
+            opts = {
+              max_completions = 1,
+              max_attempts = 2,
+            },
           },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
           avante = {
