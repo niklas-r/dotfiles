@@ -102,9 +102,30 @@ return {
             return vim.g.blink_cmp_enabled
           end,
           set = function(state)
+            if state then
+              vim.cmd [[Copilot enable]]
+            else
+              vim.cmd [[Copilot disable]]
+            end
+            vim.g.copilot_enabled = state
             vim.g.blink_cmp_enabled = state
           end,
         }):map '<leader>ta'
+
+        Snacks.toggle({
+          name = 'AI Copilot',
+          get = function()
+            return vim.g.copilot_enabled
+          end,
+          set = function(state)
+            if state then
+              vim.cmd [[Copilot enable]]
+            else
+              vim.cmd [[Copilot disable]]
+            end
+            vim.g.copilot_enabled = state
+          end,
+        }):map '<leader>tA'
       end,
     })
   end,

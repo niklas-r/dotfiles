@@ -12,5 +12,10 @@ return {
       },
     },
     dependencies = {},
+    config = function(_, opts)
+      vim.g.copilot_enabled = true
+
+      require('copilot').setup(opts)
+    end,
   },
 }
