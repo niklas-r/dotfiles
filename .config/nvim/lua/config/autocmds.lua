@@ -2,7 +2,7 @@
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'dap-repl',
   callback = function(args)
-    vim.api.nvim_set_option_value('buflisted', false, { buffer = args.buf })
+    vim.api.nvim_set_option_value('buflisted', false, { buf = args.buf })
   end,
 })
 
