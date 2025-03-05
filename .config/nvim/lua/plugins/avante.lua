@@ -31,29 +31,10 @@ return {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
     --- The below dependencies are optional,
-    -- 'hrsh7th/nvim-cmp', -- autocompletion for avante commands and mentions
     'saghen/blink.cmp', -- I'm a cool kid so I use blink for auto-completion
     'nvim-tree/nvim-web-devicons', -- or echasnovski/mini.icons
     'zbirenbaum/copilot.lua', -- for providers='copilot'
     'folke/snacks.nvim', -- for use with snacks picker
-    -- I don't really want image pasting right now
-    -- {
-    --   -- support for image pasting
-    --   "HakonHarnes/img-clip.nvim",
-    --   event = "VeryLazy",
-    --   opts = {
-    --     -- recommended settings
-    --     default = {
-    --       embed_image_as_base64 = false,
-    --       prompt_for_file_name = false,
-    --       drag_and_drop = {
-    --         insert_mode = true,
-    --       },
-    --       -- required for Windows users
-    --       use_absolute_path = true,
-    --     },
-    --   },
-    -- },
     {
       -- Make sure to set this up properly if you have lazy=true
       'MeanderingProgrammer/render-markdown.nvim',
