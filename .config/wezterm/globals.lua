@@ -7,5 +7,5 @@ return {
     left = 20,
   },
   font = 'Maple Mono NF',
-  opacity = 0.8,
+  opacity = 1,
 }
