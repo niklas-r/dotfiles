@@ -107,6 +107,8 @@ for _, v in pairs { 'q', 'w', 'e', 'r', 't', 't', 'y', 'u', 'i', 'o', 'p', 'a', 
   })
 end
 
+config.native_macos_fullscreen_mode = true
+
 config.key_tables = {
   resize_pane_mode = {
     { key = 'h', action = act.AdjustPaneSize { 'Left', 1 } },
