@@ -1,8 +1,6 @@
 return {
   { 'catppuccin/nvim' },
   { 'folke/tokyonight.nvim' },
-  { 'rebelot/kanagawa.nvim' },
-  { 'shatur/neovim-ayu' },
   {
     'rose-pine/neovim',
     name = 'rose-pine',
