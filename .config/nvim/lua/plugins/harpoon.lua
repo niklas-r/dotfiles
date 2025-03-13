@@ -43,15 +43,11 @@ return {
     { '<leader>mp', function() require('harpoon'):list():prev() end,    desc = 'Harpoon [M]arks [P]rev' },
 
     -- Nav to N file
-    { '<leader>m1', function() require('harpoon'):list():select(1) end, desc = 'Harpoon [M]arks File [1]' },
-    { '<leader>m2', function() require('harpoon'):list():select(2) end, desc = 'Harpoon [M]arks File [2]' },
-    { '<leader>m3', function() require('harpoon'):list():select(3) end, desc = 'Harpoon [M]arks File [3]' },
-    { '<leader>m4', function() require('harpoon'):list():select(4) end, desc = 'Harpoon [M]arks File [4]' },
-    { '<leader>m5', function() require('harpoon'):list():select(5) end, desc = 'Harpoon [M]arks File [5]' },
-    { '<leader>m6', function() require('harpoon'):list():select(6) end, desc = 'Harpoon [M]arks File [6]' },
-    { '<leader>m7', function() require('harpoon'):list():select(7) end, desc = 'Harpoon [M]arks File [7]' },
-    { '<leader>m8', function() require('harpoon'):list():select(8) end, desc = 'Harpoon [M]arks File [8]' },
-    { '<leader>m9', function() require('harpoon'):list():select(9) end, desc = 'Harpoon [M]arks File [9]' },
+    { '<M-a>', function() require('harpoon'):list():select(1) end, desc = 'Harpoon [M]arks File [1]' },
+    { '<M-s>', function() require('harpoon'):list():select(2) end, desc = 'Harpoon [M]arks File [2]' },
+    { '<M-d>', function() require('harpoon'):list():select(3) end, desc = 'Harpoon [M]arks File [3]' },
+    { '<M-f>', function() require('harpoon'):list():select(4) end, desc = 'Harpoon [M]arks File [4]' },
+    { '<M-g>', function() require('harpoon'):list():select(5) end, desc = 'Harpoon [M]arks File [5]' },
     -- stylua: ignore end
   },
 }
