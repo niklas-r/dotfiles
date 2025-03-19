@@ -1,8 +1,61 @@
 return {
-  { 'catppuccin/nvim' },
-  { 'folke/tokyonight.nvim' },
+  {
+    'catppuccin/nvim',
+    dependencies = {
+      'nvim-lualine/lualine.nvim',
+    },
+    enabled = true,
+    config = function()
+      require('catppuccin').setup {
+        styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+          comments = { 'italic' }, -- Change the style of comments
+          conditionals = {},
+          loops = {},
+          functions = { 'italic' },
+          keywords = {},
+          strings = {},
+          variables = {},
+          numbers = {},
+          booleans = { 'italic' },
+          properties = {},
+          types = {},
+          operators = {},
+          -- miscs = {}, -- Uncomment to turn off hard-coded styles
+        },
+        integrations = {
+          -- Avante moves fast and this integration is broken
+          -- avante = true,
+          blink_cmp = true,
+          dap_ui = true,
+          dropbar = true,
+          gitsigns = true,
+          harpoon = true,
+          lsp_trouble = true,
+          mason = true,
+          neotest = true,
+          neotree = true,
+          noice = true,
+          snacks = {
+            enabled = true,
+            indent_scope_color = 'lavender',
+          },
+          treesitter = true,
+          which_key = true,
+        },
+      }
+      -- Hack but atleast the config is in one place
+      vim.schedule(function()
+        vim.cmd ":lua require'lualine'.setup { options = { theme = 'catppuccin' } }"
+      end)
+    end,
+  },
+  {
+    'folke/tokyonight.nvim',
+    enabled = false,
+  },
   {
     'rose-pine/neovim',
+    enabled = false,
     name = 'rose-pine',
     opts = {
       variant = 'auto',
