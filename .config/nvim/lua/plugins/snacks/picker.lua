@@ -27,9 +27,7 @@ return {
     { "<leader>s:", function() Snacks.picker.command_history() end, desc = "[:] Command History" },
     ---@diagnostic disable-next-line: undefined-field
     { "<leader>su", function() Snacks.picker.undo() end, desc = "[S]earch [U]ndo tree" },
-    -- git
-    { "<leader>sG", function() Snacks.picker.git_log() end, desc = "[S]earch [G]it Log" },
-    { "<leader>sS", function() Snacks.picker.git_status() end, desc = "[S]earch [G]it Status" },
+    -- git pickers are defined in lua/plugins/git.lua
     -- find
     ---@diagnostic disable-next-line: assign-type-mismatch
     { "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath "config", title = "Neovim config files" }) end, desc = "[S]earch [N]eovim files" },

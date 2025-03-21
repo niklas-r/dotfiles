@@ -1,5 +1,38 @@
 return {
   {
+    'FabijanZulj/blame.nvim',
+    event = 'BufRead',
+    config = function(_, opts)
+      require('blame').setup {}
+
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'BlameViewOpened',
+        callback = function(event)
+          local wk = require 'which-key'
+          local map = function(key, desc)
+            wk.add { key, desc = desc, buffer = event.buf, nowait = true, silent = true, noremap = true }
+          end
+          -- event.buf
+          map('i', 'Blame: Commit info')
+          map('<TAB>', 'Blame: Stack push')
+          map('<BS>', 'Blame: Stack pop')
+          map('<CR>', 'Blame: Show commit')
+          map('<ESC>', 'Blame: close')
+          map('q', 'Blame: close')
+        end,
+      })
+    end,
+  },
+
+  {
+    'sindrets/diffview.nvim',
+    event = 'BufReadPre',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
+    },
+  },
+
+  {
     'lewis6991/gitsigns.nvim',
     dependencies = {
       'folke/snacks.nvim',
@@ -66,6 +99,51 @@ return {
       end,
       -- This will open up Trouble instead of loclist and quickfixlist
       trouble = true,
+    },
+  },
+
+  {
+    'folke/snacks.nvim',
+    keys = {
+      {
+        '<leader>sG',
+        function()
+          Snacks.picker.git_log()
+        end,
+        desc = '[S]earch [G]it Log',
+      },
+      {
+        '<leader>sS',
+        function()
+          Snacks.picker.git_status()
+        end,
+        desc = '[S]earch [G]it Status',
+      },
+      {
+        '<leader>lh',
+        function()
+          Snacks.lazygit.log_file()
+        end,
+        desc = '[L]azygit Current File [H]istory',
+      },
+      {
+        '<leader>lg',
+        function()
+          Snacks.lazygit()
+        end,
+        desc = '[L]azy[g]it',
+      },
+      {
+        '<leader>ll',
+        function()
+          Snacks.lazygit.log()
+        end,
+        desc = '[L]azygit [L]og (cwd)',
+      },
+    },
+    opts = {
+      picker = {},
+      lazygit = { enabled = true },
     },
   },
 }
