@@ -2,7 +2,7 @@ return {
   {
     'FabijanZulj/blame.nvim',
     event = 'BufRead',
-    config = function(_, opts)
+    config = function()
       require('blame').setup {}
 
       vim.api.nvim_create_autocmd('User', {
@@ -105,44 +105,29 @@ return {
   {
     'folke/snacks.nvim',
     keys = {
-      {
-        '<leader>sG',
-        function()
-          Snacks.picker.git_log()
-        end,
-        desc = '[S]earch [G]it Log',
-      },
-      {
-        '<leader>sS',
-        function()
-          Snacks.picker.git_status()
-        end,
-        desc = '[S]earch [G]it Status',
-      },
-      {
-        '<leader>lh',
-        function()
-          Snacks.lazygit.log_file()
-        end,
-        desc = '[L]azygit Current File [H]istory',
-      },
-      {
-        '<leader>lg',
-        function()
-          Snacks.lazygit()
-        end,
-        desc = '[L]azy[g]it',
-      },
-      {
-        '<leader>ll',
-        function()
-          Snacks.lazygit.log()
-        end,
-        desc = '[L]azygit [L]og (cwd)',
-      },
+      -- stylua: ignore start
+      { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "[B]ranches" },
+      { "<leader>gl", function() Snacks.picker.git_log() end, desc = "[L]og" },
+      { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Log [L]ine" },
+      { "<leader>gs", function() Snacks.picker.git_status() end, desc = "[S]tatus" },
+      { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "[S]tash" },
+      { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "[D]iff (Hunks)" },
+      { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Log [F]ile" },
+      -- stylua: ignore end
     },
     opts = {
       picker = {},
+    },
+  },
+
+  {
+    'folke/snacks.nvim',
+    keys = {
+      -- stylua: ignore start
+      { '<leader>lg', function() Snacks.lazygit() end, desc = '[L]azy[g]it', },
+      -- stylua: ignore end
+    },
+    opts = {
       lazygit = { enabled = true },
     },
   },

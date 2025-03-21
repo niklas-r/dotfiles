@@ -66,6 +66,7 @@ return {
       { '<leader>wm', group = '[M]ethod' },
       { '<leader>wb', group = '[B]uffer' },
       { '<leader>p', group = '[P]eek' },
+      { '<leader>g', group = '[G]it' },
       { '<leader>l', group = '[L]azygit' },
       { '<leader>a', group = '[A]I' },
       { '<leader>t', group = '[T]oggles' },
