@@ -2,11 +2,11 @@ return {
   'dnlhc/glance.nvim',
   event = 'LspAttach',
   keys = {
-    { '<leader>gr', '<CMD>Glance references<CR>', desc = '[G]lance [R]eferences' },
-    { '<leader>gd', '<CMD>Glance definitions<CR>', desc = '[G]lance [D]efinitions' },
-    { '<leader>gD', '<CMD>Glance type_definitions<CR>', desc = '[G]lance Type [D]efinitions' },
-    { '<leader>gI', '<CMD>Glance implementations<CR>', desc = '[G]lance [I]mplementations' },
-    { '<leader>g.', '<CMD>Glance resume<CR>', desc = '[G]lance Resume' },
+    { '<leader>pr', '<CMD>Glance references<CR>', desc = '[R]eferences' },
+    { '<leader>pd', '<CMD>Glance definitions<CR>', desc = '[D]efinitions' },
+    { '<leader>pD', '<CMD>Glance type_definitions<CR>', desc = 'Type [D]efinitions' },
+    { '<leader>pI', '<CMD>Glance implementations<CR>', desc = '[I]mplementations' },
+    { '<leader>p.', '<CMD>Glance resume<CR>', desc = 'Resume' },
   },
   opts = {
     use_trouble_qf = true,

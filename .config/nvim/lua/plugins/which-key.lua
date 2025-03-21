@@ -65,7 +65,7 @@ return {
       { '<leader>wp', group = '[P]arameter' },
       { '<leader>wm', group = '[M]ethod' },
       { '<leader>wb', group = '[B]uffer' },
-      { '<leader>g', group = '[G]lance' },
+      { '<leader>p', group = '[P]eek' },
       { '<leader>l', group = '[L]azygit' },
       { '<leader>a', group = '[A]I' },
       { '<leader>t', group = '[T]oggles' },
