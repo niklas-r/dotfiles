@@ -104,15 +104,39 @@ return {
 
   {
     'folke/snacks.nvim',
+    dependencies = {
+      'sindrets/diffview.nvim',
+    },
     keys = {
       -- stylua: ignore start
       { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "[B]ranches" },
-      { "<leader>gl", function() Snacks.picker.git_log() end, desc = "[L]og" },
-      { "<leader>gL", function() Snacks.picker.git_log_line() end, desc = "Log [L]ine" },
+      { "<leader>gl", function() Snacks.picker.git_log {
+        confirm = function(picker, item)
+          picker:close()
+          if item then
+            vim.cmd('DiffviewOpen ' .. item.commit .. '^!')
+          end
+        end,
+      } end, desc = "[L]og" },
+      { "<leader>gL", function() Snacks.picker.git_log_line {
+        confirm = function(picker, item)
+          picker:close()
+          if item then
+            vim.cmd('DiffviewOpen ' .. item.commit .. '^!')
+          end
+        end,
+      } end, desc = "Log [L]ine" },
       { "<leader>gs", function() Snacks.picker.git_status() end, desc = "[S]tatus" },
       { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "[S]tash" },
       { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "[D]iff (Hunks)" },
-      { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Log [F]ile" },
+      { "<leader>gf", function() Snacks.picker.git_log_file {
+        confirm = function(picker, item)
+          picker:close()
+          if item then
+            vim.cmd('DiffviewFileHistory ' .. item.file .. ' --follow')
+          end
+        end,
+      } end, desc = "Log [F]ile" },
       -- stylua: ignore end
     },
     opts = {
