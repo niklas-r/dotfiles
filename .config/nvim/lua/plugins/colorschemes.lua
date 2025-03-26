@@ -5,6 +5,7 @@ return {
       'nvim-lualine/lualine.nvim',
     },
     enabled = true,
+    priority = 1000,
     config = function()
       require('catppuccin').setup {
         styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
@@ -52,10 +53,12 @@ return {
   {
     'folke/tokyonight.nvim',
     enabled = false,
+    priority = 1000,
   },
   {
     'rose-pine/neovim',
     enabled = false,
+    priority = 1000,
     name = 'rose-pine',
     opts = {
       variant = 'auto',
