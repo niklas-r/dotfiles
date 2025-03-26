@@ -71,6 +71,10 @@ return {
               newfile = 'LazyProgressDone',
             },
           },
+          {
+            util.lualine_harpoon(),
+            fmt = util.trunc(0, 0, 160, true),
+          },
         },
         lualine_x = {
           {

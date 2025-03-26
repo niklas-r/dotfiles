@@ -1,3 +1,4 @@
+require 'lib.string'
 require 'config.opts'
 require 'config.filetypes'
 require 'config.remaps'

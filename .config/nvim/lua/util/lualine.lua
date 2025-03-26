@@ -61,4 +61,53 @@ function M.selectionCount()
   return tostring(lines) .. 'L ' .. tostring(vim.fn.wordcount().visual_chars) .. 'C'
 end
 
+---Return a custom lualine tabline section that integrates Harpoon marks.
+function M.lualine_harpoon()
+  local hp_keys = { 'a', 's', 'd', 'f' }
+  local prev_file, prev_output, prev_mode, prev_count, hp
+
+  return function()
+    hp = hp or require 'harpoon'
+    local hp_list = hp:list()
+    local total_marks = hp_list:length()
+    if total_marks == 0 then
+      return ''
+    end
+
+    local current_file = vim.api.nvim_buf_get_name(0)
+    local current_file_exp = vim.fn.expand '%'
+    local mode = vim.api.nvim_get_mode().mode:sub(1, 1)
+    -- PERF: Same state returns the previous output
+    if mode == prev_mode and (current_file == prev_file or current_file_exp == prev_file) and prev_count == total_marks then
+      return prev_output
+    end
+
+    local hl_normal = mode == 'n' and '%#lualine_c_normal#'
+      or mode == 'i' and '%#lualine_c_insert#'
+      or mode == 'c' and '%#lualine_c_command#'
+      or '%#lualine_c_visual#'
+    local hl_selected = ('v' == mode or 'V' == mode or '' == mode) and '%#lualine_transitional_lualine_a_visual_to_lualine_b_visual#'
+      or '%#lualine_b_diagnostics_warn_normal#'
+
+    local output = '󰀱 ' .. hl_normal
+    for index = 1, total_marks <= 4 and total_marks or 4 do
+      local marked_file = hp_list.items[index].value
+      -- FIXME: Sometimes the buffname is the full path and others the symlink...
+      ---@diagnostic disable-next-line: param-type-mismatch
+      if marked_file == current_file_exp or marked_file == current_file or current_file_exp:endswith(marked_file) or current_file:endswith(marked_file) then
+        output = output .. hl_selected .. '[' .. hp_keys[index] .. ']' .. hl_normal
+      else
+        output = output .. hp_keys[index]
+      end
+    end
+
+    prev_count = total_marks
+    prev_file = current_file
+    prev_mode = mode
+    prev_output = output
+
+    return output
+  end
+end
+
 return M
