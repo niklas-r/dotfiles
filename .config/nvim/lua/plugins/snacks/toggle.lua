@@ -89,9 +89,11 @@ return {
             if state then
               vim.cmd 'I18nVirtualTextEnable'
               vim.cmd 'I18nDiagnosticEnable'
+              vim.keymap.set('n', '<leader>ct', '<CMD>:I18nEditTranslation<CR>', { desc = 'I18n: Edit [T]ranslation', silent = true })
             else
               vim.cmd 'I18nVirtualTextDisable'
               vim.cmd 'I18nDiagnosticDisable'
+              vim.keymap.del('n', '<leader>ct')
             end
           end,
         }):map '<leader>ti'
