@@ -82,20 +82,31 @@ function M.lualine_harpoon()
       return prev_output
     end
 
-    local hl_normal = mode == 'n' and '%#lualine_c_normal#'
-      or mode == 'i' and '%#lualine_c_insert#'
-      or mode == 'c' and '%#lualine_c_command#'
-      or '%#lualine_c_visual#'
-    local hl_selected = ('v' == mode or 'V' == mode or '' == mode) and '%#lualine_transitional_lualine_a_visual_to_lualine_b_visual#'
-      or '%#lualine_b_diagnostics_warn_normal#'
+    local hl_normal = mode == 'n' and '%#lualine_b_normal#'
+      or mode == 'i' and '%#lualine_b_insert#'
+      or mode == 'c' and '%#lualine_b_command#'
+      or '%#lualine_b_visual#'
 
-    local output = '󰀱 ' .. hl_normal
+    -- Create custom highlight group with underline
+    local base_hl_group = ('v' == mode or 'V' == mode or '' == mode) and 'lualine_transitional_lualine_a_visual_to_lualine_b_visual'
+      or 'lualine_b_diagnostics_warn_normal'
+    local underline_hl_group = 'lualine_harpoon_selected_' .. mode
+    local base_hl = vim.api.nvim_get_hl(0, { name = base_hl_group })
+    vim.api.nvim_set_hl(0, underline_hl_group, {
+      fg = base_hl.fg,
+      bg = base_hl.bg,
+      underline = true,
+    })
+
+    local hl_selected = '%#' .. underline_hl_group .. '#'
+
+    local output = '󰛢 ' .. hl_normal
     for index = 1, total_marks <= 4 and total_marks or 4 do
       local marked_file = hp_list.items[index].value
       -- FIXME: Sometimes the buffname is the full path and others the symlink...
       ---@diagnostic disable-next-line: param-type-mismatch
       if marked_file == current_file_exp or marked_file == current_file or current_file_exp:endswith(marked_file) or current_file:endswith(marked_file) then
-        output = output .. hl_selected .. '[' .. hp_keys[index] .. ']' .. hl_normal
+        output = output .. hl_selected .. hp_keys[index] .. hl_normal
       else
         output = output .. hp_keys[index]
       end
