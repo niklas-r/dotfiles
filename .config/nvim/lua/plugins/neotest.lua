@@ -86,33 +86,5 @@ return {
       end,
       desc = '[U]nit Test [A]ttach Nearest Test',
     },
-    {
-      ']t',
-      function()
-        require('neotest').jump.next()
-      end,
-      desc = 'Next test',
-    },
-    {
-      '[t',
-      function()
-        require('neotest').jump.prev()
-      end,
-      desc = 'Prev test',
-    },
-    {
-      ']T',
-      function()
-        require('neotest').jump.next { status = 'failed' }
-      end,
-      desc = 'Next failed test',
-    },
-    {
-      '[T',
-      function()
-        require('neotest').jump.prev { status = 'failed' }
-      end,
-      desc = 'Prev failed test',
-    },
   },
 }
