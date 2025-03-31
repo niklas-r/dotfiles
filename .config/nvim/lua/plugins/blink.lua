@@ -3,6 +3,10 @@ local border = 'rounded'
 
 return {
   {
+    'fang2hou/blink-copilot',
+    version = '1.3.8', -- Locked to this version until I'm on nvim 0.11
+  },
+  {
     'saghen/blink.cmp',
 
     event = 'InsertEnter',
