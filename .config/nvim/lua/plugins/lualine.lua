@@ -1,5 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
+  event = 'VeryLazy',
   dependencies = {
     {
       'bwpge/lualine-pretty-path',

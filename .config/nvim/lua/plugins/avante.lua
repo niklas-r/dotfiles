@@ -1,7 +1,7 @@
 return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
-  lazy = false,
+  lazy = true,
   version = '*', -- only get "stable" versions
   ---@class avante.Config
   opts = {
@@ -36,8 +36,11 @@ return {
     'zbirenbaum/copilot.lua', -- for providers='copilot'
     'folke/snacks.nvim', -- for use with snacks picker
     {
-      -- Make sure to set this up properly if you have lazy=true
       'MeanderingProgrammer/render-markdown.nvim',
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-tree/nvim-web-devicons',
+      },
       opts = {
         file_types = { 'markdown', 'Avante' },
       },
