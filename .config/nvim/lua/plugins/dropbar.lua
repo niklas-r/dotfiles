@@ -1,6 +1,6 @@
 return {
   'Bekaboo/dropbar.nvim',
-  version = '11.*', -- Locked to this until I'm on nvim 0.11
+  version = '*',
   config = function()
     local dropbar_api = require 'dropbar.api'
     vim.keymap.set('n', '<Leader>;', dropbar_api.pick, { desc = 'Pick symbols in winbar' })
