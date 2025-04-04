@@ -32,11 +32,13 @@ return {
         Snacks.toggle({
           name = 'LSP Lines',
           get = function()
-            ---@diagnostic disable-next-line: undefined-field
-            return vim.diagnostic.config().virtual_lines
+            -- Hacky bool cast
+            return not not vim.diagnostic.config().virtual_lines
           end,
-          set = function()
-            require('lsp_lines').toggle()
+          set = function(state)
+            vim.diagnostic.config {
+              virtual_lines = state,
+            }
           end,
         }):map '<leader>tL'
 
