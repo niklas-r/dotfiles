@@ -122,7 +122,7 @@ return {
         lualine_a = {
           {
             'tabs',
-            mode = 1, -- 0: Shows tab_nr
+            mode = 2, -- 0: Shows tab_nr
             -- 1: Shows tab_name
             -- 2: Shows tab_nr + tab_name
 
