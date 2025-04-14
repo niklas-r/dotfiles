@@ -117,6 +117,7 @@ return {
             },
           },
         },
+        gh_actions_ls = {},
         bashls = {},
         lua_ls = {
           settings = {
@@ -160,6 +161,39 @@ return {
           end,
         },
       }
+    end,
+  },
+  {
+    -- This custom config is only necessary until https://github.com/williamboman/mason-lspconfig.nvim/pull/506 is merged
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+    },
+    config = function()
+      local gh_token = vim.fn.system 'gh auth token'
+      gh_token = gh_token:gsub('%s+', '') -- Remove trailing newline
+
+      local util = require 'lspconfig.util'
+
+      local config = {
+        cmd = { 'gh-actions-language-server', '--stdio' },
+        filetypes = { 'yaml.github' },
+        root_dir = util.root_pattern '.github',
+        single_file_support = true,
+        capabilities = {
+          workspace = {
+            didChangeWorkspaceFolders = {
+              dynamicRegistration = true,
+            },
+          },
+        },
+        -- These settings will be necesarry in the future though
+        settings = {
+          sessionToken = gh_token,
+        },
+      }
+
+      require('lspconfig').gh_actions_ls.setup(config)
     end,
   },
 }
