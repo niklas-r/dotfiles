@@ -3,7 +3,7 @@ return {
   priority = 1000,
   lazy = false,
   -- import snacks subdirectory with broken up snacks plugin specs
-  import = 'plugins/snacks',
+  import = 'plugins.snacks',
   keys = {
     {
       '<leader>rf',
@@ -14,6 +14,8 @@ return {
     },
   },
   init = function()
+    vim.ui.select = Snacks.picker.select
+
     vim.api.nvim_create_autocmd('User', {
       pattern = 'VeryLazy',
       callback = function()
@@ -25,12 +27,14 @@ return {
           Snacks.debug.backtrace()
         end
         vim.print = _G.dd -- Override print to use snacks for `:=` command
-
-        vim.ui.select = Snacks.picker.select
       end,
     })
   end,
+  ---@type snacks.Config
   opts = {
+    picker = {
+      ui_select = true,
+    },
     statuscolumn = { enabled = true },
     image = {},
     scope = {},
