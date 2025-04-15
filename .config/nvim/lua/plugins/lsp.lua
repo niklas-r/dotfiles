@@ -143,6 +143,7 @@ return {
         'jsonlint',
         'yamllint',
       })
+
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -161,15 +162,8 @@ return {
           end,
         },
       }
-    end,
-  },
-  {
-    -- This custom config is only necessary until https://github.com/williamboman/mason-lspconfig.nvim/pull/506 is merged
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      'williamboman/mason-lspconfig.nvim',
-    },
-    config = function()
+
+      -- This custom config is only necessary until https://github.com/williamboman/mason-lspconfig.nvim/pull/506 is merged
       local gh_token = vim.fn.system 'gh auth token'
       gh_token = gh_token:gsub('%s+', '') -- Remove trailing newline
 
