@@ -3,17 +3,12 @@ local border = 'rounded'
 
 return {
   {
-    'fang2hou/blink-copilot',
-    version = '*',
-  },
-  {
     'saghen/blink.cmp',
-
     event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
-      'fang2hou/blink-copilot',
-      'Kaiser-Yang/blink-cmp-avante',
+      { 'fang2hou/blink-copilot', version = '*' },
+      { 'Kaiser-Yang/blink-cmp-avante', version = '*' },
     },
 
     -- use a release tag to download pre-built binaries
