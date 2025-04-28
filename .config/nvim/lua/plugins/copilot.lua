@@ -9,6 +9,7 @@ return {
       filetypes = {
         bigfile = false,
         dotenv = false,
+        pem = false,
       },
     },
     dependencies = {},
