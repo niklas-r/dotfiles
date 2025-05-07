@@ -82,25 +82,6 @@ return {
 
         -- Various
         Snacks.toggle({
-          name = 'i18n virtual text',
-          get = function()
-            return vim.g.js_i18n_enabled
-          end,
-          set = function(state)
-            vim.g.js_i18n_enabled = state
-            if state then
-              vim.cmd 'I18nVirtualTextEnable'
-              vim.cmd 'I18nDiagnosticEnable'
-              vim.keymap.set('n', '<leader>ct', '<CMD>:I18nEditTranslation<CR>', { desc = 'I18n: Edit [T]ranslation', silent = true })
-            else
-              vim.cmd 'I18nVirtualTextDisable'
-              vim.cmd 'I18nDiagnosticDisable'
-              vim.keymap.del('n', '<leader>ct')
-            end
-          end,
-        }):map '<leader>ti'
-
-        Snacks.toggle({
           name = 'auto-completion',
           get = function()
             return vim.g.blink_cmp_enabled
