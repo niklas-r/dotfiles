@@ -105,6 +105,11 @@ for _, v in pairs { 'q', 'w', 'e', 'r', 't', 't', 'y', 'u', 'i', 'o', 'p', 'a', 
     mods = 'META',
     action = act.SendKey { key = v, mods = 'META' },
   })
+  table.insert(config.keys, {
+    key = v,
+    mods = 'META|SHIFT',
+    action = act.SendKey { key = v, mods = 'META|SHIFT' },
+  })
 end
 
 config.native_macos_fullscreen_mode = true
