@@ -1,4 +1,5 @@
 local wezterm = require 'wezterm'
+local utils = require 'utils'
 local act = wezterm.action
 
 local M = {}
@@ -53,6 +54,30 @@ M.theme_switcher = function(window, pane)
   local schemesCommand = 'echo -e "' .. table.concat(schemes, '\n') .. '" | '
 
   M.fzfSwitcher(window, pane, M.scriptsPath .. '/updateScheme.lua', schemesCommand)
+end
+
+M.kill_workspace = function(workspace)
+  local success, stdout = wezterm.run_child_process { '/opt/homebrew/bin/wezterm', 'cli', 'list', '--format=json' }
+
+  if success then
+    local json = wezterm.json_parse(stdout)
+    if not json then
+      return
+    end
+
+    local workspace_panes = utils.filter(json, function(p)
+      return p.workspace == workspace
+    end)
+
+    for _, p in ipairs(workspace_panes) do
+      wezterm.run_child_process {
+        '/opt/homebrew/bin/wezterm',
+        'cli',
+        'kill-pane',
+        '--pane-id=' .. p.pane_id,
+      }
+    end
+  end
 end
 
 return M

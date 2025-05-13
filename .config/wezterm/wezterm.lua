@@ -84,8 +84,28 @@ config.keys = {
   { key = '{', mods = 'LEADER', action = act.MoveTabRelative(-1) },
   { key = '}', mods = 'LEADER', action = act.MoveTabRelative(1) },
 
-  -- Lastly, workspace
+  -- Workspace management
   { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
+  {
+    key = 'W',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = 'Enter new name for workspace',
+      action = wezterm.action_callback(function(_, _, line)
+        if line then
+          wezterm.mux.rename_workspace(wezterm.mux.get_active_workspace(), line)
+        end
+      end),
+    },
+  },
+  {
+    key = 'K',
+    mods = 'LEADER',
+    action = wezterm.action_callback(function(window)
+      local w = window:active_workspace()
+      features.kill_workspace(w)
+    end),
+  },
 }
 -- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
 for i = 1, 9 do
