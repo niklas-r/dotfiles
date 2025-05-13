@@ -6,6 +6,7 @@ vim.filetype.add {
   filename = {
     ['.env'] = 'dotenv',
     ['tsconfig.json'] = 'jsonc',
+    ['.eslintrc.json'] = 'jsonc',
     ['.yamlfmt'] = 'yaml',
   },
   pattern = {
