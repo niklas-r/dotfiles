@@ -7,8 +7,8 @@ return {
     event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
+      'Kaiser-Yang/blink-cmp-avante',
       { 'fang2hou/blink-copilot', version = '*' },
-      { 'Kaiser-Yang/blink-cmp-avante', version = '*' },
     },
 
     -- use a release tag to download pre-built binaries
@@ -132,13 +132,13 @@ return {
       },
       sources = {
         default = {
+          'avante',
           'lsp',
           'path',
           'snippets',
           'buffer',
           'copilot',
           'lazydev',
-          'avante',
         },
         providers = {
           copilot = {

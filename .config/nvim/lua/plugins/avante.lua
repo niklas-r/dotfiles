@@ -1,17 +1,16 @@
 return {
   'yetone/avante.nvim',
   event = 'VeryLazy',
-  lazy = true,
-  version = '*', -- only get "stable" versions
+  version = false,
   ---@class avante.Config
   opts = {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string
     provider = 'claude', -- Recommend using Claude
     auto_suggestions_provider = 'claude-haiku', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
-    file_selector = {
-      --- @alias FileSelectorProvider "native" | "fzf" | "mini.pick" | "snacks" | "telescope" | string
+    selector = {
+      --- @alias avante.SelectorProvider "native" | "fzf_lua" | "mini_pick" | "snacks" | "telescope" | fun(selector: avante.ui.Selector): nil
       provider = 'snacks',
-      -- Options override for custom providers, currently only works with fzf and telescope
+      -- Options override for custom providers
       -- provider_opts = {},
     },
     claude = {
@@ -20,7 +19,45 @@ return {
       timeout = 30000, -- Timeout in milliseconds
       temperature = 0,
       max_tokens = 8000,
-      disable_tools = true, -- Disable tools for now (it's enabled by default) as it's causing rate-limit problems with Claude, see more here: https://github.com/yetone/avante.nvim/issues/1384
+      disabled_tools = { 'python' },
+    },
+    custom_tools = {
+      {
+        name = 'run_yarn_test',
+        description = 'Run unit tests using Yarn',
+        command = 'yarn run tests',
+        returns = {
+          {
+            name = 'result',
+            description = 'Result of the test run',
+            type = 'string',
+          },
+        },
+      },
+      {
+        name = 'run_yarn_lint',
+        description = 'Run ESLint using Yarn',
+        command = 'yarn run lint',
+        returns = {
+          {
+            name = 'result',
+            description = 'Result of the the lint process',
+            type = 'string',
+          },
+        },
+      },
+      {
+        name = 'run_yarn_type_check',
+        description = 'Run Typescript type checking using Yarn',
+        command = 'yarn run type-check',
+        returns = {
+          {
+            name = 'result',
+            description = 'Result of the the lint process',
+            type = 'string',
+          },
+        },
+      },
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
