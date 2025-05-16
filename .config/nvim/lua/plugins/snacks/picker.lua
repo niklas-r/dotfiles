@@ -19,32 +19,32 @@ return {
   'folke/snacks.nvim',
   keys = {
     -- stylua: ignore start
-    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true } } end, desc = "[S]earch [F]iles" },
+    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true }, hidden = true } end, desc = "[F]iles" },
     ---@diagnostic disable-next-line: undefined-field
-    { "<leader>sF", function() Snacks.picker.smart() end, desc = "[S]earch [F]iles Smart" },
-    { "<leader><space>", function() Snacks.picker.buffers() end, desc = "[S]earch [B]uffers" },
+    { "<leader>sF", function() Snacks.picker.smart { hidden = true } end, desc = "[F]iles Smart" },
+    { "<leader><space>", function() Snacks.picker.buffers() end, desc = "[B]uffers" },
     -- utilities
     { "<leader>s:", function() Snacks.picker.command_history() end, desc = "[:] Command History" },
     ---@diagnostic disable-next-line: undefined-field
-    { "<leader>su", function() Snacks.picker.undo() end, desc = "[S]earch [U]ndo tree" },
+    { "<leader>su", function() Snacks.picker.undo() end, desc = "[U]ndo tree" },
     -- git pickers are defined in lua/plugins/git.lua
     -- find
     ---@diagnostic disable-next-line: assign-type-mismatch
-    { "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath "config", title = "Neovim config files" }) end, desc = "[S]earch [N]eovim files" },
-    { "<leader>sp", function() Snacks.picker.files({ cwd = vim.fn.stdpath "data" .. "/lazy", title = "Lazy plugin files" }) end, desc = "[S]earch [P]lugin Files" },
-    { "<leader>s.", function() Snacks.picker.recent() end, desc = "[S]earch Recent Files [.]" },
+    { "<leader>sn", function() Snacks.picker.files({ cwd = vim.fn.stdpath "config", title = "Neovim config files" }) end, desc = "[N]eovim files" },
+    { "<leader>sp", function() Snacks.picker.files({ cwd = vim.fn.stdpath "data" .. "/lazy", title = "Lazy plugin files" }) end, desc = "[P]lugin Files" },
+    { "<leader>s.", function() Snacks.picker.recent() end, desc = "Recent Files [.]" },
     -- Grep
-    { "<leader>sg", function() Snacks.picker.grep() end, desc = "[S]earch [G]rep" },
-    { "<leader>sb", function() Snacks.picker.lines() end, desc = "[S]earch [B]uffer Lines" },
-    { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "[S]earch Open [B]uffers" },
-    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "[S]earch current [W]ord (or selection)", mode = { "n", "x" } },
+    { "<leader>sg", function() Snacks.picker.grep { hidden = true } end, desc = "[G]rep" },
+    { "<leader>sb", function() Snacks.picker.lines() end, desc = "[B]uffer Lines" },
+    { "<leader>sB", function() Snacks.picker.grep_buffers() end, desc = "Open [B]uffers" },
+    { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "current [W]ord (or selection)", mode = { "n", "x" } },
     -- search
-    { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "[S]earch [D]iagnostics" },
-    { "<leader>sh", function() Snacks.picker.help() end, desc = "[S]earch [H]elp" },
-    { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "[S]earch [K]eymaps" },
-    { "<leader>sr", function() Snacks.picker.resume() end, desc = "[S]earch [R]esume" },
-    { "<leader>sq", function() Snacks.picker.qflist() end, desc = "[S]earch [Q]uickfix list" },
-    { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "[S]earch [C]olorschemes" },
+    { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "[D]iagnostics" },
+    { "<leader>sh", function() Snacks.picker.help() end, desc = "[H]elp" },
+    { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "[K]eymaps" },
+    { "<leader>sr", function() Snacks.picker.resume() end, desc = "[R]esume" },
+    { "<leader>sq", function() Snacks.picker.qflist() end, desc = "[Q]uickfix list" },
+    { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "[C]olorschemes" },
     -- LSP
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "[G]oto [D]efinition" },
     { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "[G]oto [R]eferences" },
@@ -58,7 +58,7 @@ return {
         javascript = js_symbols,
         javascriptreact = js_symbols,
       },
-    } end, desc = "[S]earch LSP [S]ymbols" },
+    } end, desc = "LSP [S]ymbols" },
     ---@diagnostic disable-next-line: undefined-field
     { "<leader>sW", function() Snacks.picker.lsp_workspace_symbols {
       filter = {
@@ -67,7 +67,7 @@ return {
         javascript = js_symbols,
         javascriptreact = js_symbols,
       },
-    } end, desc = "[S]earch LSP [W]orkspace Symbols" },
+    } end, desc = "LSP [W]orkspace Symbols" },
     -- stylua: ignore end
   },
   opts = {
