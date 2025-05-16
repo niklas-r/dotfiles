@@ -4,7 +4,7 @@ return {
     dependencies = {
       'nvim-lualine/lualine.nvim',
     },
-    enabled = true,
+    enabled = false,
     priority = 1000,
     config = function()
       require('catppuccin').setup {
@@ -52,7 +52,7 @@ return {
   },
   {
     'folke/tokyonight.nvim',
-    enabled = false,
+    enabled = true,
     priority = 1000,
   },
   {
