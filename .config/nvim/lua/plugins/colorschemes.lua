@@ -54,6 +54,16 @@ return {
     'folke/tokyonight.nvim',
     enabled = true,
     priority = 1000,
+    opts = {
+      style = 'moon',
+      transparent = true,
+      dim_inactive = true,
+      styles = {
+        comments = { italic = true },
+        functions = { italic = true },
+        booleans = { italic = true },
+      },
+    },
   },
   {
     'rose-pine/neovim',
