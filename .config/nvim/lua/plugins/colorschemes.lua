@@ -56,7 +56,7 @@ return {
     priority = 1000,
     opts = {
       style = 'moon',
-      transparent = true,
+      transparent = false,
       dim_inactive = true,
       styles = {
         comments = { italic = true },
