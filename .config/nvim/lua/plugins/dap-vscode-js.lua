@@ -61,7 +61,7 @@ return {
           -- cwd = vim.fn.getcwd(),
           -- sourceMaps = true,
           port = function()
-            return vim.fn.input('Select port: ', 5173)
+            return vim.fn.input('Select port: ', '5173')
           end,
           url = 'http://localhost:${port}',
           webRoot = function()
