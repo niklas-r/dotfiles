@@ -36,11 +36,11 @@ Temporary Items
 
 # End of https://www.toptal.com/developers/gitignore/api/macos
 
-.config/zsh/.zsh_history
-.config/zsh/.zsh_plugins.zsh
-.config/zsh/.zlogin
-.config/zsh/.zlogout
-.config/zsh/.zpreztorc
-.config/zsh/.zprofile
-.config/zsh/.zshenv
-.config/zsh/.zshrc
+config/zsh/.zsh_history
+config/zsh/.zsh_plugins.zsh
+config/zsh/.zlogin
+config/zsh/.zlogout
+config/zsh/.zpreztorc
+config/zsh/.zprofile
+config/zsh/.zshenv
+config/zsh/.zshrc

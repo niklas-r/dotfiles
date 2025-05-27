@@ -1,6 +1,6 @@
 [submodule ".config/zsh/.zprezto"]
-	path = .config/zsh/.zprezto
+	path = config/zsh/.zprezto
 	url = git@github.com:niklas-r/prezto.git
 [submodule ".config/zsh/.antidote"]
-	path = .config/zsh/.antidote
+	path = config/zsh/.antidote
 	url = git@github.com:niklas-r/antidote.git

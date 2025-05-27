@@ -34,13 +34,13 @@ function link() {
 echo "Symlinking dotfiles..."
 
 link "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
-link "$DOTFILES_DIR/.config/bat" "$HOME/.config/bat"
-link "$DOTFILES_DIR/.config/hammerspoon" "$HOME/.config/hammerspoon"
-link "$DOTFILES_DIR/.config/lazygit" "$HOME/.config/lazygit"
-link "$DOTFILES_DIR/.config/nvim" "$HOME/.config/nvim"
-link "$DOTFILES_DIR/.config/wezterm" "$HOME/.config/wezterm"
-link "$DOTFILES_DIR/.config/zed" "$HOME/.config/zed"
-link "$DOTFILES_DIR/.config/zsh" "$HOME/.config/zsh"
+link "$DOTFILES_DIR/config/bat" "$HOME/.config/bat"
+link "$DOTFILES_DIR/config/hammerspoon" "$HOME/.config/hammerspoon"
+link "$DOTFILES_DIR/config/lazygit" "$HOME/.config/lazygit"
+link "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
+link "$DOTFILES_DIR/config/wezterm" "$HOME/.config/wezterm"
+link "$DOTFILES_DIR/config/zed" "$HOME/.config/zed"
+link "$DOTFILES_DIR/config/zsh" "$HOME/.config/zsh"
 
 echo "Done symlinking!"
 
