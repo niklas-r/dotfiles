@@ -1,91 +1,83 @@
 return {
-  'mfussenegger/nvim-dap',
-  dependencies = {
-    {
-      'rcarriga/nvim-dap-ui',
-      'nvim-neotest/nvim-nio', -- Required dependency for nvim-dap-ui
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      'williamboman/mason.nvim',
+      'jay-babu/mason-nvim-dap.nvim',
+      'mxsdev/nvim-dap-vscode-js',
     },
-    'williamboman/mason.nvim',
-    'jay-babu/mason-nvim-dap.nvim',
-    'mxsdev/nvim-dap-vscode-js',
-  },
-  lazy = true,
-  keys = function(_, keys)
-    local dap = require 'dap'
-    local dapui = require 'dapui'
-    return {
-      { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
-      { '<F1>', dap.step_into, desc = 'Debug: Step Into' },
-      { '<F2>', dap.step_over, desc = 'Debug: Step Over' },
-      { '<F3>', dap.step_out, desc = 'Debug: Step Out' },
-      { '<leader>udb', dap.toggle_breakpoint, desc = '[U]nit Test [D]ebug: Toggle [B]reakpoint' },
-      {
-        '<leader>udc',
-        function()
-          dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-        end,
-        desc = '[U]nit Test [D]ebug: Set [C]onditional Breakpoint',
-      },
-      -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-      { '<F7>', dapui.toggle, desc = 'Debug: See last session result.' },
-      unpack(keys),
-    }
-  end,
-  config = function()
-    local dap = require 'dap'
-    local dapui = require 'dapui'
+    lazy = true,
+    keys = function(_, keys)
+      local dap = require 'dap'
+      return {
+        { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
+        { '<F1>', dap.step_into, desc = 'Debug: Step Into' },
+        { '<F2>', dap.step_over, desc = 'Debug: Step Over' },
+        { '<F3>', dap.step_out, desc = 'Debug: Step Out' },
+        unpack(keys),
+      }
+    end,
+    config = function()
+      -- local dap = require 'dap'
 
-    require('mason-nvim-dap').setup {
-      -- Makes a best effort to setup the various debuggers with
-      -- reasonable debug configurations
-      automatic_installation = true,
+      require('mason-nvim-dap').setup {
+        -- Makes a best effort to setup the various debuggers with
+        -- reasonable debug configurations
+        automatic_installation = true,
 
-      -- You can provide additional configuration to the handlers,
-      -- see mason-nvim-dap README for more information
-      handlers = {},
+        -- You can provide additional configuration to the handlers,
+        -- see mason-nvim-dap README for more information
+        handlers = {},
 
-      -- You'll need to check that you have the required things installed
-      -- online, please don't ask me how to install them :)
-      ensure_installed = {
-        -- Update this to ensure that you have the debuggers for the langs you want
-        'chrome-debug-adapter',
-        'js-debug-adapter',
-      },
-    }
-
-    -- Dap UI setup
-    -- For more information, see |:help nvim-dap-ui|
-    dapui.setup {
-      icons = { expanded = '▾', collapsed = '▸', current_frame = '*' },
-      controls = {
-        icons = {
-          pause = '⏸',
-          play = '▶',
-          step_into = '⏎',
-          step_over = '⏭',
-          step_out = '⏮',
-          step_back = 'b',
-          run_last = '▶▶',
-          terminate = '⏹',
-          disconnect = '⏏',
+        -- You'll need to check that you have the required things installed
+        -- online, please don't ask me how to install them :)
+        ensure_installed = {
+          -- Update this to ensure that you have the debuggers for the langs you want
+          'chrome-debug-adapter',
+          'js-debug-adapter',
         },
-      },
-    }
+      }
 
-    -- Change breakpoint icons
-    vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-    vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-    local breakpoint_icons = vim.g.have_nerd_font
-        and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-      or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
-    for type, icon in pairs(breakpoint_icons) do
-      local tp = 'Dap' .. type
-      local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
-      vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
-    end
+      -- Change breakpoint icons
+      vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+      vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+      local breakpoint_icons = vim.g.have_nerd_font
+          and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+        or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+      for type, icon in pairs(breakpoint_icons) do
+        local tp = 'Dap' .. type
+        local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
+        vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
+      end
+    end,
+  },
+  {
+    'miroshQa/debugmaster.nvim',
+    -- osv is needed if you want to debug neovim lua code. Also can be used
+    -- as a way to quickly test-drive the plugin without configuring debug adapters
+    dependencies = { 'mfussenegger/nvim-dap', 'jbyuki/one-small-step-for-vimkind' },
+    lazy = true,
+    keys = function(_, keys)
+      local dm = require 'debugmaster'
+      return {
+        { '<leader>D', dm.mode.toggle, { desc = 'Debug mode', mode = { 'n', 'v' }, nowait = true } },
+        unpack(keys),
+      }
+    end,
+    config = function()
+      local dm = require 'debugmaster'
+      -- make sure you don't have any other keymaps that starts with "<leader>d" to avoid delay
+      -- Alternative keybindings to "<leader>d" could be: "<leader>m", "<leader>;"
+      vim.keymap.set({ 'n', 'v' }, '<leader>D', dm.mode.toggle, { nowait = true })
+      -- If you want to disable debug mode in addition to leader+D using the Escape key:
+      -- vim.keymap.set("n", "<Esc>", dm.mode.disable)
+      -- This might be unwanted if you already use Esc for ":noh"
+      vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-    dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-    dap.listeners.before.event_exited['dapui_config'] = dapui.close
-  end,
+      dm.plugins.osv_integration.enabled = true -- needed if you want to debug neovim lua code
+      -- local dap = require 'dap'
+      -- Configure your debug adapters here
+      -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+    end,
+  },
 }
