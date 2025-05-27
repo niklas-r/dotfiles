@@ -6,6 +6,6 @@ return {
     bottom = 20,
   },
   opacity = 1,
-  colorscheme = "tokyonight_moon",
   font = "Maple Mono NF",
+  colorscheme = "Catppuccin Latte",
 }

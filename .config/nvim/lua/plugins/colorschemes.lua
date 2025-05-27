@@ -4,7 +4,8 @@ return {
     dependencies = {
       'nvim-lualine/lualine.nvim',
     },
-    enabled = false,
+    name = 'catppuccin',
+    -- enabled = false,
     priority = 1000,
     config = function()
       require('catppuccin').setup {
