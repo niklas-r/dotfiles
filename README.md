@@ -2,6 +2,14 @@
 
 ![Demo picture](./dotfile-images/scrsht.png)
 
+## Quickstart
+
+I use the symlink approach to work with my dotfiles. Run this to get set up:
+
+1. `git clone --recurse-submodules git@github.com:niklas-r/dotfiles.git ~/dotfiles`
+2. `cd ~/dotfiles`
+3. `./install` (or `./install --dry-run` if you want to check the actions first)
+
 ## Submodules
 
 This project contains a few submodules. To update these, run:
@@ -37,6 +45,7 @@ I use [`zsh`](https://www.zsh.org/) with [`Prezto`](https://github.com/sorin-ion
 
 I use a lot of CLI tools, here's a list of the stuff I remembered installing. Most of which can be installed with Homebrew.
 
+- [git](https://git-scm.com/) (duh)
 - [Neovim](https://neovim.io/)
 - [bat](https://github.com/sharkdp/bat)
 - [lazygit](https://github.com/jesseduffield/lazygit)
