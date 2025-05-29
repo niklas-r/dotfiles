@@ -62,6 +62,12 @@ defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/i
 echo "Done with miscellaneous configurations!"
 
 # TODO: Copy secret-vars
-# TODO: Install Homebrew packages
+
+echo "Installing Homebrew packages..."
+
+xargs brew install < Brewfile-formulae.txt
+xargs brew install --cask < Brewfile-casks.txt
+
+echo "Done installing Homebrew packages!"
 
 echo "Done with installation!"
