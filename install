@@ -63,6 +63,20 @@ echo "Done with miscellaneous configurations!"
 
 # TODO: Copy secret-vars
 
+echo "🔍 Checking for Homebrew..."
+
+if command -v brew >/dev/null 2>&1; then
+  echo "✅ Homebrew is already installed."
+else
+  echo "🍺 Installing Homebrew..."
+
+  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  echo "✅ Homebrew installation complete."
+fi
+
+echo "🍻 Homebrew is ready!"
+
 echo "Installing Homebrew packages..."
 
 xargs brew install < Brewfile-formulae.txt
