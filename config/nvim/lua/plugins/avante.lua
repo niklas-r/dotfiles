@@ -5,7 +5,7 @@ return {
   ---@class avante.Config
   opts = {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string
-    provider = 'openai',
+    provider = 'claude',
     auto_suggestions_provider = 'claude-haiku', -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
     selector = {
       --- @alias avante.SelectorProvider "native" | "fzf_lua" | "mini_pick" | "snacks" | "telescope" | fun(selector: avante.ui.Selector): nil
@@ -13,6 +13,8 @@ return {
       -- Options override for custom providers
       -- provider_opts = {},
     },
+    ---@alias avante.Mode "agentic" | "legacy"
+    mode = 'legacy', -- agentic mode is still performing very badly
     openai = {
       endpoint = 'https://api.openai.com/v1',
       model = 'gpt-4o', -- your desired model (or use gpt-4o, etc.)
@@ -24,7 +26,9 @@ return {
     },
     claude = {
       endpoint = 'https://api.anthropic.com',
-      model = 'claude-3-7-sonnet-20250219',
+      -- model = 'claude-3-7-sonnet-20250219',
+      -- model = 'claude-3-7-sonnet-latest', -- Not test yet with latest
+      model = 'claude-sonnet-4-20250514',
       timeout = 30000, -- Timeout in milliseconds
       temperature = 0,
       max_tokens = 8000,
