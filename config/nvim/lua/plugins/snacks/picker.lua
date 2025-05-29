@@ -45,11 +45,6 @@ return {
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "[R]esume" },
     { "<leader>sq", function() Snacks.picker.qflist() end, desc = "[Q]uickfix list" },
     { "<leader>sc", function() Snacks.picker.colorschemes() end, desc = "[C]olorschemes" },
-    { "g?S", function() Snacks.picker.grep({
-      title = "Debug Prints",
-      search = "DEBUGPRINT\\[\\d+\\]",
-      live = false,
-    }) end, desc = "Search debug prints" },
     -- LSP
     { "gd", function() Snacks.picker.lsp_definitions() end, desc = "[G]oto [D]efinition" },
     { "gr", function() Snacks.picker.lsp_references() end, nowait = true, desc = "[G]oto [R]eferences" },
