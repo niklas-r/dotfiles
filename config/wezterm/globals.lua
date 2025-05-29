@@ -6,6 +6,6 @@ return {
     bottom = 20,
   },
   opacity = 1,
-  font = "Maple Mono NF",
-  colorscheme = "Catppuccin Latte",
+  font = 'Maple Mono NF',
+  colorscheme = 'Catppuccin Frappe',
 }
