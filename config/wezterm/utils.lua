@@ -37,6 +37,9 @@ function M.writeLuaObject(filePath, luaObject)
   file:close()
 end
 
+---@param wez any
+---@param key "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "black_bright" | "red_bright" | "green_bright" | "yellow_bright" | "blue_bright" | "magenta_bright" | "cyan_bright" | "white_bright"
+---@return string
 function M.getColorByKey(wez, key)
   local current_scheme = wez.color.get_builtin_schemes()[G.colorscheme]
 

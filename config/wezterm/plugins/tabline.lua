@@ -11,12 +11,12 @@ return {
         theme = G.colorscheme,
         color_overrides = {},
         section_separators = {
-          left = wez.nerdfonts.ple_lower_left_triangle,
-          right = wez.nerdfonts.ple_lower_right_triangle,
+          left = wez.nerdfonts.ple_upper_left_triangle,
+          right = wez.nerdfonts.ple_upper_right_triangle,
         },
         component_separators = {
-          left = wez.nerdfonts.ple_backslash_separator,
-          right = wez.nerdfonts.ple_forwardslash_separator,
+          left = wez.nerdfonts.ple_forwardslash_separator,
+          right = wez.nerdfonts.ple_backslash_separator,
         },
         tab_separators = {
           left = wez.nerdfonts.ple_lower_left_triangle,
@@ -43,7 +43,9 @@ return {
               mode = 'leader'
             end
 
-            return ' ' .. mode:upper() .. ' '
+            return wez.format {
+              { Text = ' ' .. mode:upper() .. ' ' },
+            }
           end,
         },
         tabline_b = { 'workspace' },
