@@ -8,10 +8,15 @@ return {
       'AndreM222/copilot-lualine',
     },
   },
-  -- config = function(_, opts)
   opts = function()
-    local lazy_status = require 'lazy.status' -- to configure lazy pending updates count
     local util = require 'util.lualine'
+    local trunc_widths = {
+      XXS = 50,
+      XS = 80,
+      S = 100,
+      M = 120,
+      L = 140,
+    }
 
     Snacks.toggle({
       name = 'lualine lsp names',
@@ -35,15 +40,16 @@ return {
         lualine_a = {
           {
             'mode',
-            fmt = util.trunc(130, 3, 0, true),
+            fmt = util.trunc(trunc_widths.L, 3, 0, true),
           },
         },
         lualine_b = {
           {
-            'branch',
-            fmt = util.trunc(70, 15, 65, true),
+            -- 'branch',
+            'b:gitsigns_head',
+            icon = '',
+            fmt = util.trunc(trunc_widths.L, 15, trunc_widths.S, false),
           },
-
           {
             'diff',
             symbols = {
@@ -51,20 +57,28 @@ return {
               modified = ' ',
               removed = ' ',
             },
-            fmt = util.trunc(0, 0, 60, true),
+            fmt = util.trunc(0, 0, trunc_widths.XS, true),
+            source = function()
+              local gitsigns = vim.b.gitsigns_status_dict
+              if gitsigns then
+                return {
+                  added = gitsigns.added,
+                  modified = gitsigns.changed,
+                  removed = gitsigns.removed,
+                }
+              end
+            end,
           },
           {
             'diagnostics',
             symbols = vim.g.have_nerd_font and { error = ' ', warn = ' ', info = ' ', hint = ' ' }
               or { error = 'E', warn = 'W', info = 'I', hint = 'H' },
+            fmt = util.trunc(0, 0, trunc_widths.XXS, true),
           },
         },
         lualine_c = {
           {
             'pretty_path',
-            providers = {
-              default = require 'util/pretty_path_harpoon',
-            },
             directories = {
               max_depth = 4,
             },
@@ -84,38 +98,47 @@ return {
             color = 'DiagnosticVirtualTextHint',
             separator = { left = '', right = '' },
           },
+          -- stylua: ignore
           {
-            lazy_status.updates,
-            cond = lazy_status.has_updates,
-            -- color = { fg = '#3d59a1' },
-            fmt = util.trunc(0, 0, 160, true), -- hide when window is < 100 columns
+            function() return "  " .. require("dap").status() end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
+            color = function() return { fg = Snacks.util.color("Debug") } end,
+            fmt = util.trunc(trunc_widths.L, 8, trunc_widths.M, false),
+          },
+          -- stylua: ignore
+          {
+            require("lazy.status").updates,
+            cond = require("lazy.status").has_updates,
+            color = function() return { fg = Snacks.util.color("Special") } end,
+            fmt = util.trunc(0, 0, trunc_widths.L, false),
           },
           {
             'copilot',
+            fmt = util.trunc(0, 8, trunc_widths.S, false),
           },
           {
             util.lsp_status_all,
-            fmt = util.trunc(0, 8, 140, false),
+            fmt = util.trunc(0, 8, trunc_widths.S, false),
           },
           {
             util.encoding_only_if_not_utf8,
-            fmt = util.trunc(0, 0, 140, true), -- hide when window is < 80 columns
+            fmt = util.trunc(0, 0, trunc_widths.XXS, true),
           },
           {
             util.fileformat_only_if_not_unix,
-            fmt = util.trunc(0, 0, 140, true), -- hide when window is < 80 columns
+            fmt = util.trunc(0, 0, trunc_widths.XXS, true),
           },
         },
         lualine_y = {
-          { 'progress', fmt = util.trunc(0, 0, 40, true) },
+          { 'progress', fmt = util.trunc(0, 0, trunc_widths.XXS, true) },
           {
             util.lualine_harpoon(),
-            fmt = util.trunc(0, 0, 160, true),
+            fmt = util.trunc(0, 0, trunc_widths.L, true),
           },
         },
         lualine_z = {
-          { 'location', fmt = util.trunc(0, 0, 80, true) },
-          { util.selectionCount, fmt = util.trunc(0, 0, 80, true) },
+          { 'location', fmt = util.trunc(0, 0, trunc_widths.XXS, true) },
+          { util.selectionCount, fmt = util.trunc(0, 0, trunc_widths.XS, true) },
         },
       },
       tabline = {
@@ -143,11 +166,6 @@ return {
         lualine_c = {
           {
             'pretty_path',
-            -- 'filename',
-            -- symbols = {
-            --   modified = '+', -- Text to show when the file is modified.
-            --   readonly = '', -- Text to show when the file is non-modifiable or readonly.
-            -- },
           },
         },
       },
