@@ -3,6 +3,7 @@ return {
   depenencies = {
     'nabekou29/js-i18n.nvim',
     'tadaa/vimade',
+    'lewis6991/gitsigns.nvim',
   },
   opts = {
     toggle = {},
@@ -52,6 +53,16 @@ return {
             require('gitsigns').toggle_current_line_blame()
           end,
         }):map '<leader>tb'
+
+        Snacks.toggle({
+          name = 'Git Signs',
+          get = function()
+            return require('gitsigns.config').config.signcolumn
+          end,
+          set = function(state)
+            require('gitsigns').toggle_signs(state)
+          end,
+        }):map '<leader>tG'
 
         -- Buffer effects
         Snacks.toggle({
