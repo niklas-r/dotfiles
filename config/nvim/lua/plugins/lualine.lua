@@ -3,6 +3,7 @@ return {
   event = 'VeryLazy',
   dependencies = {
     {
+      'nvim-tree/nvim-web-devicons',
       'bwpge/lualine-pretty-path',
       'folke/snacks.nvim',
       'AndreM222/copilot-lualine',

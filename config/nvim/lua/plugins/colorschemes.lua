@@ -36,6 +36,7 @@ return {
           mason = true,
           neotest = true,
           neotree = true,
+          octo = true,
           noice = true,
           snacks = {
             enabled = true,
