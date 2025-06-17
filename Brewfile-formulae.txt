@@ -9,7 +9,7 @@ deno
 dotenv-linter
 fastfetch
 fd
-ffmpegthumbnailer
+ffmpeg
 fzf
 gh
 git
