@@ -11,6 +11,9 @@ zsh-users/zsh-autosuggestions
 zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-completions
 
+# Atuin for synced terminal history
+atuinsh/atuin@main
+
 ### The following is an examples file from https://getantidote.github.io/usage
 
 # # .zsh_plugins.txt

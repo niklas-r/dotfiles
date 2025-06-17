@@ -1,4 +1,5 @@
 achannarasappa/tap/ticker
+atuin
 bat
 bitwarden-cli
 btop
