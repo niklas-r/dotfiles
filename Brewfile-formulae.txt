@@ -16,6 +16,7 @@ git
 git-delta
 git-filter-repo
 graphviz
+grype
 hashicorp/tap/terraform
 imagemagick
 imagesnap
@@ -28,6 +29,7 @@ python@3.10
 ripgrep
 sevenzip
 slides
+syft
 tarkah/tickrs/tickrs
 tcl-tk
 tldr
