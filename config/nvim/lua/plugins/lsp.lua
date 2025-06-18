@@ -105,6 +105,15 @@ return {
         -- ts_ls = {},
         vtsls = {},
         eslint = {}, -- Using ESLint LSP for code actions
+        tailwindcss = {
+          hovers = true,
+          suggestions = true,
+          -- Only load Tailwind LSP if a config file is found in root
+          root_dir = function(fname)
+            local root_pattern = require('lspconfig').util.root_pattern('tailwind.config.cjs', 'tailwind.config.js', 'postcss.config.js')
+            return root_pattern(fname)
+          end,
+        },
         jsonls = {
           settings = {
             json = {

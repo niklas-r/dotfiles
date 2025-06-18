@@ -29,6 +29,7 @@ return {
           -- avante = true,
           blink_cmp = true,
           dap_ui = true,
+          diffview = true,
           dropbar = true,
           gitsigns = true,
           harpoon = true,
@@ -36,8 +37,8 @@ return {
           mason = true,
           neotest = true,
           neotree = true,
-          octo = true,
           noice = true,
+          octo = true,
           snacks = {
             enabled = true,
             indent_scope_color = 'lavender',

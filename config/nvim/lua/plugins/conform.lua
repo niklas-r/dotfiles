@@ -1,6 +1,11 @@
 local js_settings = {
   'prettierd',
 }
+
+local format = function()
+  require('conform').format { async = true, lsp_format = 'fallback' }
+end
+
 return {
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -8,10 +13,14 @@ return {
   keys = {
     {
       '<leader>ff',
-      function()
-        require('conform').format { async = true, lsp_format = 'fallback' }
-      end,
-      mode = '',
+      format,
+      mode = 'n',
+      desc = '[F]ormat File',
+    },
+    {
+      '<leader>ff',
+      format,
+      mode = 'v',
       desc = '[F]ormat File',
     },
   },
