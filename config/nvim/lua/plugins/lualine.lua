@@ -10,7 +10,8 @@ return {
     },
   },
   opts = function()
-    local util = require 'util.lualine'
+    local codeCompanionStatus = require 'plugins.lualine.code-companion-status'
+    local util = require 'plugins.lualine.utils'
     local trunc_widths = {
       XXS = 50,
       XS = 80,
@@ -89,6 +90,10 @@ return {
           },
         },
         lualine_x = {
+          {
+            codeCompanionStatus,
+            color = 'LspDiagnosticsVirtualTextWarning',
+          },
           {
             function()
               return vim.g.macro_recording

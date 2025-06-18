@@ -1,7 +1,8 @@
 return {
   'yetone/avante.nvim',
-  event = 'VeryLazy',
+  -- event = 'VeryLazy',
   version = false,
+  enabled = false,
   ---@class avante.Config
   opts = {
     ---@alias Avante.Provider "claude" | "openai" | "azure" | "gemini" | "vertex" | "cohere" | "copilot" | string

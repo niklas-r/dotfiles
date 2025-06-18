@@ -7,7 +7,7 @@ return {
     event = 'InsertEnter',
     dependencies = {
       'rafamadriz/friendly-snippets',
-      'Kaiser-Yang/blink-cmp-avante',
+      -- 'Kaiser-Yang/blink-cmp-avante',
       { 'fang2hou/blink-copilot', version = '*' },
     },
 
@@ -131,8 +131,11 @@ return {
         },
       },
       sources = {
+        per_filetype = {
+          codecompanion = { 'codecompanion' },
+        },
         default = {
-          'avante',
+          -- 'avante',
           'lsp',
           'path',
           'snippets',
@@ -153,28 +156,28 @@ return {
             },
           },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
-          avante = {
-            module = 'blink-cmp-avante',
-            name = 'Avante',
-            opts = {
-              kind_icons = {
-                AvanteCmd = '',
-                AvanteMention = '',
-              },
-              avante = {
-                command = {
-                  get_kind_name = function(_)
-                    return 'AvanteCmd'
-                  end,
-                },
-                mention = {
-                  get_kind_name = function(_)
-                    return 'AvanteMention'
-                  end,
-                },
-              },
-            },
-          },
+          -- avante = {
+          --   module = 'blink-cmp-avante',
+          --   name = 'Avante',
+          --   opts = {
+          --     kind_icons = {
+          --       AvanteCmd = '',
+          --       AvanteMention = '',
+          --     },
+          --     avante = {
+          --       command = {
+          --         get_kind_name = function(_)
+          --           return 'AvanteCmd'
+          --         end,
+          --       },
+          --       mention = {
+          --         get_kind_name = function(_)
+          --           return 'AvanteMention'
+          --         end,
+          --       },
+          --     },
+          --   },
+          -- },
           cmdline = {
             -- ignores cmdline completions when executing shell commands
             enabled = function()
