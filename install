@@ -42,6 +42,7 @@ link "$DOTFILES_DIR/config/wezterm" "$HOME/.config/wezterm"
 link "$DOTFILES_DIR/config/zed" "$HOME/.config/zed"
 link "$DOTFILES_DIR/config/zsh" "$HOME/.config/zsh"
 link "$DOTFILES_DIR/config/atuin" "$HOME/.config/atuin"
+link "$DOTFILES_DIR/config/mcphub" "$HOME/.config/mcphub"
 
 echo "Done symlinking!"
 

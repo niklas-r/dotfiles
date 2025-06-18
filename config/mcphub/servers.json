@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "command": "npx",
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
+      "disabled": false
+    }
+  },
+  "nativeMCPServers": [
+    
+  ]
+}
