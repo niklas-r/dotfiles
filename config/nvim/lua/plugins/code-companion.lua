@@ -18,6 +18,8 @@ return {
       'echasnovski/mini.diff',
       -- Dependepcies used by extensions
       'ravitemer/mcphub.nvim',
+      -- Chat history extension
+      'ravitemer/codecompanion-history.nvim',
     },
     cmd = {
       'CodeCompanion',
@@ -63,6 +65,13 @@ return {
             make_slash_commands = true,
             show_result_in_chat = true,
           },
+        },
+        history = {
+          enabled = true,
+          -- Number of days after which chats are automatically deleted (0 to disable)
+          expiration_days = 30,
+          -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
+          picker = 'snacks',
         },
       },
       prompt_library = {
