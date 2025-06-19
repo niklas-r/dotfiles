@@ -38,6 +38,9 @@ return {
             ['buffer'] = {
               opts = snacks_provider,
             },
+            ['help'] = {
+              opts = snacks_provider,
+            },
             ['file'] = {
               opts = snacks_provider,
             },

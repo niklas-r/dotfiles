@@ -100,6 +100,10 @@ end
 --- Stop active spinners associated with a namespace ID
 --- @param ns_id number The namespace ID to stop spinners
 local function stop_spinner(ns_id)
+  if virtual_text_spinners[ns_id] == nil then
+    -- Spinner is already stopped, no need to do anything
+    return
+  end
   local block_spinner, spinner = unpack(virtual_text_spinners[ns_id])
   if spinner then
     spinner:stop()
@@ -158,7 +162,8 @@ local function create_autocmds(opts)
 
       if args.match:find 'StartedInline' then
         create_extmarks(opts, data, ns_id)
-      elseif args.match:find 'FinishedInline' then
+      -- *FinishedInline will match when finished successfully, *Finished will match when aborted with `q`
+      elseif args.match:find 'FinishedInline' or args.match:find 'Finished' then
         stop_spinner(ns_id)
         vim.api.nvim_buf_clear_namespace(context.bufnr, ns_id, 0, -1)
       end
