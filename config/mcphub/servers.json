@@ -1,9 +1,9 @@
 {
+  "nativeMCPServers": [
+    
+  ],
   "mcpServers": {
     "git": {
-      "args": [
-        "mcp-server-git"
-      ],
       "command": "uvx",
       "autoApprove": [
         "git_status",
@@ -17,22 +17,23 @@
         "git_create_branch",
         "git_checkout",
         "git_show"
-      ]
+      ],
+      "args": [
+        "mcp-server-git"
+      ],
+      "disabled": false
     },
     "context7": {
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ],
-      "disabled": false,
       "command": "npx",
       "autoApprove": [
         "resolve-library-id",
         "get-library-docs"
-      ]
+      ],
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "disabled": false
     }
-  },
-  "nativeMCPServers": [
-    
-  ]
+  }
 }
