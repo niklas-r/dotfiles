@@ -135,7 +135,6 @@ return {
           codecompanion = { 'codecompanion' },
         },
         default = {
-          -- 'avante',
           'lsp',
           'path',
           'snippets',
@@ -156,28 +155,6 @@ return {
             },
           },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
-          -- avante = {
-          --   module = 'blink-cmp-avante',
-          --   name = 'Avante',
-          --   opts = {
-          --     kind_icons = {
-          --       AvanteCmd = '',
-          --       AvanteMention = '',
-          --     },
-          --     avante = {
-          --       command = {
-          --         get_kind_name = function(_)
-          --           return 'AvanteCmd'
-          --         end,
-          --       },
-          --       mention = {
-          --         get_kind_name = function(_)
-          --           return 'AvanteMention'
-          --         end,
-          --       },
-          --     },
-          --   },
-          -- },
           cmdline = {
             -- ignores cmdline completions when executing shell commands
             enabled = function()
