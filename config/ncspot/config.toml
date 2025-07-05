@@ -1,0 +1,51 @@
+use_nerdfont = true
+
+# Use "Shift+q" to quit instead of the default "q" to avoid accidentally quitting
+[keybindings]
+"Shift+q" = "quit"
+"q" = "noop"
+"x" = "noop"
+
+# Enable desktop notifications
+notify = "true"
+
+
+# My Catppucin Frappe Lavender theme based on:
+# https://github.com/catppuccin/ncspot/blob/main/themes/catppuccin-frappe-lavender.toml
+[theme]
+background = "default"
+primary = "#B2BEEB"
+secondary = "#81C8BE"
+title = "#BABBF1"
+playing = "#A6D189"
+playing_selected = "#A6D189"
+playing_bg = "#303446"
+highlight = "#C6D0F5"
+highlight_bg = "#4C4E68"
+error = "#303446"
+error_bg = "#E78284"
+statusbar = "#BABBF1"
+statusbar_progress = "#BABBF1"
+statusbar_bg = "#414559"
+cmdline = "#BABBF1"
+cmdline_bg = "#292C3C"
+
+# Official Catppucin Latter Lavender theme (light theme)
+# https://github.com/catppuccin/ncspot/blob/main/themes/catppuccin-latte-lavender.toml
+# [theme]
+# background = "default"
+# primary = "#4c4f69"
+# secondary = "#179299"
+# title = "#7287fd"
+# playing = "#40a02b"
+# playing_bg = "#eff1f5"
+# highlight = "#4c4f69"
+# highlight_bg = "#b1bcf9"
+# playing_selected = "#40a02b"
+# error = "#eff1f5"
+# error_bg = "#d20f39"
+# statusbar = "#7287fd"
+# statusbar_bg = "#ccd0da"
+# statusbar_progress = "#7287fd"
+# cmdline = "#7287fd"
+# cmdline_bg = "#e6e9ef"
