@@ -1,14 +1,108 @@
 {
-  "nativeMCPServers": [
-    
-  ],
   "mcpServers": {
-    "sentry": {
+    "github": {
+      "url": "https://api.githubcopilot.com/mcp/",
+      "disabled": false,
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_ACCESS_TOKEN}"
+      },
+      "autoApprove": [
+        "add_issue_comment",
+        "assign_copilot_to_issue",
+        "cancel_workflow_run",
+        "create_and_submit_pull_request_review",
+        "create_branch",
+        "create_issue",
+        "create_or_update_file",
+        "create_pending_pull_request_review",
+        "create_pull_request",
+        "delete_file",
+        "delete_pending_pull_request_review",
+        "dismiss_notification",
+        "download_workflow_run_artifact",
+        "get_code_scanning_alert",
+        "get_commit",
+        "get_file_contents",
+        "get_issue",
+        "get_issue_comments",
+        "get_job_logs",
+        "get_me",
+        "get_notification_details",
+        "get_pull_request",
+        "get_pull_request_comments",
+        "get_pull_request_diff",
+        "get_pull_request_files",
+        "get_pull_request_reviews",
+        "get_pull_request_status",
+        "get_secret_scanning_alert",
+        "get_tag",
+        "get_workflow_run",
+        "get_workflow_run_logs",
+        "get_workflow_run_usage",
+        "list_branches",
+        "list_code_scanning_alerts",
+        "list_commits",
+        "list_issues",
+        "list_notifications",
+        "list_pull_requests",
+        "list_secret_scanning_alerts",
+        "list_tags",
+        "list_workflow_jobs",
+        "list_workflow_run_artifacts",
+        "list_workflow_runs",
+        "list_workflows",
+        "mark_all_notifications_read",
+        "request_copilot_review",
+        "push_files",
+        "rerun_failed_jobs",
+        "rerun_workflow_run",
+        "run_workflow",
+        "search_code",
+        "search_issues",
+        "search_orgs",
+        "search_pull_requests",
+        "search_repositories",
+        "search_users",
+        "update_issue",
+        "update_pull_request",
+        "update_pull_request_branch"
+      ]
+    },
+    "git": {
+      "disabled": false,
+      "autoApprove": [
+        "git_status",
+        "git_diff_unstaged",
+        "git_diff_staged",
+        "git_diff",
+        "git_commit",
+        "git_add",
+        "git_reset",
+        "git_log",
+        "git_create_branch",
+        "git_checkout",
+        "git_show",
+        "git_init",
+        "git_branch"
+      ],
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx"
+    },
+    "context7": {
+      "disabled": false,
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
       "args": [
         "-y",
-        "mcp-remote@latest",
-        "https://mcp.sentry.dev/mcp"
+        "@upstash/context7-mcp"
       ],
+      "command": "npx"
+    },
+    "sentry": {
       "autoApprove": [
         "whoami",
         "find_organizations",
@@ -21,47 +115,19 @@
         "update_issue",
         "find_errors",
         "find_transactions",
-        "create_team",
-        "create_project",
-        "create_dsn",
-        "update_project",
         "find_dsns",
         "begin_seer_issue_fix",
         "get_seer_issue_fix_status"
       ],
-      "command": "npx"
-    },
-    "context7": {
       "args": [
         "-y",
-        "@upstash/context7-mcp"
+        "mcp-remote@latest",
+        "https://mcp.sentry.dev/mcp"
       ],
-      "autoApprove": [
-        "resolve-library-id",
-        "get-library-docs"
-      ],
-      "disabled": false,
       "command": "npx"
-    },
-    "git": {
-      "args": [
-        "mcp-server-git"
-      ],
-      "autoApprove": [
-        "git_status",
-        "git_diff_unstaged",
-        "git_diff_staged",
-        "git_diff",
-        "git_commit",
-        "git_add",
-        "git_reset",
-        "git_log",
-        "git_create_branch",
-        "git_checkout",
-        "git_show"
-      ],
-      "disabled": false,
-      "command": "uvx"
     }
-  }
+  },
+  "nativeMCPServers": [
+    
+  ]
 }
