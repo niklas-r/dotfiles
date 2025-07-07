@@ -12,7 +12,7 @@ zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-completions
 
 # Atuin for synced terminal history
-atuinsh/atuin@main
+atuinsh/atuin branch:main
 
 ### The following is an examples file from https://getantidote.github.io/usage
 
