@@ -15,6 +15,7 @@ zsh-users/zsh-completions
 atuinsh/atuin branch:main
 
 romkatv/zsh-bench kind:path
+romkatv/powerlevel10k
 
 ### The following is an examples file from https://getantidote.github.io/usage
 
