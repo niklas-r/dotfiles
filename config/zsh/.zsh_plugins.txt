@@ -14,6 +14,8 @@ zsh-users/zsh-completions
 # Atuin for synced terminal history
 atuinsh/atuin branch:main
 
+romkatv/zsh-bench kind:path
+
 ### The following is an examples file from https://getantidote.github.io/usage
 
 # # .zsh_plugins.txt
