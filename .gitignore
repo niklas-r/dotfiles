@@ -44,3 +44,7 @@ config/zsh/.zpreztorc
 config/zsh/.zprofile
 config/zsh/.zshenv
 config/zsh/.zshrc
+
+config/.codex/log
+config/.codex/sessions
+config/.codex/history.jsonl
