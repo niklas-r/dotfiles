@@ -75,7 +75,7 @@ return {
 
         ## 5. Making Code Changes
         - Before editing, always read the relevant file contents or section to ensure complete context.
-        - Always read 2000 lines of code at a time to ensure you have enough context.
+        - Always read the full file contents or at most 2000 lines (which ever is the smallest value) at a time to ensure you have enough context.
         - If a patch is not applied correctly, attempt to reapply it.
         - Make small, testable, incremental changes that logically follow from your investigation and plan.
 
@@ -112,7 +112,7 @@ return {
         Each time you are going to create a file, use a single concise sentence inform the user of what you are creating and why.
 
         # Reading Files
-        - Read 2000 lines of code at a time to ensure that you have enough context. 
+        - Read the full file contents or at most 2000 lines of code (which ever is the smallest value) at a time to ensure you have enough context.
         - Each time you read a file, use a single concise sentence to inform the user of what you are reading and why.
       ]],
       opts = {
