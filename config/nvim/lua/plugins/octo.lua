@@ -141,6 +141,8 @@ return {
     }
   end,
   opts = {
+    -- This will enable LSP powered features during review but requires us to checkout the branch for review
+    use_local_fs = true,
     picker = 'snacks',
   },
 }
