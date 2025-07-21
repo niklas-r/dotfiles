@@ -1,11 +1,35 @@
 {
   "mcpServers": {
+    "sentry": {
+      "args": [
+        "-y",
+        "mcp-remote@latest",
+        "https://mcp.sentry.dev/mcp"
+      ],
+      "command": "npx",
+      "autoApprove": [
+        "whoami",
+        "find_organizations",
+        "find_teams",
+        "find_projects",
+        "find_issues",
+        "find_releases",
+        "find_tags",
+        "get_issue_details",
+        "update_issue",
+        "find_errors",
+        "find_transactions",
+        "create_team",
+        "create_project",
+        "create_dsn",
+        "update_project",
+        "find_dsns",
+        "analyze_issue_with_seer",
+        "search_docs",
+        "get_doc"
+      ]
+    },
     "github": {
-      "url": "https://api.githubcopilot.com/mcp/",
-      "disabled": false,
-      "headers": {
-        "Authorization": "Bearer ${GITHUB_ACCESS_TOKEN}"
-      },
       "autoApprove": [
         "add_issue_comment",
         "assign_copilot_to_issue",
@@ -66,9 +90,30 @@
         "update_issue",
         "update_pull_request",
         "update_pull_request_branch"
+      ],
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_ACCESS_TOKEN}"
+      },
+      "url": "https://api.githubcopilot.com/mcp/",
+      "disabled": false
+    },
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "command": "npx",
+      "disabled": false,
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
       ]
     },
     "git": {
+      "args": [
+        "mcp-server-git"
+      ],
+      "command": "uvx",
       "disabled": false,
       "autoApprove": [
         "git_status",
@@ -84,47 +129,17 @@
         "git_show",
         "git_init",
         "git_branch"
-      ],
-      "args": [
-        "mcp-server-git"
-      ],
-      "command": "uvx"
+      ]
     },
-    "context7": {
-      "disabled": false,
-      "autoApprove": [
-        "resolve-library-id",
-        "get-library-docs"
-      ],
+    "sequentialthinking": {
       "args": [
         "-y",
-        "@upstash/context7-mcp"
+        "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "command": "npx"
-    },
-    "sentry": {
+      "command": "npx",
       "autoApprove": [
-        "whoami",
-        "find_organizations",
-        "find_teams",
-        "find_projects",
-        "find_issues",
-        "find_releases",
-        "find_tags",
-        "get_issue_details",
-        "update_issue",
-        "find_errors",
-        "find_transactions",
-        "find_dsns",
-        "begin_seer_issue_fix",
-        "get_seer_issue_fix_status"
-      ],
-      "args": [
-        "-y",
-        "mcp-remote@latest",
-        "https://mcp.sentry.dev/mcp"
-      ],
-      "command": "npx"
+        "sequentialthinking"
+      ]
     }
   },
   "nativeMCPServers": [
