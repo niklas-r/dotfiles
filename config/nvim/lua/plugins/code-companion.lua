@@ -77,6 +77,8 @@ return {
       'ravitemer/mcphub.nvim',
       -- Chat history extension
       'ravitemer/codecompanion-history.nvim',
+      -- Nice markdown
+      'MeanderingProgrammer/render-markdown.nvim',
     },
     cmd = {
       'CodeCompanion',
@@ -167,32 +169,6 @@ return {
       use_bundled_binary = true,
       auto_approve = true,
     },
-  },
-  {
-    'MeanderingProgrammer/render-markdown.nvim',
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter',
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {
-      file_types = { 'markdown', 'codecompanion' },
-      html = {
-        enabled = true,
-        tag = {
-          buf = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-          file = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-          help = { icon = '󰘥 ', highlight = 'CodeCompanionChatVariable' },
-          image = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-          symbols = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-          url = { icon = '󰖟 ', highlight = 'CodeCompanionChatVariable' },
-          var = { icon = ' ', highlight = 'CodeCompanionChatVariable' },
-          tool = { icon = ' ', highlight = 'CodeCompanionChatTool' },
-          user = { icon = ' ', highlight = 'CodeCompanionChatTool' },
-          group = { icon = ' ', highlight = 'CodeCompanionChatToolGroup' },
-        },
-      },
-    },
-    ft = { 'markdown', 'codecompanion' },
   },
   -- Use mini.diff for cleaner diff when using the inline assistant or the `@insert_edit_into_file` tool
   {
