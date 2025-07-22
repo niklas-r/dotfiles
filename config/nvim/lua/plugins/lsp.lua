@@ -22,6 +22,7 @@ return {
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'marilari88/twoslash-queries.nvim',
     },
     config = function()
       local gh_token = vim.fn.system 'gh auth token'
@@ -31,7 +32,12 @@ return {
       ---@type table<string, vim.lsp.ClientConfig>
       local servers = {
         -- ts_ls = {},
-        vtsls = {},
+        vtsls = {
+          on_attach = function(client, bufnr)
+            vim.print 'vtsls attached'
+            require('twoslash-queries').attach(client, bufnr)
+          end,
+        },
         eslint = {}, -- Using ESLint LSP for code actions
         tailwindcss = {
           hovers = true,
