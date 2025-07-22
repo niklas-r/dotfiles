@@ -93,10 +93,10 @@ vim.opt.foldtext = ''
 vim.opt.maxmempattern = 500000
 
 local signs_config = {
-  [vim.diagnostic.severity.ERROR] = { icon = '', hl = 'DiagnosticSignError' },
-  [vim.diagnostic.severity.WARN] = { icon = '', hl = 'DiagnosticSignWarn' },
-  [vim.diagnostic.severity.INFO] = { icon = '', hl = 'DiagnosticSignInfo' },
-  [vim.diagnostic.severity.HINT] = { icon = '', hl = 'DiagnosticSignHint' },
+  [vim.diagnostic.severity.ERROR] = { icon = '', hl = 'DiagnosticSignError' },
+  [vim.diagnostic.severity.WARN] = { icon = '', hl = 'DiagnosticSignWarn' },
+  [vim.diagnostic.severity.INFO] = { icon = '', hl = 'DiagnosticSignInfo' },
+  [vim.diagnostic.severity.HINT] = { icon = '', hl = 'DiagnosticSignHint' },
 }
 
 local signs = { text = {}, texthl = {}, numhl = {} }
