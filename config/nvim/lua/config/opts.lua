@@ -92,20 +92,30 @@ vim.opt.foldtext = ''
 -- Setting this will allow foldexpr (among others) to use more memory
 vim.opt.maxmempattern = 500000
 
--- Remove annoying inline diagnostics text. Using Trouble and Lsp Lines plugins instead
-vim.diagnostic.config { virtual_text = false, virtual_lines = false, float = { border = 'rounded' } }
+local signs_config = {
+  [vim.diagnostic.severity.ERROR] = { icon = '', hl = 'DiagnosticSignError' },
+  [vim.diagnostic.severity.WARN] = { icon = '', hl = 'DiagnosticSignWarn' },
+  [vim.diagnostic.severity.INFO] = { icon = '', hl = 'DiagnosticSignInfo' },
+  [vim.diagnostic.severity.HINT] = { icon = '', hl = 'DiagnosticSignHint' },
+}
+
+local signs = { text = {}, texthl = {}, numhl = {} }
+for severity, config in pairs(signs_config) do
+  signs.text[severity] = config.icon
+  signs.texthl[severity] = config.hl
+  signs.numhl[severity] = config.hl
+end
+
+vim.diagnostic.config {
+  virtual_text = false,
+  virtual_lines = false,
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  signs = signs,
+}
 
 -- Use ripgrep for grepping
 vim.opt.grepformat = '%f:%l:%c:%m'
 vim.opt.grepprg = 'rg --vimgrep'
-
--- Change diagnostic symbols in the sign column (gutter)
-if vim.g.have_nerd_font then
-  local signs = { Error = '', Warn = '', Hint = '', Info = '' }
-  for type, icon in pairs(signs) do
-    local hl = 'DiagnosticSign' .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-  end
-end
 
 return {}
