@@ -3,6 +3,7 @@ arc
 audacity
 blackhole-2ch
 discord
+font-maple-mono-nf
 font-symbols-only-nerd-font
 hammerspoon
 handbrake
