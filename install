@@ -32,31 +32,42 @@ function link() {
 }
 
 echo "Symlinking dotfiles..."
+export XDG_CONFIG_HOME="$HOME/.config"
 
 link "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 link "$DOTFILES_DIR/config/.codex" "$HOME/.codex"
-link "$DOTFILES_DIR/config/bat" "$HOME/.config/bat"
-link "$DOTFILES_DIR/config/hammerspoon" "$HOME/.config/hammerspoon"
-link "$DOTFILES_DIR/config/lazygit" "$HOME/.config/lazygit"
-link "$DOTFILES_DIR/config/ncspot" "$HOME/.config/ncspot"
-link "$DOTFILES_DIR/config/nvim" "$HOME/.config/nvim"
-link "$DOTFILES_DIR/config/wezterm" "$HOME/.config/wezterm"
-link "$DOTFILES_DIR/config/zed" "$HOME/.config/zed"
-link "$DOTFILES_DIR/config/zsh" "$HOME/.config/zsh"
-link "$DOTFILES_DIR/config/atuin" "$HOME/.config/atuin"
-link "$DOTFILES_DIR/config/mcphub" "$HOME/.config/mcphub"
+link "$DOTFILES_DIR/config/bat" "$XDG_CONFIG_HOME/bat"
+link "$DOTFILES_DIR/config/hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+link "$DOTFILES_DIR/config/lazygit" "$XDG_CONFIG_HOME/lazygit"
+link "$DOTFILES_DIR/config/ncspot" "$XDG_CONFIG_HOME/ncspot"
+link "$DOTFILES_DIR/config/nvim" "$XDG_CONFIG_HOME/nvim"
+link "$DOTFILES_DIR/config/wezterm" "$XDG_CONFIG_HOME/wezterm"
+link "$DOTFILES_DIR/config/zed" "$XDG_CONFIG_HOME/zed"
+link "$DOTFILES_DIR/config/atuin" "$XDG_CONFIG_HOME/atuin"
+link "$DOTFILES_DIR/config/mcphub" "$XDG_CONFIG_HOME/mcphub"
 
 echo "Done symlinking!"
 
 
-echo "Initialize Prezto..."
+echo "Initialize ZSH environment..."
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+# change the root .zshenv file to use ZDOTDIR
+cat << EOF >| $HOME/.zshenv
+# This file is generated during install. Make changes to ${0:a:h}
+export ZDOTDIR=$ZDOTDIR
+[[ -f \$ZDOTDIR/.zshenv ]] && . \$ZDOTDIR/.zshenv
+EOF
+
+link "$DOTFILES_DIR/config/zsh" $ZDOTDIR
 
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
   link "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
-echo "Done initializing Prezto!"
+echo "Done initializing ZSH environment!"
 
 echo "Miscellaneous configurations..."
 
