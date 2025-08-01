@@ -99,4 +99,10 @@ xargs brew install --cask < Brewfile-casks.txt
 
 echo "Done installing Homebrew packages!"
 
+echo "Install miscellaneous packages..."
+
+gh extension install github/gh-copilot
+
+echo "Done installing miscellaneous packages!"
+
 echo "Done with installation!"
