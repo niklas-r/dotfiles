@@ -122,6 +122,37 @@ return {
             vim.g.copilot_enabled = state
           end,
         }):map '<leader>tA'
+
+        -- File formatting
+        Snacks.toggle({
+          name = 'Global autoformat',
+          get = function()
+            return not vim.g.disable_autoformat
+          end,
+          set = function(state)
+            if state then
+              vim.cmd [[FormatDisable]]
+            else
+              vim.cmd [[FormatEnable]]
+            end
+            vim.g.disable_autoformat = not state
+          end,
+        }):map '<leader>tF'
+
+        Snacks.toggle({
+          name = 'Buffer autoformat',
+          get = function()
+            return not vim.b.disable_autoformat
+          end,
+          set = function(state)
+            if state then
+              vim.cmd [[FormatDisable!]]
+            else
+              vim.cmd [[FormatEnable!]]
+            end
+            vim.b.disable_autoformat = not state
+          end,
+        }):map '<leader>tf'
       end,
     })
   end,

@@ -80,6 +80,16 @@ return {
         },
         lualine_c = {
           {
+            function()
+              return '󰉥'
+            end,
+            color = 'Error',
+            cond = function()
+              local buf = vim.api.nvim_get_current_buf()
+              return vim.g.disable_autoformat or vim.b[buf].disable_autoformat
+            end,
+          },
+          {
             'pretty_path',
             directories = {
               max_depth = 4,
