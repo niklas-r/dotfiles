@@ -361,11 +361,11 @@
   # Change the value of this parameter to show a different icon.
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
 
-  # Custom VSC icons
+  # Custom VCS icons
   typeset -g POWERLEVEL9K_VCS_STASHED_ICON='󱉟\u2009'
-  typeset -g POWERLEVEL9K_VCS_STAGED_ICON='\u2009'
-  typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON='\u2009'
-  typeset -g POWERLEVEL9K_VCS_CONFLICTED_ICON='\u2009'
+  typeset -g POWERLEVEL9K_VCS_STAGED_ICON='\u2009'
+  typeset -g POWERLEVEL9K_VCS_UNSTAGED_ICON='\u2009'
+  typeset -g POWERLEVEL9K_VCS_CONFLICTED_ICON='\u2009'
   # Formatter for Git status.
   #
   # Example output: master wip ⇣42⇡42 *42 merge ~42 +42 !42 ?42.
