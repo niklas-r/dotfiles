@@ -25,8 +25,6 @@ return {
           -- miscs = {}, -- Uncomment to turn off hard-coded styles
         },
         integrations = {
-          -- Avante moves fast and this integration is broken
-          -- avante = true,
           blink_cmp = true,
           dap_ui = true,
           diffview = true,
