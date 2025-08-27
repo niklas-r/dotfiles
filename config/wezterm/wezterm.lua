@@ -45,6 +45,10 @@ config.max_fps = 120
 -- Keys
 config.leader = { key = 'l', mods = 'SUPER', timeout_milliseconds = 1200 }
 config.keys = {
+  -- Scrolling
+  { key = 'PageUp', action = act.ScrollByPage(-0.5) },
+  { key = 'PageDown', action = act.ScrollByPage(0.5) },
+
   -- Send keycode for leader when pressing leader twice
   { key = config.leader.key, mods = 'LEADER|' .. config.leader.mods, action = act.SendKey { key = config.leader.key, mods = config.leader.mods } },
   { key = 'c', mods = 'LEADER', action = act.ActivateCopyMode },
