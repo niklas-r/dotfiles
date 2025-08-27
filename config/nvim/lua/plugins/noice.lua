@@ -57,6 +57,9 @@ return {
           ['vim.lsp.util.stylize_markdown'] = true,
         },
       },
+      popupmenu = {
+        enabled = false, -- disable the Noice popupmenu UI, I'm using Blink
+      },
       -- you can enable a preset for easier configuration
       presets = {
         bottom_search = true, -- use a classic bottom cmdline for search

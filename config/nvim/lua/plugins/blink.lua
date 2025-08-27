@@ -54,26 +54,6 @@ return {
           show_on_insert_on_trigger_character = false,
         },
       },
-      cmdline = {
-        keymap = {
-          ['<CR>'] = { 'accept_and_enter', 'fallback' },
-          ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
-          ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
-        },
-        completion = {
-          list = {
-            selection = {
-              auto_insert = false,
-              preselect = false,
-            },
-          },
-          menu = {
-            auto_show = true,
-          },
-          ghost_text = { enabled = true },
-        },
-      },
-
       keymap = {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
         ['<C-d>'] = { 'show_documentation', 'hide_documentation' },
