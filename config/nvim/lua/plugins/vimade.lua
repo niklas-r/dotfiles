@@ -1,7 +1,7 @@
 --- This plugins dims panes that are not active
 
 -- Used by Snacks.toggle
-vim.g.vimade_enabled = true
+vim.g.vimade_enabled = false
 
 return {
   'tadaa/vimade',
@@ -27,4 +27,13 @@ return {
       },
     },
   },
+  config = function(_, opts)
+    require('vimade').setup(opts)
+
+    if vim.g.vimade_enabled then
+      vim.cmd 'VimadeEnable'
+    else
+      vim.cmd 'VimadeDisable'
+    end
+  end,
 }
