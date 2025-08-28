@@ -5,5 +5,6 @@ return {
     'nvim-lua/plenary.nvim',
     'MeanderingProgrammer/render-markdown.nvim',
   },
+  cmd = { 'Store' },
   opts = {},
 }
