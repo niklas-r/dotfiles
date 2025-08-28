@@ -78,7 +78,20 @@ return {
       { ']', group = 'Next' },
       { 'g', group = 'Goto' },
       { 'gs', group = '[S]urround' },
-      { 'z', group = 'Fold' },
+      {
+        'z',
+        group = 'Fold/Spelling',
+
+        {
+          'zu',
+          group = 'Undo spelling',
+          {
+            mode = 'n',
+            { 'zug', 'Undo good word', desc = 'Undo mark as good' },
+            { 'zuw', 'Undo wrong word', desc = 'Undo mark as wrong' },
+          },
+        },
+      },
     },
   },
 }

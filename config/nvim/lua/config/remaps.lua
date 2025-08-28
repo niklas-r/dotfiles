@@ -60,7 +60,7 @@ vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Black hole delete' })
 vim.keymap.set('n', 'q', '<Nop>')
 vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 
--- Keybinds which will get you cancelled
+-- Key binds which will get you cancelled
 vim.keymap.set('n', '<C-c>', 'ciw')
 vim.keymap.set('n', '<C-s>', '<cmd>w<cr>', { desc = 'Save current buffer' })
 vim.keymap.set('n', '<C-S-s>', '<cmd>wa<cr>', { desc = 'Save all buffers' })
@@ -103,5 +103,9 @@ vim.keymap.set('n', '<leader>bo', ':%bd!|e#<CR>', { desc = 'Close [O]ther Buffer
 
 -- file
 vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = '[N]ew File' })
+
+-- spelling
+vim.keymap.set('n', ']S', ']s', { desc = 'Next bad word', noremap = true })
+vim.keymap.set('n', '[S', '[s', { desc = 'Prev bad word', noremap = true })
 
 return {}
