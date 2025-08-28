@@ -129,8 +129,8 @@ return {
             async = true,
             -- Optional settings
             opts = {
-              max_completions = 1,
-              max_attempts = 2,
+              max_completions = 2,
+              max_attempts = 3,
             },
           },
           lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
