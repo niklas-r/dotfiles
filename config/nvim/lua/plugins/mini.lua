@@ -66,7 +66,7 @@ local ai_whichkey = function(opts)
 end
 
 return {
-  'echasnovski/mini.nvim',
+  'nvim-mini/mini.nvim',
   event = 'VeryLazy',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',

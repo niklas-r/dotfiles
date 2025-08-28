@@ -4,7 +4,7 @@ return {
   version = '*', -- Remove if you DON'T want to use the stable version
   enabled = false,
   dependencies = {
-    'echasnovski/mini.nvim', -- Optional: Needed for line highlighting (full mini.nvim plugin)
+    'nvim-mini/mini.nvim', -- Optional: Needed for line highlighting (full mini.nvim plugin)
     'folke/snacks.nvim', -- Optional: If you want to use the `:Debugprint search` command with snacks.nvim
     'folke/which-key.nvim',
   },

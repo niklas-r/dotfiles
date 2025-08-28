@@ -72,7 +72,7 @@ return {
       -- Picker
       'folke/snacks.nvim',
       -- Nicer diffs
-      'echasnovski/mini.diff',
+      'nvim-mini/mini.diff',
       -- Dependepcies used by extensions
       'ravitemer/mcphub.nvim',
       -- Chat history extension
@@ -172,7 +172,7 @@ return {
   },
   -- Use mini.diff for cleaner diff when using the inline assistant or the `@insert_edit_into_file` tool
   {
-    'echasnovski/mini.diff',
+    'nvim-mini/mini.diff',
     config = function()
       local diff = require 'mini.diff'
       diff.setup {
