@@ -30,9 +30,7 @@ return {
   config = function(_, opts)
     require('vimade').setup(opts)
 
-    if vim.g.vimade_enabled then
-      vim.cmd 'VimadeEnable'
-    else
+    if not vim.g.vimade_enabled then
       vim.cmd 'VimadeDisable'
     end
   end,

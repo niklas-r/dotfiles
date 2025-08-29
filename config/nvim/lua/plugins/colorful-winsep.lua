@@ -1,4 +1,5 @@
 vim.g.colorful_winsep_enabled = true
+
 return {
   'nvim-zh/colorful-winsep.nvim',
   opts = {
