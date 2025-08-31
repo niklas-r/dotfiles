@@ -69,8 +69,6 @@ return {
           -- You can optionally set descriptions to the mappings (used in the desc parameter of
           -- nvim_buf_set_keymap) which plugins like which-key display
           ['ic'] = { query = '@class.inner', desc = 'in class' },
-          -- You can also use captures from other query groups like `locals.scm`
-          ['as'] = { query = '@local.scope', query_group = 'locals', desc = 'around scope' },
         },
 
         -- You can choose the select mode (default is charwise 'v')
@@ -114,7 +112,6 @@ return {
           [']m'] = { query = '@function.outer', desc = 'Next [M]ethod' },
           [']c'] = { query = '@class.outer', desc = 'Next [C]lass' },
           [']o'] = { query = '@loop.*', desc = 'Next L[o]op' },
-          [']s'] = { query = '@local.scope', query_group = 'locals', desc = 'Next [S]cope' },
           [']z'] = { query = '@fold', query_group = 'folds', desc = 'Next [F]old' },
         },
         goto_next_end = {
@@ -125,7 +122,6 @@ return {
           ['[m'] = { query = '@function.outer', desc = 'Prev [M]ethod' },
           ['[c'] = { query = '@class.outer', desc = 'Prev [C]lass' },
           ['[o'] = { query = '@loop.*', desc = 'Prev L[o]op' },
-          ['[s'] = { query = '@local.scope', query_group = 'locals', desc = 'Prev [S]cope' },
           ['[z'] = { query = '@fold', query_group = 'folds', desc = 'Prev [F]old' },
         },
         goto_previous_end = {
