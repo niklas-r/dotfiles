@@ -47,4 +47,6 @@ config/zsh/.zshrc
 
 config/.codex/log
 config/.codex/sessions
+config/.codex/auth.json
+config/.codex/version.json
 config/.codex/history.jsonl

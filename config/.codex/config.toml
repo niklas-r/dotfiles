@@ -1,0 +1,7 @@
+[mcp_servers.sentry]
+command = "npx"
+args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
+
+[mcp_servers.sequeltial_thinking]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
