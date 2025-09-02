@@ -69,6 +69,7 @@
   "smart-splits.nvim": { "branch": "master", "commit": "67cbc412b83014ea5f92d617471d459714b5e6c7" },
   "snacks.nvim": { "branch": "main", "commit": "bc0630e43be5699bb94dadc302c0d21615421d93" },
   "store.nvim": { "branch": "main", "commit": "1359fe210f619f8e54cb4bc5fdcc40c1edc18876" },
+  "strudel.nvim": { "branch": "main", "commit": "67ad931ab516e30fd04dc8b547799137ac54b4d1" },
   "tailwind-tools": { "branch": "master", "commit": "fbe982901d4508b0dcd80e07addf0fcb6dab6c49" },
   "template-string.nvim": { "branch": "main", "commit": "da5f326b65fb74fd068aa1d8b55461b64c8fb23b" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
