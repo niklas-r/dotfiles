@@ -42,6 +42,19 @@ return {
             }
           end,
         }):map '<leader>tL'
+        Snacks.toggle({
+          name = 'Line inspect',
+          get = function()
+            return require('lensline').is_enabled()
+          end,
+          set = function(state)
+            if state then
+              require('lensline').enable()
+            else
+              require('lensline').disable()
+            end
+          end,
+        }):map '<leader>tI'
 
         -- Git toggles
         Snacks.toggle({
