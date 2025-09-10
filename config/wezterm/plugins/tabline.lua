@@ -5,6 +5,59 @@ return {
   setup = function(wez)
     local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
 
+    local function getTabComponents(isActive)
+      return {
+        'index',
+        { 'process', padding = { left = 0, right = 0 }, icons_only = true },
+        {
+          'parent',
+          padding = 0,
+          max_length = isActive and 15 or 5,
+          cond = function(tab)
+            return tab.tab_title == ''
+          end,
+          fmt = function(output)
+            return output .. '/'
+          end,
+        },
+        {
+          'cwd',
+          padding = { left = 0, right = 1 },
+          max_length = isActive and 20 or 10,
+
+          cond = function(tab)
+            return tab.tab_title == ''
+          end,
+        },
+        {
+          'tab',
+          icon = '',
+          padding = { left = 0, right = 1 },
+          max_length = 35,
+          cond = function(tab)
+            return #tab.tab_title > 1
+          end,
+        },
+        {
+          'output',
+          cond = function(tab)
+            if isActive then
+              return false
+            end
+
+            for _, pane in ipairs(tab.panes) do
+              if pane.has_unseen_output then
+                return true
+              end
+            end
+
+            return false
+          end,
+        },
+        { 'zoomed', padding = 0 },
+      }
+    end
+
     tabline.setup {
       options = {
         icons_enabled = true,
@@ -32,39 +85,20 @@ return {
           full = wez.nerdfonts.fa_battery_full,
         },
         tabline_a = {
-          function(window)
-            local mode = 'normal'
-            local key_table = window:active_key_table()
-
-            if key_table ~= nil and key_table:find '_mode$' then
-              -- strip string '_mode' from end
-              mode = key_table:sub(1, -6)
-            elseif window:leader_is_active() then
-              mode = 'leader'
-            end
-
-            return wez.format {
-              { Text = ' ' .. mode:upper() .. ' ' },
-            }
-          end,
+          {
+            'mode',
+            fmt = function(output, window)
+              if window:leader_is_active() then
+                return 'LEADER'
+              end
+              return output
+            end,
+          },
         },
         tabline_b = { 'workspace' },
         tabline_c = { ' ' },
-        tab_active = {
-          'index',
-          { 'process', padding = { left = 0, right = 0 }, icons_only = true },
-          { 'parent', padding = 0, max_length = 15 },
-          '/',
-          { 'cwd', padding = { left = 0, right = 1 }, max_length = 20 },
-          { 'zoomed', padding = 0 },
-        },
-        tab_inactive = {
-          'index',
-          { 'process', padding = { left = 0, right = 0 }, icons_only = true },
-          { 'parent', padding = 0, max_length = 5 },
-          '/',
-          { 'cwd', padding = { left = 0, right = 1 }, max_length = 10 },
-        },
+        tab_active = getTabComponents(true),
+        tab_inactive = getTabComponents(false),
         tabline_x = { 'ram', 'cpu' },
         tabline_y = { 'datetime', 'battery' },
         tabline_z = { 'hostname' },

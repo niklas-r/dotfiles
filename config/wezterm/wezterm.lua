@@ -78,15 +78,29 @@ config.keys = {
   },
 
   -- Tab keybindings
-  { key = 't', mods = 'LEADER', action = act.SpawnTab 'CurrentPaneDomain' },
-  { key = '[', mods = 'LEADER', action = act.ActivateTabRelative(-1) },
-  { key = ']', mods = 'LEADER', action = act.ActivateTabRelative(1) },
-  { key = 'n', mods = 'LEADER', action = act.ShowTabNavigator },
+
+  {
+    key = 't',
+    mods = 'LEADER',
+    action = act.ShowTabNavigator,
+  },
+  {
+    key = 'T',
+    mods = 'LEADER',
+    action = act.PromptInputLine {
+      description = 'Enter new name for tab',
+      action = wezterm.action_callback(function(window, _, line)
+        -- line will be `nil` if they hit escape without entering anything
+        -- An empty string if they just hit enter
+        -- Or the actual line of text they wrote
+        if line then
+          window:active_tab():set_title(line)
+        end
+      end),
+    },
+  },
   -- Key table for moving tabs around
   { key = 'm', mods = 'LEADER', action = act.ActivateKeyTable { name = 'move_tab_mode', one_shot = false } },
-  -- Or shortcuts to move tab w/o move_tab_mode table. SHIFT is for when caps lock is on
-  { key = '{', mods = 'LEADER', action = act.MoveTabRelative(-1) },
-  { key = '}', mods = 'LEADER', action = act.MoveTabRelative(1) },
 
   -- Workspace management
   { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
@@ -162,7 +176,7 @@ config.key_tables = {
 config.use_fancy_tab_bar = false
 config.status_update_interval = 1000
 config.tab_bar_at_bottom = false
-config.tab_max_width = 32
+config.tab_max_width = 100
 
 -- Load plugins
 require('plugins/tabline').setup(wezterm)
