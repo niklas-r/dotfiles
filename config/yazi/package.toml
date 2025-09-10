@@ -1,0 +1,22 @@
+[[plugin.deps]]
+use = "yazi-rs/plugins:zoom"
+rev = "d7588f6"
+hash = "4a47a9cd4d8b3a963cb4cc593664b77e"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:full-border"
+rev = "d7588f6"
+hash = "3996fc74044bc44144b323686f887e1"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:git"
+rev = "d7588f6"
+hash = "63b6c222bf2103b3023389dde5e2ecfe"
+
+[[plugin.deps]]
+use = "yazi-rs/plugins:chmod"
+rev = "d7588f6"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
+
+[flavor]
+deps = []
