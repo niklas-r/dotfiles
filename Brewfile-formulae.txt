@@ -35,7 +35,6 @@ tarkah/tickrs/tickrs
 tcl-tk
 tldr
 tokei
-tree
 uv
 virtualenv
 watchexec
