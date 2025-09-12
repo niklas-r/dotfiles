@@ -58,7 +58,6 @@ General code style:
 
 OOP code style:
 - Value composition over inheritance
-- Use appropriate comments (JSDoc for TS/JS, docsting for Python etc.) for methods and classes to explain their purpose and usage, include examples where appropriate.
 - Push details to private methods
 - Proper encapsulation and adherence to OOP principles such as SOLID
 ]]
@@ -133,10 +132,17 @@ return {
         },
         history = {
           enabled = true,
-          -- Number of days after which chats are automatically deleted (0 to disable)
-          expiration_days = 30,
-          -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
-          picker = 'snacks',
+          opts = {
+            -- Number of days after which chats are automatically deleted (0 to disable)
+            expiration_days = 30,
+            -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
+            picker = 'snacks',
+            title_generation_opts = {
+              -- We set copilot as the adapter because ACP adapters does not support title generation currently
+              adapter = 'copilot', -- "copilot"
+              model = 'gpt-4o', -- "gpt-4o"
+            },
+          },
         },
       },
       prompt_library = require 'plugins.code-companion.prompts',
