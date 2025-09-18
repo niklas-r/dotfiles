@@ -10,6 +10,8 @@ return {
         bigfile = false,
         dotenv = false,
         pem = false,
+        ['*.str'] = false,
+        ['*.strudel.js'] = false,
       },
     },
     dependencies = {},

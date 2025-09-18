@@ -3,7 +3,7 @@ local map = function(lhs, rhs, desc)
 end
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-  pattern = '*.str',
+  pattern = { '*.str', '*.strudel.js' },
   callback = function()
     vim.schedule(function()
       local strudel = require 'strudel'
