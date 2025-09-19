@@ -69,7 +69,6 @@
   "snacks.nvim": { "branch": "main", "commit": "d67a47739dfc652cfcf66c59e929c704a854b37a" },
   "store.nvim": { "branch": "main", "commit": "1359fe210f619f8e54cb4bc5fdcc40c1edc18876" },
   "strudel.nvim": { "branch": "main", "commit": "5a8e6db66502f55a988025e7f081c84843021c76" },
-  "tailwind-tools": { "branch": "master", "commit": "fbe982901d4508b0dcd80e07addf0fcb6dab6c49" },
   "template-string.nvim": { "branch": "main", "commit": "da5f326b65fb74fd068aa1d8b55461b64c8fb23b" },
   "todo-comments.nvim": { "branch": "main", "commit": "304a8d204ee787d2544d8bc23cd38d2f929e7cc5" },
   "tokyonight.nvim": { "branch": "main", "commit": "14fd5ff7f84027064724ec3157fe903199e77ded" },
