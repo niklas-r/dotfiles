@@ -90,7 +90,7 @@ vim.opt.smoothscroll = true
 -- Setting foldexpr settings through auto command for better performance
 vim.opt.foldtext = ''
 -- Setting this will allow foldexpr (among others) to use more memory
-vim.opt.maxmempattern = 500000
+vim.opt.maxmempattern = 2000000
 
 local signs_config = {
   [vim.diagnostic.severity.ERROR] = { icon = '', hl = 'DiagnosticSignError' },
