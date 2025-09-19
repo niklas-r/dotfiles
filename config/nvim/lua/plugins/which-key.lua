@@ -73,7 +73,6 @@ return {
       { '<leader>t', group = '[T]oggles' },
       { '<leader>b', group = '[B]uffers' },
       { '<leader><tab>', group = '[T]abs' },
-      { '<leader>y', group = '[Y]arn' },
       { '<leader>q', group = '[Q]uit/session' },
       { '[', group = 'Prev' },
       { ']', group = 'Next' },
