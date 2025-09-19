@@ -34,7 +34,6 @@ return {
         -- ts_ls = {},
         vtsls = {
           on_attach = function(client, bufnr)
-            vim.print 'vtsls attached'
             require('twoslash-queries').attach(client, bufnr)
           end,
         },
@@ -42,12 +41,6 @@ return {
         tailwindcss = {
           hovers = true,
           suggestions = true,
-          -- Only load Tailwind LSP if a config file is found in root
-          ---@diagnostic disable-next-line: assign-type-mismatch
-          root_dir = function(fname)
-            local root_pattern = require('lspconfig').util.root_pattern('tailwind.config.cjs', 'tailwind.config.js', 'postcss.config.js')
-            return root_pattern(fname)
-          end,
         },
         jsonls = {
           settings = {
