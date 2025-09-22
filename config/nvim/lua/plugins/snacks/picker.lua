@@ -19,9 +19,9 @@ return {
   'folke/snacks.nvim',
   keys = {
     -- stylua: ignore start
-    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true }, hidden = true } end, desc = "[F]iles" },
+    { "<leader>sf", function() Snacks.picker.files { matcher = { frecency = true }, hidden = true, layout = { preset = "vscode" } } end, desc = "[F]iles" },
     ---@diagnostic disable-next-line: undefined-field
-    { "<leader>sF", function() Snacks.picker.smart { hidden = true } end, desc = "[F]iles Smart" },
+    { "<leader>sF", function() Snacks.picker.smart { hidden = true, layout = { preset = "vscode" } } end, desc = "[F]iles Smart" },
     { "<leader><space>", function() Snacks.picker.buffers() end, desc = "[B]uffers" },
     -- utilities
     { "<leader>s:", function() Snacks.picker.command_history() end, desc = "[:] Command History" },
