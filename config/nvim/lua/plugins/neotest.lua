@@ -13,7 +13,7 @@ return {
     require('neotest').setup {
       adapters = {
         require 'neotest-vitest' {
-          vitestCommand = 'yarn vitest run --coverage.enabled=false',
+          vitestCommand = 'npx vitest run --coverage.enabled=false --reporter=dot',
         },
       },
       output = {
