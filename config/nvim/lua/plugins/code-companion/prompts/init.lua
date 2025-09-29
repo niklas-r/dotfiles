@@ -39,7 +39,5 @@
 local M = {}
 
 M['Beast mode'] = require 'plugins.code-companion.prompts.beast_mode'
-M['Get to work'] = require 'plugins.code-companion.prompts.cancer'
-M['context7'] = require 'plugins.code-companion.prompts.context7'
 
 return M
