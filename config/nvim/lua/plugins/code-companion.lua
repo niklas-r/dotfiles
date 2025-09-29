@@ -88,7 +88,7 @@ return {
     opts = {
       opts = {
         ---@param opts { adapter: any, language: string }
-        system_prompt = function(opts)
+        system_prompt = function(_)
           return default_system_prompt .. '\n\n' .. custom_system_prompt
         end,
       },

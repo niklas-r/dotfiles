@@ -1,7 +1,7 @@
 --- @class VirtualTextSpinner.SpinnerOpts
---- @field spinner_text? string Text to display before the spinner
---- @field spinner_frames? string[] Spinner frames to use for the spinner
---- @field hl_group? string Highlight group for the spinner
+--- @field spinner_text string Text to display before the spinner
+--- @field spinner_frames string[] Spinner frames to use for the spinner
+--- @field hl_group string Highlight group for the spinner
 --- @field repeat_interval number Interval in milliseconds to update the spinner
 --- @field extmark vim.api.keyset.set_extmark Extmark options passed to nvim_buf_set_extmark
 local spinner_opts = {
