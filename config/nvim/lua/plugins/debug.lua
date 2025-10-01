@@ -6,14 +6,36 @@ return {
       'jay-babu/mason-nvim-dap.nvim',
       'mxsdev/nvim-dap-vscode-js',
     },
-    lazy = true,
     keys = function(_, keys)
-      local dap = require 'dap'
       return {
-        { '<F5>', dap.continue, desc = 'Debug: Start/Continue' },
-        { '<F1>', dap.step_into, desc = 'Debug: Step Into' },
-        { '<F2>', dap.step_over, desc = 'Debug: Step Over' },
-        { '<F3>', dap.step_out, desc = 'Debug: Step Out' },
+        {
+          '<F5>',
+          function()
+            require('dap').continue()
+          end,
+          desc = 'Debug: Start/Continue',
+        },
+        {
+          '<F1>',
+          function()
+            require('dap').step_into()
+          end,
+          desc = 'Debug: Step Into',
+        },
+        {
+          '<F2>',
+          function()
+            require('dap').step_over()
+          end,
+          desc = 'Debug: Step Over',
+        },
+        {
+          '<F3>',
+          function()
+            require('dap').step_out()
+          end,
+          desc = 'Debug: Step Out',
+        },
         unpack(keys),
       }
     end,
@@ -53,14 +75,16 @@ return {
   },
   {
     'miroshQa/debugmaster.nvim',
-    -- osv is needed if you want to debug neovim lua code. Also can be used
-    -- as a way to quickly test-drive the plugin without configuring debug adapters
-    dependencies = { 'mfussenegger/nvim-dap', 'jbyuki/one-small-step-for-vimkind' },
-    lazy = true,
+    dependencies = { 'mfussenegger/nvim-dap' },
     keys = function(_, keys)
-      local dm = require 'debugmaster'
       return {
-        { '<leader>D', dm.mode.toggle, { desc = 'Debug mode', mode = { 'n', 'v' }, nowait = true } },
+        {
+          '<leader>D',
+          function()
+            require('debugmaster').mode.toggle()
+          end,
+          { desc = 'Debug mode', mode = { 'n', 'v' }, nowait = true },
+        },
         unpack(keys),
       }
     end,

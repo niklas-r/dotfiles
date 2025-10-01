@@ -22,6 +22,7 @@ vim.api.nvim_create_autocmd('RecordingEnter', {
   callback = function()
     vim.g.macro_recording = 'Recording @' .. vim.fn.reg_recording()
     vim.cmd 'redrawstatus'
+    require('lualine').refresh { force = true, placement = { 'statusline' } }
   end,
 })
 
@@ -31,6 +32,7 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
   callback = function()
     vim.g.macro_recording = ''
     vim.cmd 'redrawstatus'
+    require('lualine').refresh { force = true, placement = { 'statusline' } }
   end,
 })
 

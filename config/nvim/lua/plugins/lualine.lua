@@ -30,6 +30,15 @@ return {
       end,
     }):map '<leader>tN'
 
+    local dmode_enabled = false
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'DebugModeChanged',
+      callback = function(args)
+        dmode_enabled = args.data.enabled
+        require('lualine').refresh { force = true, placement = { 'statusline' } }
+      end,
+    })
+
     return {
       options = {
         component_separators = { left = '╲', right = '╱' },
@@ -114,18 +123,32 @@ return {
             color = 'DiagnosticVirtualTextHint',
             separator = { left = '', right = '' },
           },
-          -- stylua: ignore
           {
-            function() return "  " .. require("dap").status() end,
-            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
-            color = function() return { fg = Snacks.util.color("Debug") } end,
+            function()
+              return '  DEBUG'
+            end,
+            cond = function()
+              return dmode_enabled
+            end,
+            color = function()
+              local dColor = Snacks.util.color('dCursor', 'bg')
+              if dColor == nil then
+                return
+              end
+              return {
+                fg = Snacks.util.blend(dColor, '#000000', 0.3),
+                bg = dColor,
+              }
+            end,
+            separator = { left = '', right = '' },
             fmt = util.trunc(trunc_widths.L, 8, trunc_widths.M, false),
           },
-          -- stylua: ignore
           {
-            require("lazy.status").updates,
-            cond = require("lazy.status").has_updates,
-            color = function() return { fg = Snacks.util.color("Special") } end,
+            require('lazy.status').updates,
+            cond = require('lazy.status').has_updates,
+            color = function()
+              return { fg = Snacks.util.color 'Special' }
+            end,
             fmt = util.trunc(0, 0, trunc_widths.L, false),
           },
           {
