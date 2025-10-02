@@ -7,7 +7,6 @@ return {
     local pi = require 'package-info'
     pi.setup {
       autostart = false,
-      hide_up_to_date = true,
     }
 
     local wk = require 'which-key'
