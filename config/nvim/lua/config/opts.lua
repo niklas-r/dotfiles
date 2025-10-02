@@ -118,4 +118,7 @@ vim.diagnostic.config {
 vim.opt.grepformat = '%f:%l:%c:%m'
 vim.opt.grepprg = 'rg --vimgrep'
 
+vim.o.conceallevel = 2
+vim.o.concealcursor = 'nc'
+
 return {}
