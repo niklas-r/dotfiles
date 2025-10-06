@@ -3,7 +3,10 @@ local snacks_provider = {
 }
 
 local anthropic_adapter = {
-  adapter = 'anthropic',
+  adapter = {
+    name = 'anthropic',
+    model = 'claude-sonnet-4-5-20250929',
+  },
 }
 
 return {
