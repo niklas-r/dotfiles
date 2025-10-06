@@ -22,6 +22,20 @@ return {
         -- Defaults to a picker that supports `fzf-lua`, `telescope.nvim` and `mini.pick`
         ---@type fun(cmd:string, opts:table)|nil
         pick = nil,
+          -- stylua: ignore start
+          header = [[ 
+                                                                       
+                                                                     
+       ████ ██████           █████      ██                     
+      ███████████             █████                             
+      █████████ ███████████████████ ███   ███████████   
+     █████████  ███    █████████████ █████ ██████████████   
+    █████████ ██████████ █████████ █████ █████ ████ █████   
+  ███████████ ███    ███ █████████ █████ █████ ████ █████  
+ ██████  █████████████████████ ████ █████ █████ ████ ██████ 
+                                                                       
+          ]],
+        -- stylua: ignore end
       },
       -- item field formatters
       formats = {
@@ -41,15 +55,7 @@ return {
         end,
       },
       sections = {
-        {
-          section = 'terminal',
-          cmd = vim.fn.stdpath 'config' .. '/scripts/animate-header.sh' .. ' ' .. vim.fn.stdpath 'config' .. '/static/neovim-graffiti.cat',
-          align = 'center',
-          indent = 0,
-          height = 9,
-          width = 71,
-          padding = 2,
-        },
+        { section = 'header' },
         {
           align = 'center',
           padding = 1,
