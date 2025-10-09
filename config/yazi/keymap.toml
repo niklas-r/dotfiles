@@ -40,3 +40,9 @@ desc = "Zoom out hovered file"
 on   = [ "c", "m" ]
 run  = "plugin chmod"
 desc = "Chmod on selected files"
+
+# What size plugin
+[[mgr.prepend_keymap]]
+on = [ "n", "s" ]
+run  = "plugin what-size"
+desc = "Calc size of selection or cwd"
