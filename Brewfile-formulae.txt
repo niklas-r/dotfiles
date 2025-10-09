@@ -3,6 +3,7 @@ atuin
 bat
 bitwarden-cli
 btop
+carapace
 cloudflared
 cmatrix
 deno
@@ -25,6 +26,7 @@ jq
 lazygit
 lolcat
 lua
+moor
 ncspot
 python@3.10
 ripgrep
