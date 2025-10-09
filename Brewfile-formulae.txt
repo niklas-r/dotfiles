@@ -15,6 +15,7 @@ ffmpeg
 fzf
 gh
 git
+git-absorb
 git-delta
 git-filter-repo
 graphviz
