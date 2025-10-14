@@ -105,6 +105,16 @@ return {
           end,
         }):map '<leader>tc'
 
+        Snacks.toggle({
+          name = 'invisible characters',
+          get = function()
+            return vim.opt.list:get()
+          end,
+          set = function(state)
+            vim.opt.list = state
+          end,
+        }):map '<leader>tI'
+
         -- Various
         Snacks.toggle({
           name = 'auto-completion',
