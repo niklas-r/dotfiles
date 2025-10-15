@@ -11,9 +11,6 @@ vim.keymap.set('n', '<Esc>', function()
   end
 end)
 
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
-
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
@@ -30,6 +27,15 @@ vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selection up' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'Join lines' })
 -- Same but produce no space
 vim.keymap.set('n', 'gJ', 'mzgJ`z', { desc = 'Join lines with no spaces' })
+
+-- Helpers to join lines without messing up jump list
+vim.keymap.set('n', 'J', function()
+  vim.cmd 'keepjumps normal! J'
+end, { desc = 'Join lines' })
+
+vim.keymap.set('n', 'gJ', function()
+  vim.cmd 'keepjumps normal! gJ'
+end, { desc = 'Join lines with no spaces' })
 
 -- Center screen when navigating
 -- Currently handled by animated scrolling plugin
