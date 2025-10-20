@@ -4,7 +4,6 @@ return {
     'neovim/nvim-lspconfig',
     'nvim-treesitter/nvim-treesitter',
     'nvim-lua/plenary.nvim',
-    'folke/snacks.nvim', -- Necessary for Snacks toggle
   },
   cmd = { 'I18nVirtualTextEnable' }, -- Lazy load on command
   opts = {
@@ -19,28 +18,34 @@ return {
   },
   init = function()
     local enabled = false
-    require('snacks')
-      .toggle({
-        name = 'i18n virtual text',
-        get = function()
-          return enabled
-        end,
-        set = function(state)
-          if state then
-            vim.cmd 'I18nVirtualTextEnable'
-            vim.cmd 'I18nDiagnosticEnable'
-            vim.keymap.set('n', '<leader>ct', '<CMD>:I18nEditTranslation<CR>', { desc = 'I18n: Edit [T]ranslation', silent = true })
-          else
-            vim.cmd 'I18nVirtualTextDisable'
-            vim.cmd 'I18nDiagnosticDisable'
-            vim.keymap.del('n', '<leader>ct')
-          end
-          enabled = state
-        end,
-      })
-      :map '<leader>ti'
-  end,
-  config = function(_, opts)
-    require('js-i18n').setup(opts)
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'VeryLazy',
+      once = true,
+      callback = function()
+        if require 'snacks' ~= nil then
+          require('snacks')
+            .toggle({
+              name = 'i18n virtual text',
+              get = function()
+                return enabled
+              end,
+              set = function(state)
+                if state then
+                  vim.cmd 'I18nVirtualTextEnable'
+                  vim.cmd 'I18nDiagnosticEnable'
+                  vim.keymap.set('n', '<leader>ct', '<CMD>:I18nEditTranslation<CR>', { desc = 'I18n: Edit [T]ranslation', silent = true })
+                else
+                  vim.cmd 'I18nVirtualTextDisable'
+                  vim.cmd 'I18nDiagnosticDisable'
+                  vim.keymap.del('n', '<leader>ct')
+                end
+                enabled = state
+              end,
+            })
+            :map '<leader>ti'
+        end
+      end,
+    })
   end,
 }
