@@ -20,15 +20,20 @@ return {
       L = 140,
     }
 
-    Snacks.toggle({
-      name = 'lualine lsp names',
-      get = function()
-        return vim.g.custom_lualine_show_lsp_names
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'VeryLazy',
+      callback = function()
+        Snacks.toggle({
+          name = 'lualine lsp names',
+          get = function()
+            return vim.g.custom_lualine_show_lsp_names
+          end,
+          set = function(state)
+            vim.g.custom_lualine_show_lsp_names = state
+          end,
+        }):map '<leader>tN'
       end,
-      set = function(state)
-        vim.g.custom_lualine_show_lsp_names = state
-      end,
-    }):map '<leader>tN'
+    })
 
     local dmode_enabled = false
     vim.api.nvim_create_autocmd('User', {

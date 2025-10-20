@@ -1,14 +1,21 @@
 return {
   {
     'catppuccin/nvim',
-    dependencies = {
-      'nvim-lualine/lualine.nvim',
-    },
     name = 'catppuccin',
     -- enabled = false,
     priority = 1000,
-    config = function()
-      require('catppuccin').setup {
+    opts = function()
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'VeryLazy',
+        once = true,
+        callback = function()
+          if require 'lualine' ~= nil then
+            require('lualine').setup { options = { theme = 'catppuccin' } }
+          end
+        end,
+      })
+
+      return {
         styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
           comments = { 'italic' }, -- Change the style of comments
           conditionals = {},
@@ -45,10 +52,6 @@ return {
           which_key = true,
         },
       }
-      -- Hack but atleast the config is in one place
-      vim.schedule(function()
-        vim.cmd ":lua require'lualine'.setup { options = { theme = 'catppuccin' } }"
-      end)
     end,
   },
   {
