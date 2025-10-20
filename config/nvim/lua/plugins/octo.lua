@@ -4,9 +4,27 @@ return {
     'nvim-lua/plenary.nvim',
     'folke/snacks.nvim',
     'nvim-tree/nvim-web-devicons',
+    'folke/which-key.nvim',
   },
   cmd = { 'Octo' }, -- Lazy load on command
   keys = {
+    -- Descriptions for which-key
+    { '<leader>gh', desc = 'Git[h]ub' },
+    { '<leader>ghi', desc = '[I]ssues' },
+    { '<leader>ghp', desc = '[P]ull Request' },
+    { '<leader>ghr', desc = '[R]epos/[R]eview' },
+    { '<leader>ght', desc = '[T]hreads' },
+    { '<leader>ghc', desc = '[C]omments' },
+    { '<leader>ghl', desc = '[L]abels' },
+    { '<leader>gha', desc = '[A]ssignees' },
+    { '<leader>ghv', desc = 'Re[v]iewers' },
+    { '<leader>ghm', desc = '[M]ilestones' },
+    { '<leader>ghk', desc = 'Project [C]ards' },
+    { '<leader>ghg', desc = '[G]ists' },
+    { '<leader>ghs', desc = '[S]earch' },
+    { '<leader>ghn', desc = '[N]otifications' },
+    { '<leader>ghd', desc = '[D]iscussions' },
+    { '<leader>ghw', desc = '[W]orkflow Runs' },
     -- Issues
     { '<leader>ghil', '<cmd>Octo issue list<cr>', desc = 'List Issues' },
     { '<leader>ghis', '<cmd>Octo issue search<cr>', desc = 'Search Issues' },
@@ -119,27 +137,6 @@ return {
     -- Workflow Runs
     { '<leader>ghwl', '<cmd>Octo run list<cr>', desc = 'List Workflow Runs' },
   },
-  init = function()
-    local wk = require 'which-key'
-    wk.add {
-      { '<leader>gh', group = 'Git[h]ub' },
-      { '<leader>ghi', group = '[I]ssues' },
-      { '<leader>ghp', group = '[P]ull Request' },
-      { '<leader>ghr', group = '[R]epos/[R]eview' },
-      { '<leader>ght', group = '[T]hreads' },
-      { '<leader>ghc', group = '[C]omments' },
-      { '<leader>ghl', group = '[L]abels' },
-      { '<leader>gha', group = '[A]ssignees' },
-      { '<leader>ghv', group = 'Re[v]iewers' },
-      { '<leader>ghm', group = '[M]ilestones' },
-      { '<leader>ghk', group = 'Project [C]ards' },
-      { '<leader>ghg', group = '[G]ists' },
-      { '<leader>ghs', group = '[S]earch' },
-      { '<leader>ghn', group = '[N]otifications' },
-      { '<leader>ghd', group = '[D]iscussions' },
-      { '<leader>ghw', group = '[W]orkflow Runs' },
-    }
-  end,
   opts = {
     -- This will enable LSP powered features during review but requires us to checkout the branch for review
     use_local_fs = true,

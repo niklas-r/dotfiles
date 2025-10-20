@@ -9,11 +9,6 @@ return {
   },
   cmd = { 'Coverage', 'CoverageLoad', 'CoverageLoadLcov', 'CoverageShow', 'CoverageHide', 'CoverageToggle', 'CoverageClear', 'CoverageSummary' },
   init = function()
-    local wk = require 'which-key'
-    wk.add {
-      { '<leader>uc', group = '[C]ode coverage' },
-    }
-
     vim.api.nvim_create_autocmd('User', {
       pattern = 'VeryLazy',
       callback = function()
@@ -36,6 +31,8 @@ return {
     })
   end,
   keys = {
+    -- Description for which-key
+    { '<leader>uc', desc = '[C]ode coverage' },
     {
       '<leader>ucs',
       '<CMD>CoverageSummary<CR>',

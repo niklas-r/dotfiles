@@ -1,6 +1,9 @@
 return {
   {
     'FabijanZulj/blame.nvim',
+    dependencies = {
+      'folke/which-key.nvim',
+    },
     event = 'BufRead',
     config = function()
       require('blame').setup {}

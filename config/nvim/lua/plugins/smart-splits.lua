@@ -1,13 +1,12 @@
+-- This enables us to lazy load smart splits
+vim.g.smart_splits_multiplexer_integration = 'wezterm'
+
 return {
   'mrjones2014/smart-splits.nvim',
   dependencies = {
     'folke/which-key.nvim',
   },
-  lazy = false, -- Needs to be false to work with Wezterm integration
-  init = function()
-    local wk = require 'which-key'
-    wk.add { '<leader>Sb', group = '[B]uffer' }
-  end,
+  event = 'VeryLazy',
   opts = {
     ignored_buftypes = {
       'nofile',
