@@ -1,6 +1,10 @@
+promptToReturnFromSubprocess: false
+
 git:
   paging:
     # colorArg: always
     pager: delta --paging=never
 
+  pagers:
+    - useExternalDiffGitConfig: true
 

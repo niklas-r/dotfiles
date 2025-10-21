@@ -21,3 +21,18 @@
 	line-numbers = true
 [merge]
 	conflictStyle = zdiff3
+[diff]
+	; Set difftastic as default tool when calling "git difftool"
+	tool = difftastic
+	; Set difftastic as default for "git diff" as well
+	external = difft --tab-width 2
+[difftool]
+	; Do not prompt before launching difftool
+	prompt = false
+
+[difftool "difftastic"]
+	cmd = difft --tab-width 2 "$MERGED" "$LOCAL" "abcdef1" "100644" "$REMOTE" "abcdef2" "100644"
+
+[pager]
+	; Use a pager for large outputs, just like other git commands
+	difftool = true
