@@ -28,6 +28,7 @@ jq
 lazygit
 lolcat
 lua
+mergiraf
 moor
 ncspot
 python@3.10
