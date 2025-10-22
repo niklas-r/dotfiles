@@ -24,8 +24,6 @@
 [diff]
 	; Set difftastic as default tool when calling "git difftool"
 	tool = difftastic
-	; Set difftastic as default for "git diff" as well
-	external = difft --tab-width 2
 [difftool]
 	; Do not prompt before launching difftool
 	prompt = false

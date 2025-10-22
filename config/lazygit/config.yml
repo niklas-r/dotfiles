@@ -6,5 +6,5 @@ git:
     pager: delta --paging=never
 
   pagers:
-    - useExternalDiffGitConfig: true
+    - externalDiffCommand: difft --color=always
 
