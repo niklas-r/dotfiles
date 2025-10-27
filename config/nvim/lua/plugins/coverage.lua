@@ -12,6 +12,10 @@ return {
     vim.api.nvim_create_autocmd('User', {
       pattern = 'VeryLazy',
       callback = function()
+        require('which-key').add {
+          { '<leader>uc', group = '[C]ode coverage' },
+        }
+
         Snacks.toggle({
           name = 'code coverage',
           get = function()
@@ -31,8 +35,6 @@ return {
     })
   end,
   keys = {
-    -- Description for which-key
-    { '<leader>uc', desc = '[C]ode coverage' },
     {
       '<leader>ucs',
       '<CMD>CoverageSummary<CR>',
