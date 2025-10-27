@@ -8,6 +8,8 @@ return {
     dependencies = {
       'rafamadriz/friendly-snippets',
       { 'fang2hou/blink-copilot', version = '*' },
+      'moyiz/blink-emoji.nvim',
+      'Kaiser-Yang/blink-cmp-git',
     },
 
     -- use a release tag to download pre-built binaries
@@ -120,6 +122,8 @@ return {
           'buffer',
           'copilot',
           'lazydev',
+          'git',
+          'emoji',
         },
         providers = {
           copilot = {
@@ -138,6 +142,35 @@ return {
             -- ignores cmdline completions when executing shell commands
             enabled = function()
               return vim.fn.getcmdtype() ~= ':' or not vim.fn.getcmdline():match "^[%%0-9,'<>%-]*!"
+            end,
+          },
+          git = {
+            module = 'blink-cmp-git',
+            name = 'Git',
+            opts = {
+              enabled = function()
+                return vim.tbl_contains({ 'octo', 'gitcommit' }, vim.bo.filetype)
+              end,
+            },
+          },
+          emoji = {
+            module = 'blink-emoji',
+            name = 'Emoji',
+            score_offset = 15, -- Tune by preference
+            opts = {
+              insert = true, -- Insert emoji (default) or complete its name
+              ---@type string|table|fun():table
+              trigger = function()
+                return { ':' }
+              end,
+            },
+            should_show_items = function()
+              return vim.tbl_contains(
+                -- Enable emoji completion only for git commits and markdown.
+                -- By default, enabled for all file-types.
+                { 'gitcommit', 'lazygit', 'markdown' },
+                vim.o.filetype
+              )
             end,
           },
         },
