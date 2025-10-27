@@ -121,4 +121,6 @@ vim.opt.grepprg = 'rg --vimgrep'
 vim.o.conceallevel = 2
 vim.o.concealcursor = 'nc'
 
+vim.o.winborder = 'rounded'
+
 return {}
