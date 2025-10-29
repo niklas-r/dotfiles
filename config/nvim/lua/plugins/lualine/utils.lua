@@ -40,7 +40,15 @@ end
 
 -- Override 'encoding': Don't display if encoding is UTF-8.
 function M.encoding_only_if_not_utf8()
-  local ret, _ = (vim.bo.fenc or vim.go.enc):gsub('^utf%-8$', '')
+  local enc = vim.bo.fenc or vim.go.enc
+
+  -- If has BOM, always show with -bom suffix
+  if vim.bo.bomb then
+    return enc .. '-bom'
+  end
+
+  -- If encoding is UTF-8 and no BOM, hide it
+  local ret, _ = enc:gsub('^utf%-8$', '')
   return ret
 end
 
