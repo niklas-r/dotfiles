@@ -4,6 +4,7 @@ bat
 bitwarden-cli
 btop
 carapace
+clippy
 cloudflared
 cmatrix
 deno

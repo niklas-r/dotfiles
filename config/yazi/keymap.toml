@@ -15,6 +15,15 @@ on = ["m", "S"]
 run = "linemode size_and_mtime"
 desc = "Linemode: size_and_mtime"
 
+# Copy to clipboard for MacOS
+[[mgr.prepend_keymap]]
+on  = "<C-y>"
+run = 'shell -- clippy "$@"'
+
+#
+# Plugins
+# =======
+
 # I'm used to having zoxide on `z`, so I switched fzf to `Z`
 [[mgr.prepend_keymap]]
 on = "z"
