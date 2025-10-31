@@ -59,7 +59,7 @@ return {
       keymap = {
         ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
         ['<C-d>'] = { 'show_documentation', 'hide_documentation' },
-        ['<C-e>'] = { 'hide', 'fallback' },
+        ['<C-e>'] = false,
         ['<CR>'] = { 'accept', 'fallback' },
         ['<C-y>'] = { 'accept', 'fallback' },
 

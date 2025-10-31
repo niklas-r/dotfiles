@@ -10,6 +10,10 @@ local font = wezterm.font_with_fallback { { family = G.font } }
 config.font = font
 config.font_size = 14
 
+-- Enable this when you need to debug what it being sent to Wezterm when pressing keys
+-- Check the debugger for output
+-- config.debug_key_events = true
+
 -- Disable weird behavior for left alt
 config.send_composed_key_when_left_alt_is_pressed = true
 
@@ -123,6 +127,18 @@ config.keys = {
       local w = window:active_workspace()
       features.kill_workspace(w)
     end),
+  },
+
+  -- Disable some default keymaps which I want to use in Neovim
+  {
+    key = 'Tab',
+    mods = 'CTRL',
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
+    key = 'Tab',
+    mods = 'CTRL|SHIFT',
+    action = wezterm.action.DisableDefaultAssignment,
   },
 }
 -- I can use the tab navigator (LDR t), but I also want to quickly navigate tabs with index
