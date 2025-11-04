@@ -144,6 +144,11 @@ return {
           end
         end,
       } end, desc = "Log [F]ile" },
+    -- gh
+    { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub [i]ssues (open)" },
+    { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub [I]ssues (all)" },
+    { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub [p]R's (open)" },
+    { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub [P]R's (all)" },
       -- stylua: ignore end
     },
     opts = {
