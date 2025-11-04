@@ -18,9 +18,10 @@ local mappings = {
   { MEH_MODS, '1', '1Password' },
   { MEH_MODS, 'A', 'Arc' },
   { MEH_MODS, 'B', 'Bitwarden' },
-  { MEH_MODS, 'C', 'Claude' },
+  { MEH_MODS, 'C', 'Calendar' },
   { MEH_MODS, 'D', 'Discord' },
   { MEH_MODS, 'F', 'Finder' },
+  { MEH_MODS, 'M', 'Mail' },
   { MEH_MODS, 'O', 'Microsoft Outlook' }, -- Sigh...
   { HYPER_MODS, 'O', 'Obsidian' },
   { MEH_MODS, 'P', 'Postman' },
