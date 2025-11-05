@@ -46,9 +46,10 @@ return {
 
     return {
       options = {
-        component_separators = { left = '╲', right = '╱' },
+
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
         disabled_filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard' },
-        section_separators = { left = '', right = '' },
         ignore_focus = { 'trouble' },
         always_show_tabline = false,
       },
@@ -126,7 +127,7 @@ return {
               return vim.g.macro_recording ~= nil
             end,
             color = 'DiagnosticVirtualTextHint',
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
           },
           {
             function()
@@ -145,7 +146,7 @@ return {
                 bg = dColor,
               }
             end,
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             fmt = util.trunc(trunc_widths.L, 8, trunc_widths.M, false),
           },
           {

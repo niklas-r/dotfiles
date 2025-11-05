@@ -64,16 +64,16 @@ return {
         theme = G.colorscheme,
         color_overrides = {},
         section_separators = {
-          left = wez.nerdfonts.ple_upper_left_triangle,
-          right = wez.nerdfonts.ple_upper_right_triangle,
+          left = wez.nerdfonts.ple_right_half_circle_thick,
+          right = wez.nerdfonts.ple_left_half_circle_thick,
         },
         component_separators = {
-          left = wez.nerdfonts.ple_forwardslash_separator,
-          right = wez.nerdfonts.ple_backslash_separator,
+          left = wez.nerdfonts.ple_right_half_circle_thin,
+          right = wez.nerdfonts.ple_left_half_circle_thin,
         },
         tab_separators = {
-          left = wez.nerdfonts.ple_lower_left_triangle,
-          right = wez.nerdfonts.ple_lower_right_triangle,
+          left = wez.nerdfonts.ple_right_half_circle_thick,
+          right = wez.nerdfonts.ple_left_half_circle_thick,
         },
       },
       sections = {
