@@ -1,5 +1,7 @@
 local size = 'win.size={width=60,height=20}'
 
+vim.g.lsp_breadcrumbs_enabled = true
+
 return {
   {
     'folke/trouble.nvim',
@@ -67,6 +69,59 @@ return {
             },
           },
         })
+      end,
+    },
+  },
+
+  -- Add breadcrumbs to lualine using Trouble symbols source
+  {
+    'folke/trouble.nvim',
+    optional = true,
+    depedencies = { 'folke/snacks.nvim' },
+    specs = {
+      'nvim-lualine/lualine.nvim',
+      init = function()
+        vim.api.nvim_create_autocmd('User', {
+          pattern = 'VeryLazy',
+          callback = function()
+            Snacks.toggle({
+              name = 'LSP breadcrumbs',
+              get = function()
+                return vim.g.lsp_breadcrumbs_enabled
+              end,
+              set = function(state)
+                vim.g.lsp_breadcrumbs_enabled = state
+                require('lualine').refresh { force = true, placement = { 'statusline' } }
+              end,
+            }):map '<leader>tB'
+          end,
+        })
+      end,
+      opts = function(_, opts)
+        local trouble = require 'trouble'
+        local symbols = trouble.statusline {
+          mode = 'lsp_document_symbols',
+          groups = {},
+          title = false,
+          filter = { range = true },
+          format = '{kind_icon}{symbol.name:Normal}',
+          -- The following line is needed to fix the background color
+          -- Set it to the lualine section you want to use
+          hl_group = 'lualine_c_normal',
+        }
+
+        local merged_opts = vim.tbl_deep_extend('force', opts or {}, {})
+        merged_opts.sections = merged_opts.sections or {}
+        merged_opts.sections.lualine_c = merged_opts.sections.lualine_c or {}
+        table.insert(merged_opts.sections.lualine_c, {
+          symbols.get,
+          cond = function()
+            return vim.g.lsp_breadcrumbs_enabled and symbols.has()
+          end,
+        })
+
+        -- vim.print(vim.inspect(merged_opts))
+        return merged_opts
       end,
     },
   },
