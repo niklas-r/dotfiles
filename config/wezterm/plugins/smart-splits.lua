@@ -1,5 +1,7 @@
+local wez = require 'wezterm'
+
 return {
-  setup = function(wez, config)
+  setup = function(config)
     local smart_splits = wez.plugin.require 'https://github.com/mrjones2014/smart-splits.nvim'
     smart_splits.apply_to_config(config, {
       -- directional keys to use in order of: left, down, up, right

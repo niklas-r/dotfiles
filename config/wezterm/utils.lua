@@ -1,3 +1,4 @@
+local wez = require 'wezterm'
 local G = require 'globals'
 local M = {}
 
@@ -37,13 +38,21 @@ function M.writeLuaObject(filePath, luaObject)
   file:close()
 end
 
----@param wez any
----@param key "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "black_bright" | "red_bright" | "green_bright" | "yellow_bright" | "blue_bright" | "magenta_bright" | "cyan_bright" | "white_bright"
+---@param key "surface" | "foreground" | "background" | "tab_bar_bg" | "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "black_bright" | "red_bright" | "green_bright" | "yellow_bright" | "blue_bright" | "magenta_bright" | "cyan_bright" | "white_bright"
 ---@return string
-function M.getColorByKey(wez, key)
+function M.getColorByKey(key)
   local current_scheme = wez.color.get_builtin_schemes()[G.colorscheme]
 
+  local surface = current_scheme.cursor and current_scheme.cursor.bg or current_scheme.ansi[1]
+
+  if string.find(G.colorscheme, 'Catppuccin') then
+    surface = current_scheme.tab_bar.inactive_tab_edge
+  end
+
   local key_to_color = {
+    surface = surface,
+    foreground = current_scheme.foreground,
+    background = current_scheme.background,
     black = current_scheme.ansi[1],
     red = current_scheme.ansi[2],
     green = current_scheme.ansi[3],
@@ -60,12 +69,13 @@ function M.getColorByKey(wez, key)
     magenta_bright = current_scheme.brights[6],
     cyan_bright = current_scheme.brights[7],
     white_bright = current_scheme.brights[8],
+    tab_bar_bg = current_scheme.tab_bar and current_scheme.tab_bar.inactive_tab and current_scheme.tab_bar.inactive_tab.bg_color or current_scheme.background,
   }
 
   return key_to_color[key]
 end
 
-function M.getCommandIcon(wez, cmd)
+function M.getCommandIcon(cmd)
   if cmd == 'nvim' then
     return wez.nerdfonts.linux_neovim
   elseif string.find(cmd, 'git') then

@@ -1,10 +1,11 @@
+local wez = require 'wezterm'
 local utils = require 'utils'
 local G = require 'globals'
+local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
 
 return {
-  setup = function(wez)
-    local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
-
+  tabline = tabline,
+  setup = function()
     local function getTabComponents(isActive)
       return {
         'index',
@@ -58,18 +59,85 @@ return {
       }
     end
 
+    local mode_colors = {
+      normal_mode = {
+        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'blue' },
+        b = { fg = utils.getColorByKey 'blue', bg = utils.getColorByKey 'surface' },
+        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+      },
+      copy_mode = {
+        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'yellow' },
+        b = { fg = utils.getColorByKey 'yellow', bg = utils.getColorByKey 'surface' },
+        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+      },
+      search_mode = {
+        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'green' },
+        b = { fg = utils.getColorByKey 'green', bg = utils.getColorByKey 'surface' },
+        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+      },
+      leader_mode = {
+        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'red' },
+        b = { fg = utils.getColorByKey 'red', bg = utils.getColorByKey 'surface' },
+        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+      },
+    }
+
+    local function left_separator()
+      return wez.nerdfonts.ple_left_half_circle_thick
+    end
+    local function right_separator()
+      return wez.nerdfonts.ple_right_half_circle_thick
+    end
+
+    ---@param output string
+    ---@param window table -- Wezterm window object
+    ---@param what 'fg'|'bg'|'both'|'fg-inverse'|'bg-inverse'|'both-inverse'
+    ---@param fg_section 'a'|'b'|'c'
+    ---@param bg_section? 'a'|'b'|'c'
+    local function mode_formatter(output, window, what, fg_section, bg_section)
+      local key_table = window:active_key_table()
+      local leader = window:leader_is_active()
+
+      local mode = 'normal_mode'
+      if leader then
+        mode = 'leader_mode'
+      elseif type(key_table) == 'string' then
+        mode = key_table
+      end
+
+      local mode_color = mode_colors[mode]
+
+      if bg_section == nil then
+        bg_section = fg_section
+      end
+
+      local fg = 'fg'
+      local bg = 'bg'
+      if what == 'fg-inverse' or what == 'both-inverse' then
+        fg = 'bg'
+      end
+      if what == 'bg-inverse' or what == 'both-inverse' then
+        bg = 'fg'
+      end
+      return wez.format {
+        { Foreground = { Color = mode_color[fg_section][fg] } },
+        { Background = { Color = mode_color[bg_section][bg] } },
+        { Text = output },
+      }
+    end
+
     tabline.setup {
       options = {
         icons_enabled = true,
         theme = G.colorscheme,
         color_overrides = {},
         section_separators = {
-          left = wez.nerdfonts.ple_right_half_circle_thick,
-          right = wez.nerdfonts.ple_left_half_circle_thick,
+          left = '',
+          right = '',
         },
         component_separators = {
-          left = wez.nerdfonts.ple_right_half_circle_thin,
-          right = wez.nerdfonts.ple_left_half_circle_thin,
+          left = '',
+          right = '',
         },
         tab_separators = {
           left = wez.nerdfonts.ple_right_half_circle_thick,
@@ -78,8 +146,8 @@ return {
       },
       sections = {
         battery_to_icon = {
-          empty = { wez.nerdfonts.fa_battery_empty, color = { fg = utils.getColorByKey(wez, 'red') } },
-          quarter = { wez.nerdfonts.fa_battery_quarter, color = { fg = utils.getColorByKey(wez, 'yellow') } },
+          empty = { wez.nerdfonts.fa_battery_empty, color = { fg = utils.getColorByKey 'red' } },
+          quarter = { wez.nerdfonts.fa_battery_quarter, color = { fg = utils.getColorByKey 'yellow' } },
           half = wez.nerdfonts.fa_battery_half,
           three_quarters = wez.nerdfonts.fa_battery_three_quarters,
           full = wez.nerdfonts.fa_battery_full,
@@ -87,23 +155,94 @@ return {
         tabline_a = {
           {
             'mode',
+            padding = 0,
+            fmt = function(_, window)
+              return mode_formatter(left_separator(), window, 'both-inverse', 'a')
+            end,
+          },
+          {
+            'mode',
+            padding = 0,
             fmt = function(output, window)
               if window:leader_is_active() then
-                return 'LEADER'
+                return mode_formatter(' LEADER ', window, 'both', 'a')
               end
-              return output
+              return mode_formatter(' ' .. output .. ' ', window, 'both', 'a')
             end,
           },
         },
-        tabline_b = { 'workspace' },
+        tabline_b = {
+          {
+            'workspace',
+            padding = 0,
+            icon = false,
+            fmt = function(output, window)
+              return mode_formatter(' ' .. wez.nerdfonts.cod_terminal_tmux .. ' ' .. output .. ' ', window, 'both', 'b')
+            end,
+          },
+          {
+            'workspace',
+            icon = false,
+            padding = 0,
+            fmt = function(_, window)
+              return mode_formatter(right_separator(), window, 'fg-inverse', 'b', 'c')
+            end,
+          },
+        },
         tabline_c = { ' ' },
         tab_active = getTabComponents(true),
         tab_inactive = getTabComponents(false),
         tabline_x = { 'ram', 'cpu' },
-        tabline_y = { 'datetime', 'battery' },
-        tabline_z = { 'hostname' },
+        tabline_y = {
+          {
+            'datetime',
+            icons_enabled = false,
+            padding = 0,
+            fmt = function(_, window)
+              return mode_formatter(left_separator(), window, 'fg-inverse', 'b', 'c')
+            end,
+          },
+          {
+            'datetime',
+            icons_enabled = false,
+            padding = 0,
+            fmt = function(output, window)
+              return mode_formatter(' ' .. wez.nerdfonts.md_clock_time_five_outline .. ' ' .. output .. ' ', window, 'both', 'b')
+            end,
+          },
+          {
+            'battery',
+            icons_enabled = false,
+            padding = 0,
+            fmt = function(output, window)
+              return mode_formatter(' ' .. wez.nerdfonts.fa_battery_full .. ' ' .. output .. ' ', window, 'both', 'b')
+            end,
+          },
+        },
+        tabline_z = {
+          {
+            'hostname',
+            padding = 0,
+            fmt = function(output, window)
+              return mode_formatter(' ' .. output .. ' ', window, 'both', 'a')
+            end,
+          },
+          {
+            'hostname',
+            padding = 0,
+            fmt = function(_, window)
+              return mode_formatter(right_separator(), window, 'both-inverse', 'a')
+            end,
+          },
+        },
       },
       extensions = {},
     }
+
+    -- { Foreground = { Color = utils.getColorByKey 'blue' } },
+    -- { Background = { Color = utils.getColorByKey 'background' } },
+    -- wez.nerdfonts.ple_left_half_circle_thick,
+    -- { Foreground = { Color = utils.getColorByKey 'blue' } },
+    -- { Background = { Color = utils.getColorByKey 'background' } },
   end,
 }

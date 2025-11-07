@@ -46,9 +46,8 @@ return {
 
     return {
       options = {
-
+        component_separators = '',
         section_separators = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
         disabled_filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard' },
         ignore_focus = { 'trouble' },
         always_show_tabline = false,
@@ -58,6 +57,8 @@ return {
           {
             'mode',
             fmt = util.trunc(trunc_widths.L, 3, 0, true),
+            separator = { left = '' },
+            right_padding = 2,
           },
         },
         lualine_b = {
@@ -86,14 +87,14 @@ return {
               end
             end,
           },
+        },
+        lualine_c = {
           {
             'diagnostics',
             symbols = vim.g.have_nerd_font and { error = ' ', warn = ' ', info = ' ', hint = ' ' }
               or { error = 'E', warn = 'W', info = 'I', hint = 'H' },
             fmt = util.trunc(0, 0, trunc_widths.XXS, true),
           },
-        },
-        lualine_c = {
           {
             function()
               return '󰉥'
@@ -182,8 +183,8 @@ return {
           },
         },
         lualine_z = {
-          { 'location', fmt = util.trunc(0, 0, trunc_widths.XXS, true) },
           { util.selectionCount, fmt = util.trunc(0, 0, trunc_widths.XS, true) },
+          { 'location', fmt = util.trunc(0, 0, trunc_widths.XXS, true), separator = { right = '' }, left_padding = 2 },
         },
       },
       tabline = {

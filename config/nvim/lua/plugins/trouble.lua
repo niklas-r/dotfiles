@@ -1,6 +1,6 @@
 local size = 'win.size={width=60,height=20}'
 
-vim.g.lsp_breadcrumbs_enabled = true
+vim.g.lsp_breadcrumbs_enabled = false
 
 return {
   {

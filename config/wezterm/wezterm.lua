@@ -195,18 +195,21 @@ config.tab_bar_at_bottom = false
 config.tab_max_width = 100
 
 -- Load plugins
-require('plugins/tabline').setup(wezterm)
-require('plugins/smart-splits').setup(wezterm, config)
+require('plugins/tabline').setup()
+require('plugins/smart-splits').setup(config)
 
--- Appearance setting for when I need to take pretty screenshots
---[[
-config.enable_tab_bar = false
---]]
+-- Recommended settings for tabline
+config.show_new_tab_button_in_tab_bar = false
+config.colors = {
+  tab_bar = {
+    background = require('plugins/tabline').tabline.get_theme().normal_mode.c.bg,
+  },
+}
 config.window_padding = {
-  left = '0.5cell',
-  right = '0.5cell',
-  top = '0.5cell',
-  bottom = '0cell',
+  left = '0',
+  right = '0',
+  top = '0',
+  bottom = '0',
 }
 
 -- and finally, return the configuration to wezterm
