@@ -1,7 +1,8 @@
 local wezterm = require 'wezterm'
 local act = wezterm.action
 local features = require 'features'
-local G = require 'globals'
+local globals = require 'utils.globals'
+local G = globals.readGlobals()
 
 local config = wezterm.config_builder()
 
@@ -20,7 +21,6 @@ config.send_composed_key_when_left_alt_is_pressed = true
 -- Window
 config.window_background_opacity = G.opacity
 config.macos_window_background_blur = 50
-config.window_padding = G.padding
 config.window_decorations = 'RESIZE'
 config.window_close_confirmation = 'AlwaysPrompt'
 config.adjust_window_size_when_changing_font_size = false
@@ -60,8 +60,8 @@ config.keys = {
   { key = 'phys:Space', mods = 'LEADER', action = act.ActivateCommandPalette },
 
   -- Switchers
-  { key = 'k', mods = 'LEADER', action = wezterm.action_callback(features.theme_switcher) },
-  { key = 'f', mods = 'LEADER', action = wezterm.action_callback(features.font_switcher) },
+  { key = 'k', mods = 'LEADER', action = features.themes() },
+  { key = 'f', mods = 'LEADER', action = features.fonts() },
 
   -- Pane keybindings
   { key = 'd', mods = 'CMD|SHIFT', action = act.SplitVertical { domain = 'CurrentPaneDomain' } },

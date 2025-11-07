@@ -1,42 +1,9 @@
 local wez = require 'wezterm'
-local G = require 'globals'
+local globals = require 'utils.globals'
+
+local G = globals.readGlobals()
+
 local M = {}
-
-M.globalsPath = os.getenv 'HOME' .. '/.config/wezterm/globals.lua'
-
-function M.readLuaObject(filePath)
-  local file = assert(loadfile(filePath))
-  return file()
-end
-
-function M.writeLuaObject(filePath, luaObject)
-  local function tableToString(tbl, indent)
-    indent = indent or ''
-    local result = '{\n'
-    local nextIndent = indent .. '  '
-    for k, v in pairs(tbl) do
-      local keyStr
-      if type(k) == 'string' and k:match '^%a[%w_]*$' then
-        keyStr = k -- Use key as-is without brackets if it's a valid identifier
-      else
-        keyStr = '[' .. tostring(k) .. ']'
-      end
-
-      if type(v) == 'table' then
-        result = result .. nextIndent .. keyStr .. ' = ' .. tableToString(v, nextIndent) .. ',\n'
-      else
-        local valueStr = (type(v) == 'string') and '"' .. v .. '"' or tostring(v)
-        result = result .. nextIndent .. keyStr .. ' = ' .. valueStr .. ',\n'
-      end
-    end
-    result = result .. indent .. '}'
-    return result
-  end
-
-  local file = assert(io.open(filePath, 'w'))
-  file:write('return ' .. tableToString(luaObject) .. '\n')
-  file:close()
-end
 
 ---@param key "surface" | "foreground" | "background" | "tab_bar_bg" | "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "black_bright" | "red_bright" | "green_bright" | "yellow_bright" | "blue_bright" | "magenta_bright" | "cyan_bright" | "white_bright"
 ---@return string
@@ -75,24 +42,40 @@ function M.getColorByKey(key)
   return key_to_color[key]
 end
 
-function M.getCommandIcon(cmd)
-  if cmd == 'nvim' then
-    return wez.nerdfonts.linux_neovim
-  elseif string.find(cmd, 'git') then
-    return wez.nerdfonts.oct_git_branch
-  end
-  return wez.nerdfonts.fa_code
+function M.wezThemeToNvimTheme(key)
+  local nvim_colors = {}
+
+  return nvim_colors[key]
 end
 
-M.filter = function(tbl, callback)
-  local filt_table = {}
+---@type table<string[], string> -- key: WezTerm theme name, value: Neovim theme name
+local color_scheme_map = {
+  -- Tokyo Night Variants
+  [{ 'Tokyo Night', 'tokyonight', 'Tokyo Night Light (Gogh)' }] = 'tokyonight',
+  [{ 'Tokyo Night Day', 'tokyonight_day', 'tokyonight-day' }] = 'tokyonight-day',
+  [{ 'tokyonight_night' }] = 'tokyonight-night',
+  [{ 'Tokyo Night Storm', 'Tokyo Night Storm (Gogh)', 'tokyonight-storm', 'TokyoNightStorm (Gogh)' }] = 'tokyonight-storm',
+  [{ 'tokyonight_moon', 'Tokyo Night Moon' }] = 'tokyonight-moon',
+  -- Catppuccin Variants
+  [{ 'Catppuccin Frappe', 'catppuccin-frappe', 'Catppuccin Frappe', 'Catppuccin Frappé (Gogh)' }] = 'catppuccin-frappe',
+  [{ 'catppuccin-latte', 'Catppuccin Latte', 'Catppuccin Latte (Gogh)' }] = 'catppuccin-latte',
+  [{ 'Catppuccin Macchiato', 'catppuccin-macchiato', 'Catppuccin Macchiato', 'Catppuccin Macchiato (Gogh)' }] = 'catppuccin-macchiato',
+  [{ 'Catppuccin Mocha', 'catppuccin-mocha', 'Catppuccin Mocha', 'Catppuccin Mocha (Gogh)' }] = 'catppuccin-mocha',
+}
 
-  for i, v in ipairs(tbl) do
-    if callback(v, i) then
-      table.insert(filt_table, v)
+---@param color_scheme string
+function M.set_nvim_color_scheme(color_scheme)
+  local path = globals.nvimPath .. '/colorsaver'
+  local nvim_theme = 'catppuccin-frappe' -- default
+
+  for wez_names, nvim_name in pairs(color_scheme_map) do
+    for _, wez_name in ipairs(wez_names) do
+      if color_scheme == wez_name then
+        nvim_theme = nvim_name
+      end
     end
   end
-  return filt_table
-end
 
+  globals.writeToFile(path, nvim_theme)
+end
 return M

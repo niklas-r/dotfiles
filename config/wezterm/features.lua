@@ -1,59 +1,101 @@
 local wezterm = require 'wezterm'
-local utils = require 'utils'
-local act = wezterm.action
+local utils = require 'utils.general'
+local picker = require 'utils.picker'
+local globals = require 'utils.globals'
+local colors = require 'utils.colors'
 
 local M = {}
 
-M.scriptsPath = os.getenv 'HOME' .. '/.config/wezterm/scripts'
+M.themes = function()
+  return wezterm.action_callback(function(window, pane)
+    local choices = {}
 
--- fzf switcher which opens in a right split and executes a command
-M.fzfSwitcher = function(window, pane, script, command)
-  -- execute fzf with update script on every cursor move
-  local fzfCommand = "fzf --color=bg+:-1 --reverse  --preview-window=down,1 --preview='" .. script .. " {}'"
+    local schemes = wezterm.get_builtin_color_schemes()
+    local custom_schemes_path = wezterm.glob(wezterm.config_dir .. '/colors/*')
 
-  window:perform_action(
-    act.SplitPane {
-      direction = 'Right',
-      command = {
-        args = {
-          'zsh',
-          '-c',
-          command .. fzfCommand,
-        },
+    -- loop over builtin schemes
+    for scheme, _ in pairs(schemes) do
+      table.insert(choices, { label = tostring(scheme) })
+    end
+
+    -- sort choices list
+    table.sort(choices, function(c1, c2)
+      return c1.label < c2.label
+    end)
+
+    local action = wezterm.action_callback(function(_, _, _, label)
+      if label then
+        globals.setGlobals(function(G)
+          G.colorscheme = label
+        end)
+        colors.set_nvim_color_scheme(label)
+      end
+    end)
+
+    local opts = {
+      window = window,
+      pane = pane,
+      choices = choices,
+      title = wezterm.format {
+        { Attribute = { Underline = 'Single' } },
+        { Foreground = { AnsiColor = 'Green' } },
+        { Text = 'Choose a theme! 🎨' },
       },
-      size = { Percent = 25 },
-    },
-    pane
-  )
-end
+      action = action,
+    }
 
-M.font_switcher = function(window, pane)
-  -- get system fonts by family name including only monospaced fonts, format and sort them
-  local fontsCommand = "fc-list :spacing=100 family | grep -v '^\\.' | cut -d ',' -f1 | sort -u | "
-
-  M.fzfSwitcher(window, pane, M.scriptsPath .. '/updateFont.lua', fontsCommand)
-end
-
-M.theme_switcher = function(window, pane)
-  -- get builtin wezterm color schemes
-  local builtinSchemes = wezterm.get_builtin_color_schemes()
-
-  -- build a new table from the builtin wezterm color schemes names
-  local schemes = {}
-
-  for key, _ in pairs(builtinSchemes) do
-    table.insert(schemes, tostring(key))
-  end
-
-  -- sort them alphabetically
-  table.sort(schemes, function(c1, c2)
-    return c1 < c2
+    picker.pick(opts)
   end)
+end
 
-  -- build the command from schemes table to be passed to fzf
-  local schemesCommand = 'echo -e "' .. table.concat(schemes, '\n') .. '" | '
+M.fonts = function()
+  return wezterm.action_callback(function(window, pane)
+    local choices = {}
 
-  M.fzfSwitcher(window, pane, M.scriptsPath .. '/updateScheme.lua', schemesCommand)
+    local _, stdout, _ = wezterm.run_child_process { 'zsh', '-ic', 'fc-list :spacing=mono family' }
+
+    local list = wezterm.split_by_newlines(stdout)
+
+    -- loop over builtin schemes
+    for _, font in pairs(list) do
+      if string.sub(font, 1, 1) ~= '.' then
+        if font:find ',' then
+          -- split and take first part
+          local first = font:match '([^,]+)'
+          table.insert(choices, { label = tostring(first) })
+        else
+          table.insert(choices, { label = tostring(font) })
+        end
+      end
+    end
+
+    -- sort choices list
+    table.sort(choices, function(c1, c2)
+      return c1.label < c2.label
+    end)
+
+    local action = wezterm.action_callback(function(_, _, _, label)
+      if label then
+        globals.setGlobals(function(G)
+          G.font = label
+        end)
+      end
+    end)
+
+    local opts = {
+      window = window,
+      pane = pane,
+      choices = choices,
+      title = wezterm.format {
+        { Attribute = { Underline = 'Single' } },
+        { Foreground = { AnsiColor = 'Green' } },
+        { Text = 'Choose a font! ✏️  ' },
+      },
+      action = action,
+    }
+
+    picker.pick(opts)
+  end)
 end
 
 M.kill_workspace = function(workspace)

@@ -1,7 +1,9 @@
 local wez = require 'wezterm'
-local utils = require 'utils'
-local G = require 'globals'
+local colors = require 'utils.colors'
+local globals = require 'utils.globals'
 local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
+
+local G = globals.readGlobals()
 
 return {
   tabline = tabline,
@@ -61,24 +63,24 @@ return {
 
     local mode_colors = {
       normal_mode = {
-        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'blue' },
-        b = { fg = utils.getColorByKey 'blue', bg = utils.getColorByKey 'surface' },
-        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'blue' },
+        b = { fg = colors.getColorByKey 'blue', bg = colors.getColorByKey 'surface' },
+        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
       },
       copy_mode = {
-        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'yellow' },
-        b = { fg = utils.getColorByKey 'yellow', bg = utils.getColorByKey 'surface' },
-        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'yellow' },
+        b = { fg = colors.getColorByKey 'yellow', bg = colors.getColorByKey 'surface' },
+        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
       },
       search_mode = {
-        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'green' },
-        b = { fg = utils.getColorByKey 'green', bg = utils.getColorByKey 'surface' },
-        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'green' },
+        b = { fg = colors.getColorByKey 'green', bg = colors.getColorByKey 'surface' },
+        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
       },
       leader_mode = {
-        a = { fg = utils.getColorByKey 'tab_bar_bg', bg = utils.getColorByKey 'red' },
-        b = { fg = utils.getColorByKey 'red', bg = utils.getColorByKey 'surface' },
-        c = { fg = utils.getColorByKey 'foreground', bg = utils.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'red' },
+        b = { fg = colors.getColorByKey 'red', bg = colors.getColorByKey 'surface' },
+        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
       },
     }
 
@@ -146,8 +148,8 @@ return {
       },
       sections = {
         battery_to_icon = {
-          empty = { wez.nerdfonts.fa_battery_empty, color = { fg = utils.getColorByKey 'red' } },
-          quarter = { wez.nerdfonts.fa_battery_quarter, color = { fg = utils.getColorByKey 'yellow' } },
+          empty = { wez.nerdfonts.fa_battery_empty, color = { fg = colors.getColorByKey 'red' } },
+          quarter = { wez.nerdfonts.fa_battery_quarter, color = { fg = colors.getColorByKey 'yellow' } },
           half = wez.nerdfonts.fa_battery_half,
           three_quarters = wez.nerdfonts.fa_battery_three_quarters,
           full = wez.nerdfonts.fa_battery_full,
@@ -238,11 +240,5 @@ return {
       },
       extensions = {},
     }
-
-    -- { Foreground = { Color = utils.getColorByKey 'blue' } },
-    -- { Background = { Color = utils.getColorByKey 'background' } },
-    -- wez.nerdfonts.ple_left_half_circle_thick,
-    -- { Foreground = { Color = utils.getColorByKey 'blue' } },
-    -- { Background = { Color = utils.getColorByKey 'background' } },
   end,
 }
