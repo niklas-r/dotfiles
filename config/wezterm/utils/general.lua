@@ -11,9 +11,4 @@ M.filter = function(tbl, callback)
   return filt_table
 end
 
-M.getDirNameFromPath = function(path)
-  local parts = M.split(path, '/')
-  return parts[#parts]
-end
-
 return M

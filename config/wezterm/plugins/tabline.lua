@@ -3,7 +3,7 @@ local colors = require 'utils.colors'
 local globals = require 'utils.globals'
 local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
 
-local G = globals.readGlobals()
+local G = globals.read_globals()
 
 return {
   tabline = tabline,
@@ -63,24 +63,24 @@ return {
 
     local mode_colors = {
       normal_mode = {
-        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'blue' },
-        b = { fg = colors.getColorByKey 'blue', bg = colors.getColorByKey 'surface' },
-        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'blue' },
+        b = { fg = colors.get_color_by_key 'blue', bg = colors.get_color_by_key 'surface' },
+        c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
       },
       copy_mode = {
-        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'yellow' },
-        b = { fg = colors.getColorByKey 'yellow', bg = colors.getColorByKey 'surface' },
-        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'yellow' },
+        b = { fg = colors.get_color_by_key 'yellow', bg = colors.get_color_by_key 'surface' },
+        c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
       },
       search_mode = {
-        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'green' },
-        b = { fg = colors.getColorByKey 'green', bg = colors.getColorByKey 'surface' },
-        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'green' },
+        b = { fg = colors.get_color_by_key 'green', bg = colors.get_color_by_key 'surface' },
+        c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
       },
       leader_mode = {
-        a = { fg = colors.getColorByKey 'tab_bar_bg', bg = colors.getColorByKey 'red' },
-        b = { fg = colors.getColorByKey 'red', bg = colors.getColorByKey 'surface' },
-        c = { fg = colors.getColorByKey 'foreground', bg = colors.getColorByKey 'tab_bar_bg' },
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'red' },
+        b = { fg = colors.get_color_by_key 'red', bg = colors.get_color_by_key 'surface' },
+        c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
       },
     }
 
@@ -148,8 +148,8 @@ return {
       },
       sections = {
         battery_to_icon = {
-          empty = { wez.nerdfonts.fa_battery_empty, color = { fg = colors.getColorByKey 'red' } },
-          quarter = { wez.nerdfonts.fa_battery_quarter, color = { fg = colors.getColorByKey 'yellow' } },
+          empty = { wez.nerdfonts.fa_battery_empty, color = { fg = colors.get_color_by_key 'red' } },
+          quarter = { wez.nerdfonts.fa_battery_quarter, color = { fg = colors.get_color_by_key 'yellow' } },
           half = wez.nerdfonts.fa_battery_half,
           three_quarters = wez.nerdfonts.fa_battery_three_quarters,
           full = wez.nerdfonts.fa_battery_full,

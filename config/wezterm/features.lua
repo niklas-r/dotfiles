@@ -25,7 +25,7 @@ M.themes = function()
 
     local action = wezterm.action_callback(function(_, _, _, label)
       if label then
-        globals.setGlobals(function(G)
+        globals.set_globals(function(G)
           G.colorscheme = label
         end)
         colors.set_nvim_color_scheme(label)
@@ -76,7 +76,7 @@ M.fonts = function()
 
     local action = wezterm.action_callback(function(_, _, _, label)
       if label then
-        globals.setGlobals(function(G)
+        globals.set_globals(function(G)
           G.font = label
         end)
       end

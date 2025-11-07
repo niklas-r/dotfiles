@@ -2,7 +2,7 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 local features = require 'features'
 local globals = require 'utils.globals'
-local G = globals.readGlobals()
+local G = globals.read_globals()
 
 local config = wezterm.config_builder()
 

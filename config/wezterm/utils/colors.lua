@@ -1,13 +1,13 @@
 local wez = require 'wezterm'
 local globals = require 'utils.globals'
 
-local G = globals.readGlobals()
+local G = globals.read_globals()
 
 local M = {}
 
 ---@param key "surface" | "foreground" | "background" | "tab_bar_bg" | "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "black_bright" | "red_bright" | "green_bright" | "yellow_bright" | "blue_bright" | "magenta_bright" | "cyan_bright" | "white_bright"
 ---@return string
-function M.getColorByKey(key)
+function M.get_color_by_key(key)
   local current_scheme = wez.color.get_builtin_schemes()[G.colorscheme]
 
   local surface = current_scheme.cursor and current_scheme.cursor.bg or current_scheme.ansi[1]
@@ -42,7 +42,7 @@ function M.getColorByKey(key)
   return key_to_color[key]
 end
 
-function M.wezThemeToNvimTheme(key)
+function M.is_nvim_theme(key)
   local nvim_colors = {}
 
   return nvim_colors[key]
@@ -65,7 +65,7 @@ local color_scheme_map = {
 
 ---@param color_scheme string
 function M.set_nvim_color_scheme(color_scheme)
-  local path = globals.nvimPath .. '/colorsaver'
+  local path = globals.nvim_path .. '/colorsaver'
   local nvim_theme = 'catppuccin-frappe' -- default
 
   for wez_names, nvim_name in pairs(color_scheme_map) do
@@ -76,6 +76,6 @@ function M.set_nvim_color_scheme(color_scheme)
     end
   end
 
-  globals.writeToFile(path, nvim_theme)
+  globals.write_to_file(path, nvim_theme)
 end
 return M
