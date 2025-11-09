@@ -61,10 +61,15 @@ return {
       }
     end
 
+    local primary_color = colors.get_color_by_key 'blue'
+    if string.find(G.colorscheme:lower(), 'rose') then
+      primary_color = colors.get_color_by_key 'cyan'
+    end
+
     local mode_colors = {
       normal_mode = {
-        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'blue' },
-        b = { fg = colors.get_color_by_key 'blue', bg = colors.get_color_by_key 'surface' },
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = primary_color },
+        b = { fg = primary_color, bg = colors.get_color_by_key 'surface' },
         c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
       },
       copy_mode = {
@@ -81,6 +86,20 @@ return {
         a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'red' },
         b = { fg = colors.get_color_by_key 'red', bg = colors.get_color_by_key 'surface' },
         c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
+      },
+      tab = {
+        active = {
+          fg = primary_color,
+          bg = colors.get_color_by_key 'background',
+        },
+        inactive = {
+          fg = colors.get_color_by_key 'foreground',
+          bg = colors.get_color_by_key 'tab_bar_bg',
+        },
+        inactive_hover = {
+          fg = colors.get_color_by_key 'foreground',
+          bg = colors.get_color_by_key 'surface',
+        },
       },
     }
 
@@ -132,6 +151,7 @@ return {
       options = {
         icons_enabled = true,
         theme = G.colorscheme,
+        theme_overrides = mode_colors,
         color_overrides = {},
         section_separators = {
           left = '',

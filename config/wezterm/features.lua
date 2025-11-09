@@ -6,19 +6,23 @@ local colors = require 'utils.colors'
 
 local M = {}
 
-M.themes = function()
+M.themes = function(set_nvim_theme)
   return wezterm.action_callback(function(window, pane)
     local choices = {}
 
     local schemes = wezterm.get_builtin_color_schemes()
-    local custom_schemes_path = wezterm.glob(wezterm.config_dir .. '/colors/*')
 
     -- loop over builtin schemes
     for scheme, _ in pairs(schemes) do
       table.insert(choices, { label = tostring(scheme) })
     end
 
-    -- sort choices list
+    if set_nvim_theme then
+      choices = utils.filter(choices, function(choice)
+        return colors.is_nvim_theme(choice.label)
+      end)
+    end
+
     table.sort(choices, function(c1, c2)
       return c1.label < c2.label
     end)
@@ -28,7 +32,9 @@ M.themes = function()
         globals.set_globals(function(G)
           G.colorscheme = label
         end)
-        colors.set_nvim_color_scheme(label)
+        if set_nvim_theme then
+          colors.set_nvim_color_scheme(label)
+        end
       end
     end)
 
@@ -39,7 +45,7 @@ M.themes = function()
       title = wezterm.format {
         { Attribute = { Underline = 'Single' } },
         { Foreground = { AnsiColor = 'Green' } },
-        { Text = 'Choose a theme! 🎨' },
+        { Text = '  🌈 Choose a theme:  ' },
       },
       action = action,
     }
@@ -89,7 +95,7 @@ M.fonts = function()
       title = wezterm.format {
         { Attribute = { Underline = 'Single' } },
         { Foreground = { AnsiColor = 'Green' } },
-        { Text = 'Choose a font! ✏️  ' },
+        { Text = 'Choose a font' },
       },
       action = action,
     }

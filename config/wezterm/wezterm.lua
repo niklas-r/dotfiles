@@ -60,7 +60,8 @@ config.keys = {
   { key = 'phys:Space', mods = 'LEADER', action = act.ActivateCommandPalette },
 
   -- Switchers
-  { key = 'k', mods = 'LEADER', action = features.themes() },
+  { key = 'k', mods = 'LEADER', action = features.themes(true) },
+  { key = 'j', mods = 'LEADER', action = features.themes() },
   { key = 'f', mods = 'LEADER', action = features.fonts() },
 
   -- Pane keybindings

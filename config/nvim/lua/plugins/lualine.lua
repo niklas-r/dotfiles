@@ -51,6 +51,7 @@ return {
         disabled_filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard' },
         ignore_focus = { 'trouble' },
         always_show_tabline = false,
+        theme = 'auto',
       },
       sections = {
         lualine_a = {
