@@ -65,6 +65,44 @@ return {
       },
     },
   },
+  {
+    'EdenEast/nightfox.nvim',
+    opts = {
+      options = {
+        styles = { -- Style to be applied to different syntax groups
+          comments = 'italic', -- Value is any valid attr-list value `:help attr-list`
+          conditionals = 'NONE',
+          constants = 'NONE',
+          functions = 'italic',
+          keywords = 'NONE',
+          numbers = 'NONE',
+          operators = 'NONE',
+          strings = 'NONE',
+          types = 'NONE',
+          variables = 'NONE',
+        },
+        modules = {
+          gitsigns = true,
+          diagnostic = {
+            enable = true,
+          },
+          native_lsp = {
+            enable = true,
+          },
+          ['lazy.nvim'] = true,
+          neotest = true,
+          neotree = true,
+          treesitter = true,
+          whichkey = true,
+        },
+      },
+      groups = {
+        all = {
+          ['@boolean'] = { style = 'italic', fg = 'palette.orange' },
+        },
+      },
+    },
+  },
   -- colorsaver automatically save/loads the last used color scheme
   {
     'https://git.sr.ht/~swaits/colorsaver.nvim',

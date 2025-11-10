@@ -58,6 +58,14 @@ local color_scheme_map = {
   ['rose-pine-main'] = 'rose-pine',
   ['rose-pine-dawn'] = 'rose-pine-dawn',
   ['rose-pine-moon'] = 'rose-pine-moon',
+  -- Nightfox Variants
+  ['nightfox'] = 'nightfox',
+  ['dawnfox'] = 'dawnfox',
+  ['dayfox'] = 'dayfox',
+  ['duskfox'] = 'duskfox',
+  ['carbonfox'] = 'carbonfox',
+  ['terafox'] = 'terafox',
+  ['nordfox'] = 'nordfox',
 }
 
 function M.is_nvim_theme(key)
