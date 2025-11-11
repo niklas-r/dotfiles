@@ -42,8 +42,22 @@ return {
     default_file_explorer = true,
     keymaps = {
       -- Custom keymaps for splits so it aligns with the rest of my setup
-      ['<C-v>'] = { 'actions.select', opts = { vertical = true } },
-      ['<C-s>'] = { 'actions.select', opts = { horizontal = true } },
+      ['<C-v>'] = function()
+        require('oil').select({ vertical = true }, function()
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'OilSelect',
+            data = { method = 'vertical' },
+          })
+        end)
+      end,
+      ['<C-s>'] = function()
+        require('oil').select({ horizontal = true }, function()
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'OilSelect',
+            data = { method = 'horizontal' },
+          })
+        end)
+      end,
 
       -- Custom keymap for toggling more columns/"information"
       ['<C-i>'] = { toggleColumnInfo, desc = 'Toggle more column information' },
@@ -53,10 +67,32 @@ return {
 
       -- These are all default keymaps
       ['g?'] = { 'actions.show_help', mode = 'n' },
-      ['<CR>'] = 'actions.select',
-      ['<C-t>'] = { 'actions.select', opts = { tab = true } },
+      ['<CR>'] = function()
+        require('oil').select(nil, function()
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'OilSelect',
+            data = { method = 'buffer' },
+          })
+        end)
+      end,
+      ['<C-t>'] = function()
+        require('oil').select({ tab = true }, function()
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'OilSelect',
+            data = { method = 'tab' },
+          })
+        end)
+      end,
       ['<C-p>'] = 'actions.preview',
-      ['<C-c>'] = { 'actions.close', mode = 'n' },
+      ['<C-c>'] = function()
+        require('oil').close()
+
+        vim.defer_fn(function()
+          vim.api.nvim_exec_autocmds('User', {
+            pattern = 'OilClose',
+          })
+        end, 0)
+      end,
       ['<C-l>'] = 'actions.refresh',
       ['-'] = { 'actions.parent', mode = 'n' },
       ['_'] = { 'actions.open_cwd', mode = 'n' },
