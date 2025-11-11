@@ -49,7 +49,7 @@ local function render_dir(props)
     return { '' }
   end
 
-  return dir and { SEP, table.concat(dir, '/') .. '/' } or ''
+  return dir and { table.concat(dir, '/') .. '/' } or ''
 end
 
 local function render_filename(props)
@@ -58,16 +58,54 @@ local function render_filename(props)
     filename = '[No Name]'
   end
   local modified = vim.bo[props.buf].modified
-  return { filename, gui = modified and 'bold,italic' or 'bold', SEP }
+  return { filename, gui = modified and 'bold,italic' or 'bold' }
+end
+
+local function render_diag(props)
+  local diag_icons = { error = '', warn = '', info = '', hint = '' }
+  local entries = {}
+
+  for severity, icon in pairs(diag_icons) do
+    local count = #vim.diagnostic.get(props.buf, {
+      severity = vim.diagnostic.severity[string.upper(severity)],
+    })
+    if count > 0 then
+      table.insert(entries, {
+        SEP .. icon .. SEP .. count,
+        group = 'DiagnosticSign' .. severity,
+      })
+    end
+  end
+  return entries
 end
 
 local function render(props)
-  local result = {
-    render_icons(props),
-    render_dir(props),
-    render_filename(props),
-  }
-  return result
+  local diag = render_diag(props)
+  local icons = render_icons(props)
+  local dir = render_dir(props)
+  local filename = render_filename(props)
+
+  local results = {}
+
+  if #diag > 0 then
+    table.insert(results, {
+      { diag, SEP },
+      guibg = 'none',
+    })
+  end
+
+  if #icons > 0 then
+    table.insert(results, icons)
+  end
+
+  if #dir > 0 then
+    table.insert(results, { SEP, dir })
+  end
+  if #filename > 0 then
+    table.insert(results, { filename, SEP })
+  end
+
+  return results
 end
 
 return {
@@ -97,7 +135,7 @@ return {
       render = function(props)
         return {
           render(props),
-          guibg = '#44406e',
+          guibg = 'none',
         }
       end,
     }
