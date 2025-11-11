@@ -25,6 +25,7 @@
   "harpoon": { "branch": "harpoon2", "commit": "87b1a3506211538f460786c23f98ec63ad9af4e5" },
   "hererocks": { "branch": "master", "commit": "bcab2cb579cc3d374a0fc4f602e29912d3674965" },
   "inc-rename.nvim": { "branch": "main", "commit": "2597bccb57d1b570fbdbd4adf88b955f7ade715b" },
+  "incline.nvim": { "branch": "main", "commit": "6a3b0635bcd2490dbb1fa124217d41bf69ca0fa2" },
   "jq-playground.nvim": { "branch": "main", "commit": "3ded873cdf0fcbcbac3da473bf2bf34b7b09e19f" },
   "js-i18n.nvim": { "branch": "main", "commit": "5157a1c1a47b14aa77fa6e50626dc1add4d1a618" },
   "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
