@@ -7,57 +7,8 @@ local sep = {
   spacer = ' ',
 }
 
-local DIR_MAX_LEN = 3
-
-local highlights = {
-  filename = 'Bold',
-  modified = 'MatchParen',
-  newfile = 'Special',
-}
-
 local function is_readonly(props)
   return vim.bo[props.buf].modifiable == false or vim.bo[props.buf].readonly == true
-end
-
-local function is_modified(props)
-  return vim.bo[props.buf].modified == true
-end
-
-local function is_new(props)
-  return not is_readonly(props)
-    and vim.bo[props.buf].buftype == ''
-    and not vim.wo[props.win].diff
-    and vim.fn.filereadable(vim.api.nvim_buf_get_name(props.buf)) == 0
-end
-
-local function split_path(path)
-  local parts = vim.split(path, '/', { trimempty = true })
-  if #parts == 0 then
-    return parts
-  end
-  parts[#parts] = nil
-  return parts
-end
-
----@param path string
----@return string[]
-local function shorten_dir(path)
-  local parts = split_path(path)
-  local slice = {} ---@type string[]
-  if #parts <= DIR_MAX_LEN then
-    return parts
-  else
-    local prefix_count = math.floor(DIR_MAX_LEN / 2)
-    local suffix_count = DIR_MAX_LEN - prefix_count
-    for i = 1, prefix_count do
-      slice[i] = parts[i]
-    end
-    slice[prefix_count + 1] = symbols.ellipsis
-    for i = 1, suffix_count do
-      slice[prefix_count + 1 + i] = parts[#parts - suffix_count + i]
-    end
-  end
-  return slice
 end
 
 local function render_icons(props)
@@ -79,34 +30,20 @@ local function render_icons(props)
   return result
 end
 
-local function render_dir(props)
-  local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':p:.')
-  local dir = shorten_dir(path)
+local function render_pretty_path(props)
+  local pretty_path_component = require 'lualine.components.pretty_path' {
+    self = { section = 'x' },
+    directories = {
+      max_depth = 4,
+    },
+    highlights = {
+      newfile = 'LazyProgressDone',
+    },
+  }
 
-  if dir and dir[1] == 'oil:' then
-    return { '' }
-  end
-
-  return dir and { table.concat(dir, '/') .. '/' } or ''
-end
-
-local function render_filename(props)
-  local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-  if filename == '' then
-    filename = '[No Name]'
-  end
-
-  local name_hl = ''
-
-  if is_modified(props) then
-    name_hl = highlights.modified
-  elseif is_new(props) then
-    name_hl = highlights.newfile
-  else
-    name_hl = highlights.filename
-  end
-
-  return { filename, group = name_hl }
+  local helpers = require 'incline.helpers'
+  local is_focused = vim.api.nvim_get_current_win() == props.win
+  return helpers.eval_statusline(pretty_path_component:update_status(is_focused), { winid = props.win })
 end
 
 local function render_diag(props)
@@ -130,8 +67,7 @@ end
 local function render(props)
   local diag = render_diag(props)
   local icons = render_icons(props)
-  local dir = render_dir(props)
-  local filename = render_filename(props)
+  local pretty_path = render_pretty_path(props)
 
   local results = {}
 
@@ -146,9 +82,7 @@ local function render(props)
     table.insert(results, icons)
   end
 
-  if #dir > 0 or #filename > 0 then
-    table.insert(results, { sep.spacer, dir or '', filename or '', sep.spacer })
-  end
+  table.insert(results, { sep.spacer, pretty_path, sep.spacer })
 
   return results
 end
@@ -158,6 +92,7 @@ return {
   event = { 'BufRead', 'BufNewFile', 'BufEnter' },
   dependencies = {
     'nvim-tree/nvim-web-devicons',
+    'bwpge/lualine-pretty-path',
   },
   config = function()
     vim.api.nvim_create_autocmd('User', {
