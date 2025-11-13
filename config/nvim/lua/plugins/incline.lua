@@ -59,10 +59,21 @@ local function render_diag(props)
   return entries
 end
 
+local render_extras = function(props)
+  return vim.api.nvim_win_call(props.win, function()
+    if vim.g.disable_autoformat or vim.b[props.buf].disable_autoformat then
+      return { '󰉥', group = 'Error' }
+    end
+
+    return {}
+  end)
+end
+
 local function render(props)
   local diag = render_diag(props)
-  -- local icons = render_icons(props)
+  local icons = render_icons(props)
   local pretty_path = render_pretty_path(props)
+  local extras = render_extras(props)
 
   local results = {}
 
@@ -73,11 +84,15 @@ local function render(props)
     })
   end
 
-  -- if #icons > 0 then
-  --   table.insert(results, icons)
-  -- end
+  if #icons > 0 then
+    table.insert(results, icons)
+  end
 
   table.insert(results, { sep.spacer, pretty_path, sep.spacer })
+
+  if #extras > 0 then
+    table.insert(results, { extras, sep.spacer })
+  end
 
   return results
 end
@@ -91,15 +106,6 @@ return {
     'nvim-lualine/lualine.nvim',
   },
   config = function()
-    vim.api.nvim_create_autocmd('User', {
-      pattern = { 'OilEnter', 'OilSelect', 'OilClose' },
-      callback = function()
-        vim.defer_fn(function()
-          require('incline').refresh()
-        end, 0)
-      end,
-    })
-
     M.pretty_path_component = require 'lualine.components.pretty_path' {
       self = { section = 'x' },
       directories = {
@@ -118,7 +124,7 @@ return {
         margin = { horizontal = 0 },
       },
       ignore = {
-        filetypes = { '' },
+        filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard' },
       },
       highlight = {
         groups = {
