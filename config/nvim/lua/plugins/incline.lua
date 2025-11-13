@@ -1,3 +1,5 @@
+local M = {}
+
 local symbols = {
   readonly = '',
   ellipsis = '…',
@@ -31,19 +33,12 @@ local function render_icons(props)
 end
 
 local function render_pretty_path(props)
-  local pretty_path_component = require 'lualine.components.pretty_path' {
-    self = { section = 'x' },
-    directories = {
-      max_depth = 4,
-    },
-    highlights = {
-      newfile = 'LazyProgressDone',
-    },
-  }
-
-  local helpers = require 'incline.helpers'
   local is_focused = vim.api.nvim_get_current_win() == props.win
-  return helpers.eval_statusline(pretty_path_component:update_status(is_focused), { winid = props.win })
+  return vim.api.nvim_win_call(props.win, function()
+    local result = M.pretty_path_component:update_status(is_focused)
+    local statusline = M.helpers.eval_statusline(result)
+    return statusline
+  end)
 end
 
 local function render_diag(props)
@@ -66,7 +61,7 @@ end
 
 local function render(props)
   local diag = render_diag(props)
-  local icons = render_icons(props)
+  -- local icons = render_icons(props)
   local pretty_path = render_pretty_path(props)
 
   local results = {}
@@ -78,9 +73,9 @@ local function render(props)
     })
   end
 
-  if #icons > 0 then
-    table.insert(results, icons)
-  end
+  -- if #icons > 0 then
+  --   table.insert(results, icons)
+  -- end
 
   table.insert(results, { sep.spacer, pretty_path, sep.spacer })
 
@@ -93,6 +88,7 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
     'bwpge/lualine-pretty-path',
+    'nvim-lualine/lualine.nvim',
   },
   config = function()
     vim.api.nvim_create_autocmd('User', {
@@ -104,13 +100,25 @@ return {
       end,
     })
 
+    M.pretty_path_component = require 'lualine.components.pretty_path' {
+      self = { section = 'x' },
+      directories = {
+        max_depth = 3,
+      },
+      highlights = {
+        newfile = 'LazyProgressDone',
+      },
+    }
+
+    M.helpers = require 'incline.helpers'
+
     require('incline').setup {
       window = {
         padding = 0,
         margin = { horizontal = 0 },
       },
       ignore = {
-        filetypes = { 'oil' },
+        filetypes = { '' },
       },
       highlight = {
         groups = {

@@ -2,6 +2,7 @@
 return {
   'boltlessengineer/sense.nvim',
   event = 'VeryLazy',
+  enabled = false,
   init = function()
     -- Unorthodox way for configuring this Lazy plugin...
     ---@type sense.Config

@@ -43,6 +43,7 @@ return {
   },
   {
     'folke/tokyonight.nvim',
+    priority = 1000,
     opts = {
       style = 'moon',
       transparent = false,
@@ -56,6 +57,7 @@ return {
   },
   {
     'rose-pine/neovim',
+    priority = 1000,
     name = 'rose-pine',
     opts = {
       variant = 'auto',
@@ -67,6 +69,7 @@ return {
   },
   {
     'EdenEast/nightfox.nvim',
+    priority = 1000,
     opts = {
       options = {
         styles = { -- Style to be applied to different syntax groups
