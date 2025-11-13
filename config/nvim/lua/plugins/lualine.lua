@@ -151,10 +151,6 @@ return {
         },
         lualine_y = {
           { 'progress', fmt = util.trunc(0, 0, trunc_widths.XXS, true) },
-          {
-            util.lualine_harpoon(),
-            fmt = util.trunc(0, 0, trunc_widths.L, true),
-          },
         },
         lualine_z = {
           { util.selectionCount, fmt = util.trunc(0, 0, trunc_widths.XS, true) },

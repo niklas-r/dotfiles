@@ -32,6 +32,15 @@ local function render_icons(props)
   return result
 end
 
+local function render_harpoon(props)
+  local is_focused = vim.api.nvim_get_current_win() == props.win
+  return vim.api.nvim_win_call(props.win, function()
+    local result = M.harpoon_component:update_status(is_focused)
+    local statusline = M.helpers.eval_statusline(result)
+    return statusline
+  end)
+end
+
 local function render_pretty_path(props)
   local is_focused = vim.api.nvim_get_current_win() == props.win
   return vim.api.nvim_win_call(props.win, function()
@@ -74,6 +83,7 @@ local function render(props)
   local icons = render_icons(props)
   local pretty_path = render_pretty_path(props)
   local extras = render_extras(props)
+  local harpoon = render_harpoon(props)
 
   local results = {}
 
@@ -94,6 +104,13 @@ local function render(props)
     table.insert(results, { extras, sep.spacer })
   end
 
+  if #harpoon > 0 then
+    table.insert(results, {
+      { { sep.spacer, '󰛢', sep.spacer, group = 'MiniHipatternsNots' }, sep.spacer, harpoon, sep.spacer },
+      guibg = 'none',
+    })
+  end
+
   return results
 end
 
@@ -104,6 +121,15 @@ return {
     'nvim-tree/nvim-web-devicons',
     'bwpge/lualine-pretty-path',
     'nvim-lualine/lualine.nvim',
+    {
+      'letieu/harpoon-lualine',
+      dependencies = {
+        {
+          'ThePrimeagen/harpoon',
+          branch = 'harpoon2',
+        },
+      },
+    },
   },
   config = function()
     M.pretty_path_component = require 'lualine.components.pretty_path' {
@@ -117,6 +143,15 @@ return {
     }
 
     M.helpers = require 'incline.helpers'
+
+    M.harpoon_component = require 'lualine.components.harpoon2' {
+      self = { section = 'x' },
+      icon = '󰛢',
+      indicators = { 'a', 's', 'd', 'f' },
+      active_indicators = { 'a', 's', 'd', 'f' },
+      color_active = { fg = 'bold,underline' },
+      _separator = '',
+    }
 
     require('incline').setup {
       window = {
