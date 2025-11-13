@@ -4,7 +4,6 @@ return {
   dependencies = {
     {
       'nvim-tree/nvim-web-devicons',
-      'bwpge/lualine-pretty-path',
       'folke/snacks.nvim',
       'AndreM222/copilot-lualine',
     },
@@ -89,33 +88,7 @@ return {
             end,
           },
         },
-        lualine_c = {
-          {
-            'diagnostics',
-            symbols = vim.g.have_nerd_font and { error = ' ', warn = ' ', info = ' ', hint = ' ' }
-              or { error = 'E', warn = 'W', info = 'I', hint = 'H' },
-            fmt = util.trunc(0, 0, trunc_widths.XXS, true),
-          },
-          {
-            function()
-              return '󰉥'
-            end,
-            color = 'Error',
-            cond = function()
-              local buf = vim.api.nvim_get_current_buf()
-              return vim.g.disable_autoformat or vim.b[buf].disable_autoformat
-            end,
-          },
-          {
-            'pretty_path',
-            directories = {
-              max_depth = 4,
-            },
-            highlights = {
-              newfile = 'LazyProgressDone',
-            },
-          },
-        },
+        lualine_c = {},
         lualine_x = {
           {
             codeCompanionStatus,
@@ -208,13 +181,6 @@ return {
         lualine_x = {},
         lualine_y = {},
         lualine_z = {},
-      },
-      inactive_sections = {
-        lualine_c = {
-          {
-            'pretty_path',
-          },
-        },
       },
       winbar = {},
       extensions = {
