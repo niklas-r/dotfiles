@@ -30,7 +30,7 @@ I like to change things up quite often, I currently use [Maple Mono](https://git
 
 ### Terminal emulator
 
-My current terminal of choice is [Wezterm](https://wezterm.org). Checkout my config in [`.config/wezterm`](./.config/wezterm)!
+My current terminal of choice is [Wezterm](https://wezterm.org). Checkout my config in [`./config/wezterm`](./config/wezterm)!
 
 ### Shell
 
@@ -40,6 +40,7 @@ I use [`zsh`](https://www.zsh.org/) with [`Prezto`](https://github.com/sorin-ion
 
 - [Homebrew](https://brew.sh/)
 - [`nvm`](https://github.com/nvm-sh/nvm)
+- antidote[`antidote`](https://antidote.sh/)
 
 ### CLI tools
 
