@@ -60,6 +60,7 @@ return {
           },
         },
         bashls = {},
+        marksman = {},
         lua_ls = {
           settings = {
             Lua = {
