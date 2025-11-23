@@ -7,8 +7,9 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
-        yamllint = { 'yamllint' },
-        jsonlint = { 'jsonlint' },
+        yaml = { 'yamllint' },
+        json = { 'jsonlint' },
+        sh = { 'shellcheck' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
