@@ -1,50 +1,33 @@
 local M = {}
 
-local symbols = {
-  readonly = '',
-  ellipsis = '…',
-}
-
 local sep = {
   spacer = ' ',
 }
 
-local function is_readonly(props)
-  return vim.bo[props.buf].modifiable == false or vim.bo[props.buf].readonly == true
-end
-
 local function render_icons(props)
   local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
-  local devicons = require 'nvim-web-devicons'
-  local helpers = require 'incline.helpers'
-  local ft_icon, ft_color = devicons.get_icon_color(filename)
+  local ft_icon, ft_color = M.devicons.get_icon_color(filename)
 
   local result = {}
 
   if ft_icon then
-    table.insert(result, { sep.spacer, ft_icon, sep.spacer, guibg = ft_color, guifg = helpers.contrast_color(ft_color) })
-  end
-
-  if is_readonly(props) then
-    table.insert(result, { sep.spacer, symbols.readonly, group = 'NonText' })
+    table.insert(result, { sep.spacer, ft_icon, sep.spacer, guibg = ft_color, guifg = M.helpers.contrast_color(ft_color) })
   end
 
   return result
 end
 
 local function render_harpoon(props)
-  local is_focused = vim.api.nvim_get_current_win() == props.win
   return vim.api.nvim_win_call(props.win, function()
-    local result = M.harpoon_component:update_status(is_focused)
-    local statusline = M.helpers.eval_statusline(result)
+    local result = M.harpoon_component:update_status(props.focused)
+    local statusline = M.helpers.eval_statusline('%#lualine_c_inactive#' .. result)
     return statusline
   end)
 end
 
 local function render_pretty_path(props)
-  local is_focused = vim.api.nvim_get_current_win() == props.win
   return vim.api.nvim_win_call(props.win, function()
-    local result = M.pretty_path_component:update_status(is_focused)
+    local result = M.pretty_path_component:update_status(props.focused)
     local statusline = M.helpers.eval_statusline(result)
     return statusline
   end)
@@ -106,7 +89,7 @@ local function render(props)
 
   if #harpoon > 0 then
     table.insert(results, {
-      { { sep.spacer, '󰛢', sep.spacer, group = 'MiniHipatternsNots' }, sep.spacer, harpoon, sep.spacer },
+      { { group = 'MiniHipatternsNotes', sep.spacer, '󰛢', sep.spacer }, sep.spacer, harpoon, sep.spacer },
       guibg = 'none',
     })
   end
@@ -116,7 +99,7 @@ end
 
 return {
   'b0o/incline.nvim',
-  event = { 'BufRead', 'BufNewFile', 'BufEnter' },
+  event = 'VeryLazy',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
     'bwpge/lualine-pretty-path',
@@ -141,11 +124,8 @@ return {
         newfile = 'LazyProgressDone',
       },
     }
-
-    M.helpers = require 'incline.helpers'
-
     M.harpoon_component = require 'lualine.components.harpoon2' {
-      self = { section = 'x' },
+      self = { section = 'a' },
       icon = '󰛢',
       indicators = { 'a', 's', 'd', 'f' },
       active_indicators = { 'a', 's', 'd', 'f' },
@@ -153,18 +133,22 @@ return {
       _separator = '',
     }
 
+    M.helpers = require 'incline.helpers'
+    M.devicons = require 'nvim-web-devicons'
+
     require('incline').setup {
+      debounce_threshold = 5,
       window = {
         padding = 0,
         margin = { horizontal = 0 },
       },
       ignore = {
-        filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard' },
+        filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
       },
       highlight = {
         groups = {
-          InclineNormal = { guibg = 'none' },
-          InclineNormalNC = { guibg = 'none' },
+          InclineNormal = { guifg = '#ffffff' },
+          -- InclineNormalNC = { guibg = 'none' },
         },
       },
       render = function(props)
