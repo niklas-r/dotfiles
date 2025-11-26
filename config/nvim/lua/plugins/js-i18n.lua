@@ -11,6 +11,7 @@ return {
     translation_source = { '**/{locales,messages}/**/*.json' }, -- Pattern for translation resources
     virt_text = {
       enabled = true,
+      conceal_key = true,
     },
     diagnostic = {
       enabled = true,
