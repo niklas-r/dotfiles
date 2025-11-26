@@ -13,6 +13,7 @@
   "colorful-winsep.nvim": { "branch": "main", "commit": "e555611c8f39918e30d033a97ea1a5af457ce75e" },
   "colorsaver.nvim": { "branch": "main", "commit": "3c4f0f6dcfdb4a347db9d7d8099779040c7e8608" },
   "conform.nvim": { "branch": "master", "commit": "6208aefd675939cc7c8f1a57176135974dad269f" },
+  "consolelog.nvim": { "branch": "main", "commit": "83a786a27d45d6b18be2083fc4cd7857a300aa37" },
   "coop.nvim": { "branch": "main", "commit": "85986a6f7390d1362864708dcba097ba0e6b8d39" },
   "copilot-lualine": { "branch": "main", "commit": "222e90bd8dcdf16ca1efc4e784416afb5f011c31" },
   "copilot.lua": { "branch": "master", "commit": "4383e05a47493d7ff77b058c0548129eb38ec7fb" },

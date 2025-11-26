@@ -68,7 +68,7 @@ return {
       { '<leader>wb', group = '[B]uffer' },
       { '<leader>p', group = '[P]eek' },
       { '<leader>g', group = '[G]it' },
-      { '<leader>l', group = '[L]azygit' },
+      { '<leader>l', group = 'Console[L]og' },
       { '<leader>a', group = '[A]I', mode = { 'n', 'v' } },
       { '<leader>t', group = '[T]oggles' },
       { '<leader>b', group = '[B]uffers' },

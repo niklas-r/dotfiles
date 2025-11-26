@@ -160,7 +160,7 @@ return {
     'folke/snacks.nvim',
     keys = {
       -- stylua: ignore start
-      { '<leader>lg', function() Snacks.lazygit() end, desc = '[L]azy[g]it', },
+      { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazy[g]it', },
       -- stylua: ignore end
     },
     opts = {
