@@ -10,10 +10,10 @@ local M = {}
 function M.get_color_by_key(key)
   local current_scheme = wez.color.get_builtin_schemes()[G.colorscheme]
 
-  local surface = current_scheme.cursor and current_scheme.cursor.bg or current_scheme.ansi[1]
+  local surface = current_scheme.background or current_scheme.ansi[1]
 
-  if current_scheme.tab_tab and current_scheme.tab_tab.active_tab_edge then
-    surface = current_scheme.tab_tab.active_tab_edge
+  if current_scheme.tab_bar and current_scheme.tab_bar.inactive_tab_edge then
+    surface = current_scheme.tab_bar.inactive_tab_edge
   end
 
   local key_to_color = {
@@ -59,12 +59,12 @@ local color_scheme_map = {
   ['rose-pine-dawn'] = 'rose-pine-dawn',
   ['rose-pine-moon'] = 'rose-pine-moon',
   -- Nightfox Variants
-  ['nightfox'] = 'nightfox',
+  -- ['nightfox'] = 'nightfox',
   ['dawnfox'] = 'dawnfox',
-  ['dayfox'] = 'dayfox',
+  -- ['dayfox'] = 'dayfox',
   ['duskfox'] = 'duskfox',
   ['carbonfox'] = 'carbonfox',
-  ['terafox'] = 'terafox',
+  -- ['terafox'] = 'terafox',
   ['nordfox'] = 'nordfox',
 }
 
@@ -90,4 +90,5 @@ function M.set_nvim_color_scheme(color_scheme)
 
   globals.write_to_file(path, nvim_theme)
 end
+
 return M
