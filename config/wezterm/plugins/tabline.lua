@@ -2,6 +2,7 @@ local wez = require 'wezterm'
 local colors = require 'utils.colors'
 local globals = require 'utils.globals'
 local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
+local features = require 'features'
 
 local G = globals.read_globals()
 
@@ -224,6 +225,27 @@ return {
               return mode_formatter(left_separator(), window, 'fg-inverse', 'b', 'c')
             end,
           },
+          function(window)
+            local teams_icon = wez.nerdfonts.md_microsoft_teams
+            local meeting_icon = wez.nerdfonts.md_account_group
+            local no_meeting_icon = wez.nerdfonts.md_coffee
+
+            local icon = no_meeting_icon
+
+            local meeting_result = features.get_next_meeting()
+
+            wez.log_info('Next meeting: ' .. tostring(meeting_result))
+            if meeting_result then
+              if string.find(meeting_result, 'Teams') then
+                icon = teams_icon
+              else
+                icon = meeting_icon
+              end
+            else
+              meeting_result = 'No meeting'
+            end
+            return mode_formatter(' ' .. icon .. ' ' .. meeting_result .. ' ', window, 'both', 'b')
+          end,
           {
             'datetime',
             icons_enabled = false,

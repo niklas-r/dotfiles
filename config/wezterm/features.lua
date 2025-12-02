@@ -128,4 +128,66 @@ M.kill_workspace = function(workspace)
   end
 end
 
+M.get_next_meeting = function()
+  local icalbuddy_path = nil
+  for _, path in ipairs { '/opt/homebrew/bin/icalBuddy', '/usr/local/bin/icalBuddy' } do
+    local success, _, _ = wezterm.run_child_process { 'test', '-x', path }
+    if success then
+      icalbuddy_path = path
+      break
+    end
+  end
+
+  if not icalbuddy_path then
+    return nil
+  end
+
+  local cmd_success, stdout, _ = wezterm.run_child_process {
+    icalbuddy_path,
+    '-n',
+    '-ea',
+    '-npn',
+    '-nc',
+    '-li',
+    '1',
+    '-iep',
+    'datetime,title,location',
+    '-po',
+    'datetime,title,location',
+    '-ps',
+    '| | (|',
+    '-tf',
+    '%H:%M',
+    '-b',
+    '',
+    '-ss',
+    '',
+    'eventsToday',
+  }
+
+  if cmd_success and stdout and stdout ~= '' then
+    local result = stdout:match '^%s*(.-)%s*$'
+
+    if result and result ~= '' then
+      result = result:gsub('Microsoft Teams Meeting', 'Teams')
+
+      -- Simplify Teams meeting format: extract title and location only
+      local before_paren, location = result:match '(.-)%(Teams;%s*(.*)$'
+      if before_paren and location then
+        result = before_paren .. '(' .. location .. ')'
+      end
+
+      -- Ensure closing parenthesis if there's an opening one without a closing one
+      if result:find('(', 1, true) and not result:find(')', 1, true) then
+        result = result .. ')'
+      end
+
+      return result
+    end
+  end
+
+  wezterm.log_info 'No upcoming meetings found'
+  return nil
+end
+
 return M
