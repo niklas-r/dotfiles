@@ -234,7 +234,6 @@ return {
 
             local meeting_result = features.get_next_meeting()
 
-            wez.log_info('Next meeting: ' .. tostring(meeting_result))
             if meeting_result then
               if string.find(meeting_result, 'Teams') then
                 icon = teams_icon
