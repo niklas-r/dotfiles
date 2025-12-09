@@ -144,7 +144,14 @@ M.get_next_meeting = function()
 
   local cmd_success, stdout, _ = wezterm.run_child_process {
     icalpal_path,
-    '-n',
+    '-n', -- Only upcoming events.
+    '--ic', -- Use calendar
+    'Calendar', -- with name "Calendar".
+    '--li', -- Limit events
+    '1', -- to 1.
+    '--ea', -- Exclude all-day events.
+    '--so', -- Sort by
+    'start_date',
     '-o',
     'json',
     'eventsToday',
@@ -155,42 +162,82 @@ M.get_next_meeting = function()
 
     if json and #json > 0 then
       local event = json[1]
-      local result = ''
+      local meeting = {
+        time = nil,
+        start_time = nil,
+        end_time = nil,
+        start_timestamp = nil,
+        title = nil,
+        location = nil,
+        is_teams = false,
+      }
 
-      -- Extract start and end time from Unix timestamps and format to local time
-      if event.sseconds then
-        local start_time = os.date('%H:%M', event.sseconds)
-        if start_time then
-          result = start_time
-          -- Add end time if available
-          if event.eseconds then
-            local end_time = os.date('%H:%M', event.eseconds)
-            if end_time then
-              result = result .. '-' .. end_time
-            end
-          end
+      -- Parse timestamp
+      -- For recurring events, icalPal has a bug where:
+      -- - sseconds has the correct TIME but wrong DATE (from original occurrence)
+      -- - sctime has the correct DATE but sometimes wrong TIME
+      -- Solution: Use time from sseconds, date from sctime or today
+      if event.has_recurrences == 1 and event.sseconds and event.sctime then
+        -- Get the time components from sseconds (correct time)
+        local time_table = os.date('*t', event.sseconds)
+        local hour, min, sec = time_table.hour, time_table.min, time_table.sec
+
+        -- Get the date from sctime (correct date)
+        local year, month, day = event.sctime:match '(%d+)%-(%d+)%-(%d+)'
+
+        if year and hour then
+          meeting.start_timestamp = os.time {
+            year = tonumber(year),
+            month = tonumber(month),
+            day = tonumber(day),
+            hour = hour,
+            min = min,
+            sec = sec,
+          }
+          meeting.start_time = string.format('%02d:%02d', hour, min)
+        end
+      elseif event.sseconds then
+        -- Non-recurring events: sseconds is reliable
+        meeting.start_timestamp = event.sseconds
+        meeting.start_time = os.date('%H:%M', event.sseconds)
+      end
+
+      -- Parse end time
+      if event.has_recurrences == 1 and event.eseconds and event.ectime then
+        -- Same fix for end time: use time from eseconds, date from ectime
+        local time_table = os.date('*t', event.eseconds)
+        meeting.end_time = string.format('%02d:%02d', time_table.hour, time_table.min)
+      elseif event.ectime then
+        local hour, min = event.ectime:match '(%d+):(%d+):(%d+)'
+        if hour then
+          meeting.end_time = string.format('%02d:%02d', tonumber(hour), tonumber(min))
+        end
+      elseif event.eseconds and meeting.start_time then
+        meeting.end_time = os.date('%H:%M', event.eseconds)
+      end
+
+      -- Build time display
+      if meeting.start_time then
+        meeting.time = meeting.start_time
+        if meeting.end_time then
+          meeting.time = meeting.time .. '-' .. meeting.end_time
         end
       end
 
-      -- Add title
       if event.title then
-        if result ~= '' then
-          result = result .. ' | '
-        end
-        result = result .. event.title
+        meeting.title = event.title:match '^%s*(.-)%s*$'
       end
 
-      -- Add location if available
       if event.location and event.location ~= '' then
         local location = event.location
-        local is_teams = event.conference_url_detected and event.conference_url_detected:find 'teams.microsoft.com'
+        meeting.is_teams = event.conference_url_detected and event.conference_url_detected:find 'teams.microsoft.com' or location:find 'Microsoft Teams'
 
-        if is_teams then
+        if meeting.is_teams then
           -- For Teams meetings, extract physical location if present or just use "Teams"
-          local physical_location = location:match 'Teams;%s*(.+)' or location:match ';%s*(.+)'
+          local physical_location = location:match ';%s*(.+)'
           if physical_location then
             location = physical_location
-          elseif location:find 'Microsoft Teams' or location:find 'Teams' then
+          else
             location = 'Teams'
           end
         end
@@ -201,10 +248,10 @@ M.get_next_meeting = function()
           location = location_name:match '^%s*(.-)%s*$' -- trim whitespace
         end
 
-        result = result .. ' | (' .. location .. ')'
+        meeting.location = location
       end
 
-      return result
+      return meeting
     end
   end
 

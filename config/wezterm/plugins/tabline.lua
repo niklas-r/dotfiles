@@ -148,6 +148,69 @@ return {
       }
     end
 
+    local lastMeetingCheck = 0
+    local lastMeetingData = nil
+    local lastMeetingCheckInterval = 10
+
+    local function meeting_component(window)
+      local now = os.time()
+
+      local teams_icon = wez.nerdfonts.md_microsoft_teams
+      local meeting_icon = wez.nerdfonts.md_account_group
+      local no_meeting_icon = wez.nerdfonts.md_coffee
+
+      local icon = no_meeting_icon
+      local display_text = 'No more meetings'
+
+      if now - lastMeetingCheck > lastMeetingCheckInterval then
+        lastMeetingData = features.get_next_meeting()
+        lastMeetingCheck = now
+      end
+
+      local meeting = lastMeetingData
+
+      if meeting then
+        icon = meeting.is_teams and teams_icon or meeting_icon
+
+        -- Build display text
+        local parts = {}
+        if meeting.time then
+          local time_display = meeting.time
+
+          -- Add countdown if meeting is within 1 hour
+          if meeting.start_timestamp then
+            local now = os.time()
+            local diff_seconds = meeting.start_timestamp - now
+
+            if diff_seconds > 0 and diff_seconds <= 3600 then
+              local minutes = math.ceil(diff_seconds / 60)
+              time_display = time_display .. ' (in ' .. minutes .. 'm)'
+            elseif diff_seconds < 0 and diff_seconds >= -3600 then
+              -- Meeting started within the last hour
+              local minutes = math.ceil(-diff_seconds / 60)
+              time_display = time_display .. ' (started ' .. minutes .. 'm ago)'
+            end
+          end
+
+          table.insert(parts, time_display)
+        end
+        if meeting.title ~= nil then
+          local title = meeting.title
+          local max_title_length = 20
+          if #title > max_title_length then
+            title = title:sub(1, max_title_length):match '^%s*(.-)%s*$' .. '...'
+          end
+          table.insert(parts, title)
+        end
+        if meeting.location then
+          table.insert(parts, '(' .. meeting.location .. ')')
+        end
+        display_text = table.concat(parts, ' | ')
+      end
+
+      return mode_formatter(' ' .. icon .. ' ' .. display_text .. ' ', window, 'both', 'b')
+    end
+
     tabline.setup {
       options = {
         icons_enabled = true,
@@ -225,26 +288,7 @@ return {
               return mode_formatter(left_separator(), window, 'fg-inverse', 'b', 'c')
             end,
           },
-          function(window)
-            local teams_icon = wez.nerdfonts.md_microsoft_teams
-            local meeting_icon = wez.nerdfonts.md_account_group
-            local no_meeting_icon = wez.nerdfonts.md_coffee
-
-            local icon = no_meeting_icon
-
-            local meeting_result = features.get_next_meeting()
-
-            if meeting_result then
-              if string.find(meeting_result, 'Teams') then
-                icon = teams_icon
-              else
-                icon = meeting_icon
-              end
-            else
-              meeting_result = 'No meeting'
-            end
-            return mode_formatter(' ' .. icon .. ' ' .. meeting_result .. ' ', window, 'both', 'b')
-          end,
+          meeting_component,
           {
             'datetime',
             icons_enabled = false,
