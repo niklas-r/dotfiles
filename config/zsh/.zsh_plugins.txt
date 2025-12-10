@@ -17,6 +17,9 @@ atuinsh/atuin branch:main
 romkatv/zsh-bench kind:path
 romkatv/powerlevel10k
 
+jeffreytse/zsh-vi-mode
+TunaCuma/zsh-vi-man # This integrates with zsh-vi-mode lazy keybindings system when sourced after it
+
 ### The following is an examples file from https://getantidote.github.io/usage
 
 # # .zsh_plugins.txt
