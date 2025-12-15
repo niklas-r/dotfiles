@@ -82,6 +82,7 @@ return {
       typescript = js_settings,
       javascriptreact = js_settings,
       typescriptreact = js_settings,
+      yaml = js_settings,
       sh = { 'beautysh' },
       zsh = { 'beautysh' },
       json = { 'jq' },
