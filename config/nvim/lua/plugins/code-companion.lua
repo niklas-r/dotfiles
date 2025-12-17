@@ -19,7 +19,7 @@ return {
       'folke/snacks.nvim',
       -- Nicer diffs
       'nvim-mini/mini.diff',
-      -- Dependepcies used by extensions
+      -- Dependencies used by extensions
       'ravitemer/mcphub.nvim',
       -- Chat history extension
       'ravitemer/codecompanion-history.nvim',

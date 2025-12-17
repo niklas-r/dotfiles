@@ -8,7 +8,7 @@
   "bufresize.nvim": { "branch": "master", "commit": "3b19527ab936d6910484dcc20fb59bdb12322d8b" },
   "catppuccin": { "branch": "main", "commit": "ce8d176faa4643e026e597ae3c31db59b63cef09" },
   "codecompanion-history.nvim": { "branch": "main", "commit": "8c6ca9f998aeef89f3543343070f8562bf911fb4" },
-  "codecompanion.nvim": { "branch": "main", "commit": "8ad65eef735b31bb47d76f59d878ee1bac4bdc85" },
+  "codecompanion.nvim": { "branch": "main", "commit": "689102db718ba29623c044d22a2fa3e4cf238407" },
   "coerce.nvim": { "branch": "main", "commit": "de8ad1663ba467003b90c79eaf5b8105964dd6f5" },
   "colorful-winsep.nvim": { "branch": "main", "commit": "e555611c8f39918e30d033a97ea1a5af457ce75e" },
   "colorsaver.nvim": { "branch": "main", "commit": "3c4f0f6dcfdb4a347db9d7d8099779040c7e8608" },
