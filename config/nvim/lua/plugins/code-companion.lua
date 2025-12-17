@@ -86,7 +86,14 @@ return {
           },
         },
       },
-      prompt_library = require 'plugins.code-companion.prompts',
+      prompt_library = {
+        markdown = {
+          dirs = {
+            vim.fn.getcwd() .. '/.prompts',
+            os.getenv 'DOTFILES_DIR' .. '/config/nvim/lua/plugins/code-companion/prompts',
+          },
+        },
+      },
     },
     init = function()
       vim.keymap.set({ 'n', 'v' }, '<leader>aa', '<cmd>CodeCompanionActions<cr>', { desc = '[A]ctions', noremap = true, silent = true })
