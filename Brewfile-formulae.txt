@@ -39,7 +39,7 @@ slides
 syft
 tarkah/tickrs/tickrs
 tcl-tk
-tldr
+tealdeer
 tokei
 uv
 virtualenv
