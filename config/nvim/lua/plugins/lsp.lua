@@ -84,6 +84,7 @@ return {
         'jq', -- Fast JSON formatter and more
         'jsonlint',
         'yamllint',
+        'tree-sitter-cli', -- Required by nvim-treesitter main branch
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

@@ -69,7 +69,7 @@ return {
   'nvim-mini/mini.nvim',
   event = 'VeryLazy',
   dependencies = {
-    'nvim-treesitter/nvim-treesitter-textobjects',
+    { 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
   },
   config = function()
     local ai = require 'mini.ai'
