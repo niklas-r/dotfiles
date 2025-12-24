@@ -1,3 +1,94 @@
+local function walk_in_codediff(current_commit)
+  vim.fn.setreg('+', current_commit)
+  vim.notify('Copied: ' .. current_commit)
+  -- get parent / previous commit
+  local parent_commit = vim.trim(vim.fn.system('git rev-parse --short ' .. current_commit .. '^'))
+  parent_commit = parent_commit:match '[a-f0-9]+'
+  -- Check if command failed (e.g., Initial commit has no parent)
+  if vim.v.shell_error ~= 0 then
+    vim.notify('Cannot find parent (Root commit?)', vim.log.levels.WARN)
+    parent_commit = ''
+  end
+  local cmd = string.format('CodeDiff %s %s', parent_commit, current_commit)
+  vim.notify('Diffing: ' .. parent_commit .. ' -> ' .. current_commit)
+  vim.cmd(cmd)
+end
+
+local function git_pickaxe(opts)
+  -- TODO: Add some kind of spinner notification while git is searching for commits
+  opts = opts or {}
+  local is_global = opts.global or false
+  local current_file = vim.api.nvim_buf_get_name(0)
+  -- Force global if current buffer is invalid
+  if not is_global and (current_file == '' or current_file == nil) then
+    vim.notify('Buffer is not a file, switching to global search', vim.log.levels.WARN)
+    is_global = true
+  end
+
+  local title_scope = is_global and 'repository' or vim.fn.fnamemodify(current_file, ':t')
+  vim.ui.input({ prompt = 'Git Search in ' .. title_scope .. ': ' }, function(query)
+    if not query or query == '' then
+      return
+    end
+
+    -- set keyword highlight within Snacks.picker
+    vim.fn.setreg('/', query)
+    local old_hl = vim.opt.hlsearch
+    vim.opt.hlsearch = true
+
+    local args = {
+      'log',
+      '-G' .. query,
+      '-i',
+      '--pretty=format:%C(yellow)%h%Creset %s %C(green)(%cr)%Creset %C(blue)<%an>%Creset',
+      '--abbrev-commit',
+      '--date=short',
+    }
+
+    if not is_global then
+      table.insert(args, '--')
+      table.insert(args, current_file)
+    end
+
+    Snacks.picker {
+      title = 'Git Log: "' .. query .. '" (' .. title_scope .. ')',
+      finder = 'proc',
+      cmd = 'git',
+      args = args,
+      transform = function(item)
+        local clean_text = item.text:gsub('\27%[[0-9;]*m', '')
+        local hash = clean_text:match '^%S+'
+        if hash then
+          item.commit = hash
+          if not is_global then
+            item.file = current_file
+          end
+        end
+        return item
+      end,
+
+      preview = 'git_show',
+      confirm = function(picker, item)
+        picker:close()
+        walk_in_codediff(item.commit)
+      end,
+      format = 'text',
+
+      on_change = function()
+        vim.print 'on change triggered'
+      end,
+      on_show = function()
+        vim.print 'on show triggered'
+      end,
+      on_close = function()
+        -- remove keyword highlight
+        vim.opt.hlsearch = old_hl
+        vim.cmd 'noh'
+      end,
+    }
+  end)
+end
+
 return {
   {
     'FabijanZulj/blame.nvim',
@@ -26,13 +117,11 @@ return {
       })
     end,
   },
-
   {
-    'sindrets/diffview.nvim',
-    event = 'BufReadPre',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons', -- not strictly required, but recommended
-    },
+    'esmuellert/vscode-diff.nvim',
+    dependencies = { 'MunifTanjim/nui.nvim' },
+    branch = 'next',
+    cmd = 'CodeDiff',
   },
 
   {
@@ -95,10 +184,9 @@ return {
           -- Uses blame.nvim
           vim.cmd 'BlameToggle window'
         end, { desc = 'git [B]lame file' })
-        map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
-        map('n', '<leader>hD', function()
-          gitsigns.diffthis '@'
-        end, { desc = 'git [D]iff against last commit' })
+        map('n', '<leader>hd', function()
+          vim.cmd [[CodeDiff file HEAD]]
+        end, { desc = 'git [d]iff against index' })
       end,
       -- This will open up Trouble instead of loclist and quickfixlist
       trouble = true,
@@ -112,7 +200,7 @@ return {
   {
     'folke/snacks.nvim',
     dependencies = {
-      'sindrets/diffview.nvim',
+      'esmuellert/vscode-diff.nvim',
     },
     keys = {
       -- stylua: ignore start
@@ -120,35 +208,31 @@ return {
       { "<leader>gl", function() Snacks.picker.git_log {
         confirm = function(picker, item)
           picker:close()
-          if item then
-            vim.cmd('DiffviewOpen ' .. item.commit .. '^!')
-          end
+          walk_in_codediff(item.commit)
         end,
       } end, desc = "[L]og" },
       { "<leader>gL", function() Snacks.picker.git_log_line {
         confirm = function(picker, item)
           picker:close()
-          if item then
-            vim.cmd('DiffviewOpen ' .. item.commit .. '^!')
-          end
+          walk_in_codediff(item.commit)
         end,
       } end, desc = "Log [L]ine" },
+
+      -- Search in Git history
+      { "<leader>ge", function() git_pickaxe { global = false } end, desc = "S[e]arch (buffer)" },
+      { "<leader>gE", function() git_pickaxe { global = true } end, desc = "S[e]arch (global)" },
+
       { "<leader>gs", function() Snacks.picker.git_status() end, desc = "[S]tatus" },
       { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "[S]tash" },
       { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "[D]iff (Hunks)" },
       { "<leader>gf", function() Snacks.picker.git_log_file {
-        confirm = function(picker, item)
-          picker:close()
-          if item then
-            vim.cmd('DiffviewFileHistory ' .. item.file .. ' --follow')
-          end
-        end,
+        confirm = walk_in_codediff,
       } end, desc = "Log [F]ile" },
-    -- gh
-    { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub [i]ssues (open)" },
-    { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub [I]ssues (all)" },
-    { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub [p]R's (open)" },
-    { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub [P]R's (all)" },
+      -- gh
+      { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub [i]ssues (open)" },
+      { "<leader>gI", function() Snacks.picker.gh_issue({ state = "all" }) end, desc = "GitHub [I]ssues (all)" },
+      { "<leader>gp", function() Snacks.picker.gh_pr() end, desc = "GitHub [p]R's (open)" },
+      { "<leader>gP", function() Snacks.picker.gh_pr({ state = "all" }) end, desc = "GitHub [P]R's (all)" },
       -- stylua: ignore end
     },
     opts = {
