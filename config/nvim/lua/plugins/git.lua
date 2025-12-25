@@ -1,17 +1,18 @@
 local function walk_in_codediff(current_commit)
-  vim.fn.setreg('+', current_commit)
-  vim.notify('Copied: ' .. current_commit)
-  -- get parent / previous commit
-  local parent_commit = vim.trim(vim.fn.system('git rev-parse --short ' .. current_commit .. '^'))
-  parent_commit = parent_commit:match '[a-f0-9]+'
-  -- Check if command failed (e.g., Initial commit has no parent)
-  if vim.v.shell_error ~= 0 then
-    vim.notify('Cannot find parent (Root commit?)', vim.log.levels.WARN)
-    parent_commit = ''
-  end
-  local cmd = string.format('CodeDiff %s %s', parent_commit, current_commit)
-  vim.notify('Diffing: ' .. parent_commit .. ' -> ' .. current_commit)
-  vim.cmd(cmd)
+  vim.system({ 'git', 'rev-parse', '--short ', current_commit .. '^' }, { test = true }, function(obj)
+    obj.code = obj.code or 0
+    if obj.code ~= 0 then
+      vim.notify('Cannot find parent (Root commit?)', vim.log.levels.WARN)
+    else
+      local parent_commit = vim.trim(obj.stdout)
+      parent_commit = string.sub(parent_commit:match '[a-f0-9]+', 1, 7)
+      local cmd = string.format('CodeDiff %s %s', parent_commit, current_commit)
+      vim.notify('Diffing: ' .. parent_commit .. ' -> ' .. current_commit)
+      vim.schedule(function()
+        vim.cmd(cmd)
+      end)
+    end
+  end)
 end
 
 local function git_pickaxe(opts)
@@ -226,7 +227,10 @@ return {
       { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "[S]tash" },
       { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "[D]iff (Hunks)" },
       { "<leader>gf", function() Snacks.picker.git_log_file {
-        confirm = walk_in_codediff,
+        confirm =  function(picker, item)
+          picker:close()
+          walk_in_codediff(item.commit)
+        end,
       } end, desc = "Log [F]ile" },
       -- gh
       { "<leader>gi", function() Snacks.picker.gh_issue() end, desc = "GitHub [i]ssues (open)" },
