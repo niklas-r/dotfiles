@@ -147,11 +147,9 @@ return {
           git = {
             module = 'blink-cmp-git',
             name = 'Git',
-            opts = {
-              enabled = function()
-                return vim.tbl_contains({ 'octo', 'gitcommit' }, vim.bo.filetype)
-              end,
-            },
+            enabled = function()
+              return vim.tbl_contains({ 'octo', 'gitcommit' }, vim.bo.filetype)
+            end,
           },
           emoji = {
             module = 'blink-emoji',
@@ -169,7 +167,7 @@ return {
                 -- Enable emoji completion only for git commits and markdown.
                 -- By default, enabled for all file-types.
                 { 'gitcommit', 'lazygit', 'markdown' },
-                vim.o.filetype
+                vim.bo.filetype
               )
             end,
           },
