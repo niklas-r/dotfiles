@@ -1,7 +1,7 @@
 local function walk_in_codediff(current_commit)
   vim.system({ 'git', 'rev-parse', '--short ', current_commit .. '^' }, { test = true }, function(obj)
-    obj.code = obj.code or 0
-    if obj.code ~= 0 then
+    local code = obj.code or 0
+    if code ~= 0 then
       vim.notify('Cannot find parent (Root commit?)', vim.log.levels.WARN)
     else
       local parent_commit = vim.trim(obj.stdout)
@@ -16,11 +16,9 @@ local function walk_in_codediff(current_commit)
 end
 
 local function git_pickaxe(opts)
-  -- TODO: Add some kind of spinner notification while git is searching for commits
   opts = opts or {}
   local is_global = opts.global or false
   local current_file = vim.api.nvim_buf_get_name(0)
-  -- Force global if current buffer is invalid
   if not is_global and (current_file == '' or current_file == nil) then
     vim.notify('Buffer is not a file, switching to global search', vim.log.levels.WARN)
     is_global = true
@@ -38,12 +36,7 @@ local function git_pickaxe(opts)
     vim.opt.hlsearch = true
 
     local args = {
-      'log',
       '-G' .. query,
-      '-i',
-      '--pretty=format:%C(yellow)%h%Creset %s %C(green)(%cr)%Creset %C(blue)<%an>%Creset',
-      '--abbrev-commit',
-      '--date=short',
     }
 
     if not is_global then
@@ -51,35 +44,12 @@ local function git_pickaxe(opts)
       table.insert(args, current_file)
     end
 
-    Snacks.picker {
-      title = 'Git Log: "' .. query .. '" (' .. title_scope .. ')',
-      finder = 'proc',
-      cmd = 'git',
-      args = args,
-      transform = function(item)
-        local clean_text = item.text:gsub('\27%[[0-9;]*m', '')
-        local hash = clean_text:match '^%S+'
-        if hash then
-          item.commit = hash
-          if not is_global then
-            item.file = current_file
-          end
-        end
-        return item
-      end,
-
-      preview = 'git_show',
+    Snacks.picker.git_log {
+      title = 'Git Search: "' .. query .. '" (' .. title_scope .. ')',
+      cmd_args = args,
       confirm = function(picker, item)
         picker:close()
         walk_in_codediff(item.commit)
-      end,
-      format = 'text',
-
-      on_change = function()
-        vim.print 'on change triggered'
-      end,
-      on_show = function()
-        vim.print 'on show triggered'
       end,
       on_close = function()
         -- remove keyword highlight
@@ -188,6 +158,9 @@ return {
         map('n', '<leader>hd', function()
           vim.cmd [[CodeDiff file HEAD]]
         end, { desc = 'git [d]iff against index' })
+        map('n', '<leader>hD', function()
+          vim.cmd [[CodeDiff]]
+        end, { desc = 'git [d]iff all changes against index' })
       end,
       -- This will open up Trouble instead of loclist and quickfixlist
       trouble = true,
