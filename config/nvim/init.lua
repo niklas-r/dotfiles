@@ -31,6 +31,20 @@ require('lazy').setup {
     'tpope/vim-sleuth',
     { import = 'plugins' },
   },
+  performance = {
+    rtp = {
+      -- Stuff I don't use.
+      disabled_plugins = {
+        'gzip',
+        'netrwPlugin',
+        'rplugin',
+        'tarPlugin',
+        'tohtml',
+        'tutor',
+        'zipPlugin',
+      },
+    },
+  },
 }
 
 -- vim: ts=2 sts=2 sw=2 et
