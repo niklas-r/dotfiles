@@ -23,6 +23,7 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'marilari88/twoslash-queries.nvim',
+      'b0o/schemastore.nvim',
     },
     config = function()
       local gh_token = vim.fn.system 'gh auth token'
@@ -42,15 +43,25 @@ return {
           hovers = true,
           suggestions = true,
         },
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                -- You must disable built-in schemaStore support if you want to use
+                -- this plugin and its advanced options like `ignore`.
+                enable = false,
+                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                url = '',
+              },
+              schemas = require('schemastore').yaml.schemas(),
+            },
+          },
+        },
         jsonls = {
           settings = {
             json = {
-              schemas = {
-                {
-                  fileMatch = { 'package.json' },
-                  url = 'https://json.schemastore.org/package.json',
-                },
-              },
+              schemas = require('schemastore').json.schemas(),
+              validate = { enable = true },
             },
           },
         },
