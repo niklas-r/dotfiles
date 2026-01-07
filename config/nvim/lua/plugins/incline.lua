@@ -2,6 +2,7 @@ local M = {}
 
 local sep = {
   spacer = ' ',
+  bar = '│',
 }
 
 local function render_icons(props)
@@ -89,7 +90,7 @@ local function render(props)
 
   if #harpoon > 0 then
     table.insert(results, {
-      { { group = 'MiniHipatternsNotes', sep.spacer, '󰛢', sep.spacer }, sep.spacer, harpoon, sep.spacer },
+      { { sep.spacer, '󰛢', sep.spacer }, sep.spacer, harpoon, sep.spacer },
       guibg = 'none',
     })
   end
@@ -102,8 +103,12 @@ return {
   event = 'VeryLazy',
   dependencies = {
     'nvim-tree/nvim-web-devicons',
-    'bwpge/lualine-pretty-path',
-    'nvim-lualine/lualine.nvim',
+    {
+      'bwpge/lualine-pretty-path',
+      dependencies = {
+        'nvim-lualine/lualine.nvim',
+      },
+    },
     {
       'letieu/harpoon-lualine',
       dependencies = {
@@ -145,16 +150,9 @@ return {
       ignore = {
         filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
       },
-      highlight = {
-        groups = {
-          InclineNormal = { guifg = '#ffffff' },
-          -- InclineNormalNC = { guibg = 'none' },
-        },
-      },
       render = function(props)
         return {
           render(props),
-          guibg = 'none',
         }
       end,
     }
