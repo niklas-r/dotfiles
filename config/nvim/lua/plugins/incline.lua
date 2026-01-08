@@ -30,6 +30,9 @@ local function render_pretty_path(props)
   return vim.api.nvim_win_call(props.win, function()
     local result = M.pretty_path_component:update_status(props.focused)
     local statusline = M.helpers.eval_statusline(result)
+    if #statusline == 1 then
+      statusline[1].group = 'StatusLineNC'
+    end
     return statusline
   end)
 end
@@ -53,13 +56,13 @@ local function render_diag(props)
 end
 
 local render_extras = function(props)
-  return vim.api.nvim_win_call(props.win, function()
-    if vim.g.disable_autoformat or vim.b[props.buf].disable_autoformat then
-      return { '󰉥', group = 'Error' }
-    end
+  if vim.g.disable_autoformat then
+    return { '󰉥', group = 'ErrorMsg' }
+  elseif vim.b[props.buf].disable_autoformat then
+    return { '󰉥', group = 'WarningMsg' }
+  end
 
-    return {}
-  end)
+  return {}
 end
 
 local function render(props)
@@ -90,8 +93,7 @@ local function render(props)
 
   if #harpoon > 0 then
     table.insert(results, {
-      { { sep.spacer, '󰛢', sep.spacer }, sep.spacer, harpoon, sep.spacer },
-      guibg = 'none',
+      { harpoon, sep.spacer, group = props.focused and 'StatusLine' or 'StatusLineNC' },
     })
   end
 
@@ -115,6 +117,10 @@ return {
         {
           'ThePrimeagen/harpoon',
           branch = 'harpoon2',
+          dependencies = {
+
+            'nvim-lualine/lualine.nvim',
+          },
         },
       },
     },
@@ -126,15 +132,17 @@ return {
         max_depth = 3,
       },
       highlights = {
-        newfile = 'LazyProgressDone',
+        directory = 'Comment',
+        filename = 'Bold',
       },
     }
+
     M.harpoon_component = require 'lualine.components.harpoon2' {
       self = { section = 'a' },
-      icon = '󰛢',
-      indicators = { 'a', 's', 'd', 'f' },
-      active_indicators = { 'a', 's', 'd', 'f' },
-      color_active = { fg = 'bold,underline' },
+      icon = '',
+      indicators = { '', '', '', '' },
+      active_indicators = { '[a]', '[s]', '[d]', '[f]' },
+      color_active = { fg = 'bold' },
       _separator = '',
     }
 
@@ -142,7 +150,6 @@ return {
     M.devicons = require 'nvim-web-devicons'
 
     require('incline').setup {
-      debounce_threshold = 5,
       window = {
         padding = 0,
         margin = { horizontal = 0 },
@@ -151,9 +158,7 @@ return {
         filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
       },
       render = function(props)
-        return {
-          render(props),
-        }
+        return render(props)
       end,
     }
   end,

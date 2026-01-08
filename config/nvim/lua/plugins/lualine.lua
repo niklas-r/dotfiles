@@ -6,6 +6,15 @@ return {
       'nvim-tree/nvim-web-devicons',
       'folke/snacks.nvim',
       'AndreM222/copilot-lualine',
+      {
+        'letieu/harpoon-lualine',
+        dependencies = {
+          {
+            'ThePrimeagen/harpoon',
+            branch = 'harpoon2',
+          },
+        },
+      },
     },
   },
   opts = function()
@@ -88,7 +97,16 @@ return {
             end,
           },
         },
-        lualine_c = {},
+        lualine_c = {
+          '%=', -- Make harpoon component align to center
+          {
+            'harpoon2',
+            icon = '',
+            indicators = { '', '', '', '' },
+            active_indicators = { '', '', '', '' },
+            _separator = ' ',
+          },
+        },
         lualine_x = {
           {
             codeCompanionStatus,

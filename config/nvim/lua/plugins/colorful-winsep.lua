@@ -1,7 +1,8 @@
-vim.g.colorful_winsep_enabled = true
+vim.g.colorful_winsep_enabled = false
 
 return {
   'nvim-zh/colorful-winsep.nvim',
+  enabled = false,
   opts = {
     excluded_ft = {
       'packer',
