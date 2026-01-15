@@ -12,7 +12,14 @@ local function render_icons(props)
   local result = {}
 
   if ft_icon then
-    table.insert(result, { sep.spacer, ft_icon, sep.spacer, guibg = ft_color, guifg = M.helpers.contrast_color(ft_color) })
+    local left_icon_sep = sep.spacer
+    local right_icon_sep = sep.spacer
+
+    if ft_icon == '' then
+      right_icon_sep = sep.spacer .. sep.spacer
+    end
+
+    table.insert(result, { left_icon_sep, ft_icon, right_icon_sep, guibg = ft_color, guifg = M.helpers.contrast_color(ft_color) })
   end
 
   return result
@@ -21,6 +28,9 @@ end
 local function render_harpoon(props)
   return vim.api.nvim_win_call(props.win, function()
     local result = M.harpoon_component:update_status(props.focused)
+    if result == nil or #result == 0 then
+      return {}
+    end
     local statusline = M.helpers.eval_statusline('%#lualine_c_inactive#' .. result)
     return statusline
   end)
@@ -30,7 +40,7 @@ local function render_pretty_path(props)
   return vim.api.nvim_win_call(props.win, function()
     local result = M.pretty_path_component:update_status(props.focused)
     local statusline = M.helpers.eval_statusline(result)
-    if #statusline == 1 then
+    if not props.focused then
       statusline[1].group = 'StatusLineNC'
     end
     return statusline
@@ -131,9 +141,11 @@ return {
       directories = {
         max_depth = 3,
       },
+      symbols = {
+        modified = '●',
+      },
       highlights = {
-        directory = 'Comment',
-        filename = 'Bold',
+        filename = 'Label',
       },
     }
 
@@ -158,6 +170,12 @@ return {
         filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
       },
       render = function(props)
+        -- Hack for initial focused state
+        -- Possibly related to: https://github.com/b0o/incline.nvim/issues/72
+        if vim.api.nvim_get_current_buf() == props.buf and vim.api.nvim_get_current_win() == props.win and props.focused == false then
+          props.focused = true
+        end
+
         return render(props)
       end,
     }
