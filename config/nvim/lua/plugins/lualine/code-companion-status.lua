@@ -13,7 +13,7 @@ M.current_event = nil
 M.spinner_index = 1
 M.clear_time = nil
 
-local spinner_symbols = require('util.spinners').FourHigh
+local spinner_symbols = require('utils.spinners').FourHigh
 local spinner_symbols_len = #spinner_symbols
 
 local FINISH_EVENTS = {

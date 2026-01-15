@@ -6,7 +6,7 @@
 --- @field extmark vim.api.keyset.set_extmark Extmark options passed to nvim_buf_set_extmark
 local spinner_opts = {
   spinner_text = " Vibin'",
-  spinner_frames = require('util.spinners').FourHigh,
+  spinner_frames = require('utils.spinners').FourHigh,
   hl_group = 'DiagnosticVirtualTextWarn',
   repeat_interval = 100,
   extmark = {
