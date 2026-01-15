@@ -79,20 +79,6 @@ return {
             vim.g.vimade_enabled = state
           end,
         }):map '<leader>tp'
-        -- Snacks.toggle({
-        --   name = 'highlight active panes',
-        --   get = function()
-        --     return vim.g.colorful_winsep_enabled
-        --   end,
-        --   set = function(state)
-        --     if state then
-        --       vim.cmd 'Winsep enable'
-        --     else
-        --       vim.cmd 'Winsep disable'
-        --     end
-        --     vim.g.colorful_winsep_enabled = state
-        --   end,
-        -- }):map '<leader>tP'
 
         Snacks.toggle({
           name = 'centered mode',
