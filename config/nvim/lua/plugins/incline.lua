@@ -66,13 +66,20 @@ local function render_diag(props)
 end
 
 local render_extras = function(props)
+  local extras = {}
+
   if vim.g.disable_autoformat then
-    return { '󰉥', group = 'ErrorMsg' }
+    table.insert(extras, { '󰉥', group = 'ErrorMsg' })
   elseif vim.b[props.buf].disable_autoformat then
-    return { '󰉥', group = 'WarningMsg' }
+    table.insert(extras, { '󰉥', group = 'WarningMsg' })
   end
 
-  return {}
+  local zen = package.loaded['snacks'].zen
+  if zen and zen.win and zen.win:valid() or false then
+    table.insert(extras, { '', group = 'StatusLine' })
+  end
+
+  return extras
 end
 
 local function render(props)
@@ -168,6 +175,14 @@ return {
       },
       ignore = {
         filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
+        floating_wins = false,
+        wintypes = function(winid, wintype)
+          local zen = package.loaded['snacks'].zen
+          if zen and zen.win and not zen.win.closed then
+            return winid ~= zen.win.win
+          end
+          return wintype ~= ''
+        end,
       },
       render = function(props)
         -- Hack for initial focused state
