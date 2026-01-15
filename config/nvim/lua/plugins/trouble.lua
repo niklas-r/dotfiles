@@ -113,7 +113,7 @@ return {
         local merged_opts = vim.tbl_deep_extend('force', opts or {}, {})
         merged_opts.sections = merged_opts.sections or {}
         merged_opts.sections.lualine_c = merged_opts.sections.lualine_c or {}
-        table.insert(merged_opts.sections.lualine_c, {
+        table.insert(merged_opts.sections.lualine_c, 1, {
           symbols.get,
           cond = function()
             return vim.g.lsp_breadcrumbs_enabled and symbols.has()
