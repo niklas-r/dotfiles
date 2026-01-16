@@ -1,4 +1,5 @@
 local M = {}
+local path_utils = require 'utils.path'
 
 local sep = {
   spacer = ' ',
@@ -36,15 +37,32 @@ local function render_harpoon(props)
   end)
 end
 
-local function render_pretty_path(props)
-  return vim.api.nvim_win_call(props.win, function()
-    local result = M.pretty_path_component:update_status(props.focused)
-    local statusline = M.helpers.eval_statusline(result)
-    if not props.focused then
-      statusline[1].group = 'StatusLineNC'
-    end
-    return statusline
-  end)
+local function render_path(props)
+  local bufname = vim.api.nvim_buf_get_name(props.buf)
+  local buftype = vim.bo[props.buf].buftype
+
+  -- Use unique path for normal files
+  if bufname ~= '' and buftype == '' then
+    local unique_path = path_utils.get_unique_path(props.buf)
+
+    local hl_group = props.focused and 'Label' or 'StatusLineNC'
+
+    return {
+      { unique_path, group = hl_group },
+    }
+  end
+
+  -- Fallback to filename for special buffers
+  local filename = vim.fn.fnamemodify(bufname, ':t')
+  if filename == '' then
+    filename = '[No Name]'
+  end
+
+  local hl_group = props.focused and 'Label' or 'StatusLineNC'
+
+  return {
+    { filename, group = hl_group },
+  }
 end
 
 local function render_diag(props)
@@ -67,6 +85,11 @@ end
 
 local render_extras = function(props)
   local extras = {}
+  local modified = vim.bo[props.buf].modified and '●' or ''
+
+  if modified ~= '' then
+    table.insert(extras, { modified, group = 'WarningMsg' })
+  end
 
   if vim.g.disable_autoformat then
     table.insert(extras, { '󰉥', group = 'ErrorMsg' })
@@ -85,7 +108,7 @@ end
 local function render(props)
   local diag = render_diag(props)
   local icons = render_icons(props)
-  local pretty_path = render_pretty_path(props)
+  local path = render_path(props)
   local extras = render_extras(props)
   local harpoon = render_harpoon(props)
 
@@ -102,7 +125,7 @@ local function render(props)
     table.insert(results, icons)
   end
 
-  table.insert(results, { sep.spacer, pretty_path, sep.spacer })
+  table.insert(results, { sep.spacer, path, sep.spacer })
 
   if #extras > 0 then
     table.insert(results, { extras, sep.spacer })
@@ -123,19 +146,12 @@ return {
   dependencies = {
     'nvim-tree/nvim-web-devicons',
     {
-      'bwpge/lualine-pretty-path',
-      dependencies = {
-        'nvim-lualine/lualine.nvim',
-      },
-    },
-    {
       'letieu/harpoon-lualine',
       dependencies = {
         {
           'ThePrimeagen/harpoon',
           branch = 'harpoon2',
           dependencies = {
-
             'nvim-lualine/lualine.nvim',
           },
         },
@@ -143,19 +159,6 @@ return {
     },
   },
   config = function()
-    M.pretty_path_component = require 'lualine.components.pretty_path' {
-      self = { section = 'x' },
-      directories = {
-        max_depth = 3,
-      },
-      symbols = {
-        modified = '●',
-      },
-      highlights = {
-        filename = 'Label',
-      },
-    }
-
     M.harpoon_component = require 'lualine.components.harpoon2' {
       self = { section = 'a' },
       icon = '',
@@ -194,5 +197,11 @@ return {
         return render(props)
       end,
     }
+
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'WinClosed', 'TabEnter' }, {
+      callback = function()
+        path_utils.invalidate_cache()
+      end,
+    })
   end,
 }
