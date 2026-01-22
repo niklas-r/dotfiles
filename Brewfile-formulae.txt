@@ -1,4 +1,5 @@
 achannarasappa/tap/ticker
+anomalyco/tap/opencode
 atuin
 bat
 bitwarden-cli
