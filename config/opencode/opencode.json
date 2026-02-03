@@ -99,6 +99,7 @@
   },
   "plugin": [
     "oh-my-opencode",
+    "opencode-anthropic-auth",
     "opencode-openai-codex-auth"
   ],
   "provider": {
