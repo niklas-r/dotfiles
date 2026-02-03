@@ -14,6 +14,12 @@ return {
       adapters = {
         require 'neotest-vitest' {
           vitestCommand = 'npx vitest run --coverage.enabled=true --coverage.reporter=lcov --reporter=dot',
+          cwd = function(testFilePath)
+            return vim.fs.root(testFilePath, 'node_modules')
+          end,
+          filter_dir = function(name)
+            return name ~= 'e2e' and name ~= 'node_modules'
+          end,
         },
       },
       output = {
