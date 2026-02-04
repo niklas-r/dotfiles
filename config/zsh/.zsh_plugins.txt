@@ -7,8 +7,8 @@ ohmyzsh/ohmyzsh path:plugins/fzf
 ohmyzsh/ohmyzsh path:plugins/terraform
 
 # Any other plugins
-zsh-users/zsh-autosuggestions
-zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions kind:defer
+zsh-users/zsh-syntax-highlighting kind:defer
 zsh-users/zsh-completions
 
 # Atuin for synced terminal history
@@ -17,7 +17,7 @@ atuinsh/atuin branch:main
 romkatv/zsh-bench kind:path
 romkatv/powerlevel10k
 
-jeffreytse/zsh-vi-mode
+jeffreytse/zsh-vi-mode kind:defer
 TunaCuma/zsh-vi-man # This integrates with zsh-vi-mode lazy keybindings system when sourced after it
 
 ### The following is an examples file from https://getantidote.github.io/usage
