@@ -1,0 +1,1 @@
+/Users/niklaskahn/.config/zsh/.zprezto/runcoms/zshrc
