@@ -9,6 +9,14 @@
         "run-test-mcp-server"
       ],
       "enabled": true
+    },
+    "chrome-devtools": {
+      "type": "local",
+      "command": [
+        "npx",
+        "chrome-devtools-mcp@latest"
+      ],
+      "enabled": true
     }
   },
   "tools": {
