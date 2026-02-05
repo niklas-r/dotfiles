@@ -15,6 +15,7 @@ eza
 fastfetch
 fd
 ffmpeg
+fnm
 fzf
 gh
 git
