@@ -50,3 +50,6 @@ config/.codex/sessions
 config/.codex/auth.json
 config/.codex/version.json
 config/.codex/history.jsonl
+
+# AI-assisted coding
+**/.sisyphus
