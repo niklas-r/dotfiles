@@ -173,9 +173,6 @@ return {
 
   {
     'folke/snacks.nvim',
-    dependencies = {
-      'esmuellert/vscode-diff.nvim',
-    },
     keys = {
       -- stylua: ignore start
       { "<leader>gb", function() Snacks.picker.git_branches() end, desc = "[B]ranches" },
