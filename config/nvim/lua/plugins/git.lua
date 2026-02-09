@@ -93,6 +93,14 @@ return {
     dependencies = { 'MunifTanjim/nui.nvim' },
     branch = 'next',
     cmd = 'CodeDiff',
+    opts = {
+      keymaps = {
+        view = {
+          next_hunk = ']g',
+          prev_hunk = '[g',
+        },
+      },
+    },
   },
 
   {
