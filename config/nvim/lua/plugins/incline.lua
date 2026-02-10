@@ -6,8 +6,38 @@ local sep = {
   bar = '│',
 }
 
+local function parse_codediff_buffer(bufname)
+  local _, commit, filepath = bufname:match '^codediff://(.+)///([a-f0-9]+%^?)/(.+)$'
+
+  if commit and filepath then
+    local short_commit
+    if commit:sub(-1) == '^' then
+      short_commit = commit:sub(1, 8) .. '^'
+    else
+      short_commit = commit:sub(1, 8)
+    end
+
+    return {
+      commit = commit,
+      filepath = filepath,
+      filename = vim.fn.fnamemodify(filepath, ':t'),
+      short_commit = short_commit,
+    }
+  end
+  return nil
+end
+
 local function render_icons(props)
-  local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+  local bufname = vim.api.nvim_buf_get_name(props.buf)
+  local filename
+
+  local codediff_info = parse_codediff_buffer(bufname)
+  if codediff_info then
+    filename = codediff_info.filename
+  else
+    filename = vim.fn.fnamemodify(bufname, ':t')
+  end
+
   local ft_icon, ft_color = M.devicons.get_icon_color(filename)
 
   local result = {}
@@ -41,7 +71,16 @@ local function render_path(props)
   local bufname = vim.api.nvim_buf_get_name(props.buf)
   local buftype = vim.bo[props.buf].buftype
 
-  -- Use unique path for normal files
+  local codediff_info = parse_codediff_buffer(bufname)
+  if codediff_info then
+    local hl_group = props.focused and 'Label' or 'StatusLineNC'
+    return {
+      { codediff_info.filename, group = hl_group },
+      { sep.spacer },
+      { codediff_info.short_commit, group = 'Comment' },
+    }
+  end
+
   if bufname ~= '' and buftype == '' then
     local unique_path = path_utils.get_unique_path(props.buf)
 
@@ -179,6 +218,15 @@ return {
       ignore = {
         filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
         floating_wins = false,
+        buftypes = function(bufnr, buftype)
+          -- Allow codediff buffers even though they have a special buftype
+          local bufname = vim.api.nvim_buf_get_name(bufnr)
+          if bufname:match '^codediff://' then
+            return false -- Don't ignore
+          end
+          -- Ignore other special buffer types
+          return buftype ~= ''
+        end,
         wintypes = function(winid, wintype)
           local zen = package.loaded['snacks'].zen
           if zen and zen.win and not zen.win.closed then
@@ -198,9 +246,13 @@ return {
       end,
     }
 
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'WinClosed', 'TabEnter' }, {
+    vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter', 'WinClosed', 'TabEnter', 'FileType' }, {
       callback = function()
         path_utils.invalidate_cache()
+        -- Refresh incline to handle codediff and other special buffers
+        vim.schedule(function()
+          require('incline').refresh()
+        end)
       end,
     })
   end,
