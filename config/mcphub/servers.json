@@ -1,33 +1,41 @@
 {
   "mcpServers": {
-    "sentry": {
+    "context7": {
       "args": [
         "-y",
-        "mcp-remote@latest",
-        "https://mcp.sentry.dev/mcp"
+        "@upstash/context7-mcp"
+      ],
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
       ],
       "command": "npx",
+      "custom_instructions": {
+        "text": "Always use context7 when I need code generation, setup or configuration steps, or\nlibrary/API documentation. This means you should automatically use the Context7 MCP\ntools to resolve library id and get library docs without me having to explicitly ask."
+      },
+      "disabled": false
+    },
+    "git": {
+      "args": [
+        "mcp-server-git"
+      ],
       "autoApprove": [
-        "whoami",
-        "find_organizations",
-        "find_teams",
-        "find_projects",
-        "find_issues",
-        "find_releases",
-        "find_tags",
-        "get_issue_details",
-        "update_issue",
-        "find_errors",
-        "find_transactions",
-        "create_team",
-        "create_project",
-        "create_dsn",
-        "update_project",
-        "find_dsns",
-        "analyze_issue_with_seer",
-        "search_docs",
-        "get_doc"
-      ]
+        "git_status",
+        "git_diff_unstaged",
+        "git_diff_staged",
+        "git_diff",
+        "git_commit",
+        "git_add",
+        "git_reset",
+        "git_log",
+        "git_create_branch",
+        "git_checkout",
+        "git_show",
+        "git_init",
+        "git_branch"
+      ],
+      "command": "uvx",
+      "disabled": true
     },
     "github": {
       "autoApprove": [
@@ -91,58 +99,80 @@
         "update_pull_request",
         "update_pull_request_branch"
       ],
+      "disabled": false,
       "headers": {
         "Authorization": "Bearer ${GITHUB_ACCESS_TOKEN}"
       },
-      "url": "https://api.githubcopilot.com/mcp/",
-      "disabled": false
+      "url": "https://api.githubcopilot.com/mcp/"
     },
-    "context7": {
+    "jira": {
       "args": [
         "-y",
-        "@upstash/context7-mcp"
+        "mcp-remote@latest",
+        "https://mcp.atlassian.com/v1/mcp"
       ],
       "command": "npx",
-      "disabled": false,
-      "autoApprove": [
-        "resolve-library-id",
-        "get-library-docs"
-      ]
+      "disabled": true
     },
-    "git": {
+    "playwright": {
       "args": [
-        "mcp-server-git"
+        "@playwright/mcp@latest"
       ],
-      "command": "uvx",
-      "disabled": false,
+      "command": "npx",
+      "disabled": true
+    },
+    "sentry": {
+      "args": [
+        "-y",
+        "mcp-remote@latest",
+        "https://mcp.sentry.dev/mcp"
+      ],
       "autoApprove": [
-        "git_status",
-        "git_diff_unstaged",
-        "git_diff_staged",
-        "git_diff",
-        "git_commit",
-        "git_add",
-        "git_reset",
-        "git_log",
-        "git_create_branch",
-        "git_checkout",
-        "git_show",
-        "git_init",
-        "git_branch"
-      ]
+        "whoami",
+        "find_organizations",
+        "find_teams",
+        "find_projects",
+        "find_issues",
+        "find_releases",
+        "find_tags",
+        "get_issue_details",
+        "update_issue",
+        "find_errors",
+        "find_transactions",
+        "create_team",
+        "create_project",
+        "create_dsn",
+        "update_project",
+        "find_dsns",
+        "analyze_issue_with_seer",
+        "search_docs",
+        "get_doc"
+      ],
+      "command": "npx",
+      "custom_instructions": {
+        "disabled": false,
+        "text": "Don't mark issues as resolved. I need to manually verify your changes before I can do so."
+      },
+      "disabled": true
     },
     "sequentialthinking": {
       "args": [
         "-y",
         "@modelcontextprotocol/server-sequential-thinking"
       ],
-      "command": "npx",
       "autoApprove": [
         "sequentialthinking"
-      ]
+      ],
+      "command": "npx",
+      "disabled": true
     }
   },
-  "nativeMCPServers": [
-    
-  ]
+  "nativeMCPServers": {
+    "mcphub": {
+      "disabled": true
+    },
+    "neovim": {
+      "disabled": false
+    }
+  }
 }
