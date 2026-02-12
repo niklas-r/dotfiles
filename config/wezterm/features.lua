@@ -234,7 +234,7 @@ M.get_next_meeting = function()
 
         if meeting.is_teams then
           -- For Teams meetings, extract physical location if present or just use "Teams"
-          local physical_location = location:match ';?%s*(.+)'
+          local physical_location = location:match ';%s*(.+)'
           if physical_location then
             location = physical_location
           else
