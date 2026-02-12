@@ -18,6 +18,8 @@
       ],
       "enabled": false
     },
+    // When DW enables us to use this, run:
+    // opencode mcp auth atlassian-rovo
     "atlassian-rovo": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp",
