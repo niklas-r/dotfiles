@@ -1,5 +1,34 @@
 local M = {}
 
+local function human_friendly_tokens(tokens)
+  if not tokens then
+    return '0'
+  end
+  if tokens >= 1000 then
+    return string.format('%.1fk', tokens / 1000)
+  else
+    return tostring(tokens)
+  end
+end
+
+-- Custom icons configuration
+-- Format: { icon, hl_group, text? }
+-- The text field is optional and can be:
+--   - string: static text to display
+--   - function(bufnr): function that returns text based on buffer
+local custom_icons = {
+  gitrebase = { '', 'DevIconGitCommit', 'Rebase' },
+  help = {
+    '󰋖',
+    'DevIconTxt',
+    function(bufnr)
+      local bufname = vim.api.nvim_buf_get_name(bufnr)
+      return vim.fn.fnamemodify(bufname, ':t:r') -- filename without extension
+    end,
+  },
+  oil = { '', 'OilDir', 'File Explorer' },
+}
+
 ---@param path string
 ---@return string[]
 local function split_path(path)
@@ -170,6 +199,42 @@ end
 function M.invalidate_cache()
   path_cache.paths = {}
   path_cache.unique_paths = {}
+end
+
+---Get icon, color, and optional text for a buffer, checking custom icons first
+---@param bufnr integer Buffer number
+---@param devicons? table nvim-web-devicons module (optional)
+---@return string|nil icon The icon character
+---@return string|nil color The color/highlight group
+---@return string|nil text Optional text to display with the icon
+function M.get_icon_color(bufnr, devicons)
+  local bufname = vim.api.nvim_buf_get_name(bufnr)
+  local filename = vim.fn.fnamemodify(bufname, ':t')
+  local filetype = vim.bo[bufnr].filetype
+
+  local icon = nil
+  local color = nil
+  local text = nil
+  if filetype ~= '' and custom_icons[filetype] then
+    local color_util = require 'utils.color'
+    local icon_config = custom_icons[filetype]
+    icon = icon_config[1]
+    local icon_color = icon_config[2]
+    if icon_color:sub(1, 1) == '#' then
+      color = icon_color
+    else
+      color = color_util.get_hl_color(icon_config[2])
+    end
+    text = icon_config[3]
+
+    if type(text) == 'function' then
+      text = text(bufnr)
+    end
+  elseif devicons and filename ~= '' then
+    icon, color = devicons.get_icon_color(filename)
+  end
+
+  return icon, color, text
 end
 
 return M

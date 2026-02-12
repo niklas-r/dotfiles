@@ -28,17 +28,8 @@ local function parse_codediff_buffer(bufname)
 end
 
 local function render_icons(props)
-  local bufname = vim.api.nvim_buf_get_name(props.buf)
-  local filename
-
-  local codediff_info = parse_codediff_buffer(bufname)
-  if codediff_info then
-    filename = codediff_info.filename
-  else
-    filename = vim.fn.fnamemodify(bufname, ':t')
-  end
-
-  local ft_icon, ft_color = M.devicons.get_icon_color(filename)
+  -- Use path_utils.get_icon_color to support custom icons
+  local ft_icon, ft_color, custom_text = path_utils.get_icon_color(props.buf, M.devicons)
 
   local result = {}
 
@@ -53,7 +44,7 @@ local function render_icons(props)
     table.insert(result, { left_icon_sep, ft_icon, right_icon_sep, guibg = ft_color, guifg = M.helpers.contrast_color(ft_color) })
   end
 
-  return result
+  return result, custom_text
 end
 
 local function render_harpoon(props)
@@ -67,7 +58,7 @@ local function render_harpoon(props)
   end)
 end
 
-local function render_path(props)
+local function render_path(props, custom_text)
   local bufname = vim.api.nvim_buf_get_name(props.buf)
   local buftype = vim.bo[props.buf].buftype
 
@@ -78,6 +69,13 @@ local function render_path(props)
       { codediff_info.filename, group = hl_group },
       { sep.spacer },
       { codediff_info.short_commit, group = 'Comment' },
+    }
+  end
+
+  if custom_text then
+    local hl_group = props.focused and 'Label' or 'StatusLineNC'
+    return {
+      { custom_text, group = hl_group },
     }
   end
 
@@ -146,8 +144,8 @@ end
 
 local function render(props)
   local diag = render_diag(props)
-  local icons = render_icons(props)
-  local path = render_path(props)
+  local icons, custom_text = render_icons(props)
+  local path = render_path(props, custom_text)
   local extras = render_extras(props)
   local harpoon = render_harpoon(props)
 
@@ -216,15 +214,35 @@ return {
         margin = { horizontal = 0 },
       },
       ignore = {
-        filetypes = { 'alpha', 'neo-tree', 'snacks_dashboard', 'oil' },
+        unlisted_buffers = false,
         floating_wins = false,
         buftypes = function(bufnr, buftype)
-          -- Allow codediff buffers even though they have a special buftype
+          local ignored_filetypes = {
+            'alpha',
+            'neo-tree',
+            'snacks_dashboard',
+            'snacks_terminal',
+            'snacks_notif',
+            'terminal',
+            'incline',
+            'noice',
+            'harpoon',
+          }
+          local filetype = vim.api.nvim_get_option_value('filetype', { buf = bufnr })
+          if filetype and vim.tbl_contains(ignored_filetypes, filetype) then
+            return true
+          end
           local bufname = vim.api.nvim_buf_get_name(bufnr)
           if bufname:match '^codediff://' then
-            return false -- Don't ignore
+            return false
           end
-          -- Ignore other special buffer types
+          if filetype == 'codecompanion' then
+            return false
+          end
+          local _, _, custom_text = path_utils.get_icon_color(bufnr, M.devicons)
+          if custom_text then
+            return false
+          end
           return buftype ~= ''
         end,
         wintypes = function(winid, wintype)
