@@ -5,10 +5,10 @@
       "model": "anthropic/claude-sonnet-4-5"
     },
     "explore": {
-      "model": "openai/gpt-5-mini"
+      "model": "anthropic/claude-haiku-4-5"
     },
     "frontend-ui-ux-engineer": {
-      "model": "anthropic/claude-opus-4-5"
+      "model": "anthropic/claude-opus-4-6"
     },
     "document-writer": {
       "model": "anthropic/claude-haiku-4-5"
@@ -17,14 +17,15 @@
       "model": "anthropic/claude-sonnet-4-5"
     },
     "sisyphus": {
-      "model": "anthropic/claude-sonnet-4-5",
+      "model": "anthropic/claude-opus-4-6",
+      "variant": "high",
       "temperature": 0.3
     },
     "OpenCode-Builder": {
-      "model": "anthropic/claude-opus-4-5"
+      "model": "anthropic/claude-opus-4-6"
     },
     "prometheus": {
-      "model": "openai/gpt-5.2-codex",
+      "model": "openai/gpt-5.3-codex",
       "variant": "high"
     },
     "metis": {
@@ -36,14 +37,14 @@
   },
   "categories": {
     "visual-engineering": {
-      "model": "anthropic/claude-opus-4-5"
+      "model": "anthropic/claude-opus-4-6"
     },
     "ultrabrain": {
-      "model": "openai/gpt-5.2-codex",
+      "model": "openai/gpt-5.3-codex",
       "variant": "xhigh"
     },
     "artistry": {
-      "model": "anthropic/claude-opus-4-5",
+      "model": "anthropic/claude-opus-4-6",
       "variant": "max"
     },
     "quick": {
@@ -53,7 +54,7 @@
       "model": "anthropic/claude-sonnet-4-5"
     },
     "unspecified-high": {
-      "model": "anthropic/claude-opus-4-5",
+      "model": "anthropic/claude-opus-4-6",
       "variant": "max"
     },
     "writing": {
@@ -63,5 +64,9 @@
   "git_master": {
     "commit_footer": false,
     "include_co_authored_by": false
-  }
+  },
+  "_migrations": [
+    "model-version:openai/gpt-5.2-codex->openai/gpt-5.3-codex",
+    "model-version:openai/gpt-5.2-codex->openai/gpt-5.3-codex"
+  ]
 }
