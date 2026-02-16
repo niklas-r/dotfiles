@@ -2,6 +2,7 @@ return {
   {
     'folke/lazydev.nvim',
     ft = 'lua',
+    dependencies = { 'DrKJeff16/wezterm-types' },
     opts = {
       library = {
         -- Load luvit types when the `vim.uv` word is found
@@ -10,6 +11,7 @@ return {
         { path = 'LazyVim', words = { 'LazyVim' } },
         { path = 'snacks.nvim', words = { 'Snacks' } },
         { path = 'mcphub.nvim', words = { 'MCPHub' } },
+        { path = 'wezterm-types', mods = { 'wezterm' } },
       },
     },
   },

@@ -148,20 +148,20 @@ TOML.parse = function(toml, options)
           }
           -- utf function from http://stackoverflow.com/a/26071044
           -- converts \uXXX into actual unicode
-          local function utf(char)
+          local function utf(c)
             local bytemarkers = { { 0x7ff, 192 }, { 0xffff, 224 }, { 0x1fffff, 240 } }
-            if char < 128 then
-              return string.char(char)
+            if c < 128 then
+              return string.char(c)
             end
             local charbytes = {}
             for bytes, vals in pairs(bytemarkers) do
-              if char <= vals[1] then
+              if c <= vals[1] then
                 for b = bytes + 1, 2, -1 do
-                  local mod = char % 64
-                  char = (char - mod) / 64
+                  local mod = c % 64
+                  c = (c - mod) / 64
                   charbytes[b] = string.char(128 + mod)
                 end
-                charbytes[1] = string.char(vals[2] + char)
+                charbytes[1] = string.char(vals[2] + c)
                 break
               end
             end
@@ -255,7 +255,7 @@ TOML.parse = function(toml, options)
     end
 
     exp = exp and tonumber(exp) or 0
-    num = tonumber(num)
+    num = tostring(tonumber(num))
 
     if not float then
       return {
@@ -321,7 +321,7 @@ TOML.parse = function(toml, options)
   local function parseInlineTable()
     step() -- skip opening brace
 
-    local buffer = ''
+    local buf = ''
     local quoted = false
     local tbl = {}
 
@@ -329,11 +329,11 @@ TOML.parse = function(toml, options)
       if char() == '}' then
         break
       elseif char() == "'" or char() == '"' then
-        buffer = parseString().value
+        buf = parseString().value
         quoted = true
       elseif char() == '=' then
         if not quoted then
-          buffer = trim(buffer)
+          buf = trim(buf)
         end
 
         step() -- skip =
@@ -344,7 +344,7 @@ TOML.parse = function(toml, options)
         end
 
         local v = getValue().value
-        tbl[buffer] = v
+        tbl[buf] = v
 
         skipWhitespace()
 
@@ -355,9 +355,9 @@ TOML.parse = function(toml, options)
         end
 
         quoted = false
-        buffer = ''
+        buf = ''
       else
-        buffer = buffer .. char()
+        buf = buf .. char()
         step()
       end
     end
@@ -417,10 +417,6 @@ TOML.parse = function(toml, options)
       end
     end
 
-    if char():match(nl) then
-      -- skip
-    end
-
     if char() == '=' then
       step()
       skipWhitespace()
@@ -429,7 +425,7 @@ TOML.parse = function(toml, options)
       buffer = trim(buffer)
 
       if buffer:match '^[0-9]*$' and not quotedKey then
-        buffer = tonumber(buffer)
+        buffer = tostring(tonumber(buffer))
       end
 
       if buffer == '' and not quotedKey then
@@ -558,8 +554,8 @@ TOML.encode = function(tbl)
 
   local cache = {}
 
-  local function parse(tbl)
-    for k, v in pairs(tbl) do
+  local function parse(_tbl)
+    for k, v in pairs(_tbl) do
       if type(v) == 'boolean' then
         toml = toml .. k .. ' = ' .. tostring(v) .. '\n'
       elseif type(v) == 'number' then

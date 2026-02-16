@@ -1,4 +1,5 @@
-local wez = require 'wezterm'
+---@diagnostic disable-next-line: assign-type-mismatch
+local wez = require 'wezterm' ---@type Wezterm
 local globals = require 'utils.globals'
 
 local G = globals.read_globals()

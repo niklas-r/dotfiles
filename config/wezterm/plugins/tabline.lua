@@ -1,7 +1,8 @@
-local wez = require 'wezterm'
+---@diagnostic disable-next-line: assign-type-mismatch
+local wez = require 'wezterm' ---@type Wezterm
 local colors = require 'utils.colors'
 local globals = require 'utils.globals'
-local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez'
+local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez' ---@type TablineWez
 local features = require 'features'
 
 local G = globals.read_globals()
@@ -179,8 +180,7 @@ return {
 
           -- Add countdown if meeting is within 1 hour
           if meeting.start_timestamp then
-            local now = os.time()
-            local diff_seconds = meeting.start_timestamp - now
+            local diff_seconds = meeting.start_timestamp - os.time()
 
             if diff_seconds > 0 and diff_seconds <= 3600 then
               local minutes = math.ceil(diff_seconds / 60)
@@ -197,7 +197,7 @@ return {
         if meeting.title ~= nil then
           local title = meeting.title
           local max_title_length = 20
-          if #title > max_title_length then
+          if title ~= nil and #title > max_title_length then
             title = title:sub(1, max_title_length):match '^%s*(.-)%s*$' .. '...'
           end
           table.insert(parts, title)
@@ -261,14 +261,14 @@ return {
           {
             'workspace',
             padding = 0,
-            icon = false,
+            icon = '',
             fmt = function(output, window)
               return mode_formatter(' ' .. wez.nerdfonts.cod_terminal_tmux .. ' ' .. output .. ' ', window, 'both', 'b')
             end,
           },
           {
             'workspace',
-            icon = false,
+            icon = '',
             padding = 0,
             fmt = function(_, window)
               return mode_formatter(right_separator(), window, 'fg-inverse', 'b', 'c')

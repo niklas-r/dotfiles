@@ -1,10 +1,10 @@
-local wezterm = require 'wezterm'
+local wezterm = require 'wezterm' ---@type Wezterm
 local act = wezterm.action
 local features = require 'features'
 local globals = require 'utils.globals'
 local G = globals.read_globals()
 
-local config = wezterm.config_builder()
+local config = wezterm.config_builder() ---@class Config
 
 -- Fonts
 local font = wezterm.font_with_fallback { { family = G.font } }

@@ -1,4 +1,5 @@
-local wezterm = require 'wezterm'
+---@diagnostic disable-next-line: assign-type-mismatch
+local wezterm = require 'wezterm' ---@type Wezterm
 local act = wezterm.action
 
 local M = {}

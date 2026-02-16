@@ -1,4 +1,5 @@
-local wezterm = require 'wezterm'
+---@diagnostic disable-next-line: assign-type-mismatch
+local wezterm = require 'wezterm' ---@type Wezterm
 local utils = require 'utils.general'
 local picker = require 'utils.picker'
 local globals = require 'utils.globals'
@@ -10,7 +11,7 @@ M.themes = function(set_nvim_theme)
   return wezterm.action_callback(function(window, pane)
     local choices = {}
 
-    local schemes = wezterm.get_builtin_color_schemes()
+    local schemes = wezterm.color.get_builtin_schemes()
 
     -- loop over builtin schemes
     for scheme, _ in pairs(schemes) do
@@ -187,9 +188,9 @@ M.get_next_meeting = function()
 
         if year and hour then
           meeting.start_timestamp = os.time {
-            year = tonumber(year),
-            month = tonumber(month),
-            day = tonumber(day),
+            year = tonumber(year) or 0,
+            month = tonumber(month) or 0,
+            day = tonumber(day) or 0,
             hour = hour,
             min = min,
             sec = sec,
