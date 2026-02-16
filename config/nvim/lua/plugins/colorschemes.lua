@@ -1,9 +1,12 @@
+local term_transparency = os.getenv 'TERM_TRANSPARENCY' == 'true'
+
 return {
   {
     'catppuccin/nvim',
     name = 'catppuccin',
     priority = 1000,
     opts = {
+      transparent_background = term_transparency,
       styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
         comments = { 'italic' }, -- Change the style of comments
         conditionals = {},
@@ -46,7 +49,7 @@ return {
     priority = 1000,
     opts = {
       style = 'moon',
-      transparent = false,
+      transparent = term_transparency,
       dim_inactive = true,
       styles = {
         comments = { italic = true },
@@ -63,7 +66,7 @@ return {
       variant = 'auto',
       dark_variant = 'moon',
       styles = {
-        -- transparency = true,
+        transparency = term_transparency,
       },
     },
   },
@@ -72,6 +75,7 @@ return {
     priority = 1000,
     opts = {
       options = {
+        transparent = term_transparency,
         styles = { -- Style to be applied to different syntax groups
           comments = 'italic', -- Value is any valid attr-list value `:help attr-list`
           conditionals = 'NONE',

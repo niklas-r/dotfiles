@@ -20,6 +20,11 @@ config.send_composed_key_when_left_alt_is_pressed = true
 
 -- Window
 config.window_background_opacity = G.opacity
+config.set_environment_variables = {
+  -- Use this var to read in other configs if we want to conditionally enable something based on transparency
+  -- eg. Neovim themes
+  TERM_TRANSPARENCY = tostring(G.opacity < 1),
+}
 config.macos_window_background_blur = 50
 config.window_decorations = 'RESIZE'
 config.window_close_confirmation = 'AlwaysPrompt'
