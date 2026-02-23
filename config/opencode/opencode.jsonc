@@ -27,7 +27,9 @@
     }
   },
   "tools": {
-    "playwright*": false
+    "playwright*": false,
+    "mcp_session_*": false,
+    "mcp_interactive_bash": false
   },
   "agent": {
     "playwright-test-generator": {
