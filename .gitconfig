@@ -22,6 +22,7 @@
 	line-numbers = true
 [merge]
 	conflictStyle = zdiff3
+	tool = codediff
 [diff]
 	; Set difftastic as default tool when calling "git difftool"
 	tool = difftastic
@@ -35,3 +36,5 @@
 [pager]
 	; Use a pager for large outputs, just like other git commands
 	difftool = true
+[mergetool "codediff"]
+	cmd = nvim \"$MERGED\" -c \"CodeDiff merge \\\"$MERGED\\\"\"
