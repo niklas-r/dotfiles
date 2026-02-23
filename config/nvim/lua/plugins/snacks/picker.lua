@@ -52,6 +52,9 @@ return {
     { "gI", function() Snacks.picker.lsp_implementations() end, desc = "[G]oto [I]mplementation" },
     { "gy", function() Snacks.picker.lsp_type_definitions() end, desc = "[G]oto T[y]pe Definition" },
     { "<leader>ss", function() Snacks.picker.lsp_symbols {
+      layout = {
+        preset = "ivy_split",
+      },
       filter = {
         typescript = js_symbols,
         typescriptreact = js_symbols,
