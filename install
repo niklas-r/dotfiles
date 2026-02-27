@@ -102,7 +102,12 @@ echo "Done installing Homebrew packages!"
 
 echo "Install miscellaneous packages..."
 
-# Nothing for now
+echo "Install pipx and packages..."
+
+pip3 install pipx
+pipx install -r requirements-pipx.txt
+
+echo "Done installing pipx and packages!"
 
 echo "Done installing miscellaneous packages!"
 
