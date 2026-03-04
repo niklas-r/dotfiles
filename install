@@ -36,7 +36,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 link "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
 link "$DOTFILES_DIR/.gitignore_global" "$HOME/.gitignore"
-link "$DOTFILES_DIR/config/.codex" "$HOME/.codex"
 link "$DOTFILES_DIR/config/bat" "$XDG_CONFIG_HOME/bat"
 link "$DOTFILES_DIR/config/hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
 link "$DOTFILES_DIR/config/lazygit" "$XDG_CONFIG_HOME/lazygit"
