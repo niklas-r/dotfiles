@@ -7,14 +7,15 @@ return {
   },
   cmd = { 'I18nVirtualTextEnable' }, -- Lazy load on command
   opts = {
-    primary_language = { 'en' }, -- The default language to display (initial setting for displaying virtual text, etc.)
-    translation_source = { '**/{locales,messages}/**/*.json' }, -- Pattern for translation resources
+    server = {
+      primary_languages = { 'en' }, -- The default language to display (initial setting for displaying virtual text, etc.)
+      translation_files = {
+        file_pattern = '**/{locales,messages}/**/*.json', -- Pattern for translation resources
+      },
+    },
     virt_text = {
       enabled = true,
       conceal_key = true,
-    },
-    diagnostic = {
-      enabled = true,
     },
   },
   init = function()
@@ -34,11 +35,9 @@ return {
               set = function(state)
                 if state then
                   vim.cmd 'I18nVirtualTextEnable'
-                  vim.cmd 'I18nDiagnosticEnable'
                   vim.keymap.set('n', '<leader>ct', '<CMD>:I18nEditTranslation<CR>', { desc = 'I18n: Edit [T]ranslation', silent = true })
                 else
                   vim.cmd 'I18nVirtualTextDisable'
-                  vim.cmd 'I18nDiagnosticDisable'
                   vim.keymap.del('n', '<leader>ct')
                 end
                 enabled = state
