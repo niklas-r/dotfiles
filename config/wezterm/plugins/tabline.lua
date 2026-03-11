@@ -89,6 +89,16 @@ return {
         b = { fg = colors.get_color_by_key 'red', bg = colors.get_color_by_key 'surface' },
         c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
       },
+      resize_pane_mode = {
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'blue' },
+        b = { fg = colors.get_color_by_key 'blue', bg = colors.get_color_by_key 'surface' },
+        c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
+      },
+      move_tab_mode = {
+        a = { fg = colors.get_color_by_key 'tab_bar_bg', bg = colors.get_color_by_key 'magenta' },
+        b = { fg = colors.get_color_by_key 'magenta', bg = colors.get_color_by_key 'surface' },
+        c = { fg = colors.get_color_by_key 'foreground', bg = colors.get_color_by_key 'tab_bar_bg' },
+      },
       tab = {
         active = {
           fg = primary_color,
@@ -145,7 +155,7 @@ return {
       return wez.format {
         { Foreground = { Color = mode_color[fg_section][fg] } },
         { Background = { Color = mode_color[bg_section][bg] } },
-        { Text = output },
+        { Text = string.gsub(output, '_', ' ') },
       }
     end
 
