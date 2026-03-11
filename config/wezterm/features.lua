@@ -129,6 +129,44 @@ M.kill_workspace = function(workspace)
   end
 end
 
+local no_meeting_messages = {
+  'Time to mass refactor something!',
+  'Coffee break? You earned it.',
+  'Ship it!',
+  "The code isn't going to review itself.",
+  "Perfect time for that TODO you've been ignoring.",
+  'Zero meetings. Maximum productivity.',
+  'Calendar is clear. The world is yours.',
+  'No meetings. Suspicious. Check Teams.',
+  'Freedom! Sweet, uninterrupted freedom.',
+  'Quick, merge to main before someone schedules a retro.',
+}
+
+M.show_meeting_notification = function()
+  return wezterm.action_callback(function(window)
+    local meeting = M.get_next_meeting()
+
+    if not meeting then
+      local msg = no_meeting_messages[math.random(#no_meeting_messages)]
+      window:toast_notification('No more meetings', msg, nil, 4000)
+      return
+    end
+
+    local title = meeting.title or 'Next Meeting'
+    local parts = {}
+
+    if meeting.time then
+      table.insert(parts, meeting.time)
+    end
+    if meeting.location then
+      table.insert(parts, meeting.location)
+    end
+
+    local body = table.concat(parts, '\n')
+    window:toast_notification(title, body, nil, 5000)
+  end)
+end
+
 M.get_next_meeting = function()
   local icalpal_path = nil
   for _, path in ipairs { '/opt/homebrew/bin/icalPal', '/usr/local/bin/icalPal' } do
