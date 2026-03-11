@@ -160,9 +160,6 @@ return {
       local meeting_icon = wez.nerdfonts.md_account_group
       local no_meeting_icon = wez.nerdfonts.md_coffee
 
-      local icon = no_meeting_icon
-      local display_text = 'No more meetings'
-
       if now - lastMeetingCheck > lastMeetingCheckInterval then
         lastMeetingData = features.get_next_meeting()
         lastMeetingCheck = now
@@ -170,45 +167,34 @@ return {
 
       local meeting = lastMeetingData
 
-      if meeting then
-        icon = meeting.is_teams and teams_icon or meeting_icon
-
-        -- Build display text
-        local parts = {}
-        if meeting.time then
-          local time_display = meeting.time
-
-          -- Add countdown if meeting is within 1 hour
-          if meeting.start_timestamp then
-            local diff_seconds = meeting.start_timestamp - os.time()
-
-            if diff_seconds > 0 and diff_seconds <= 3600 then
-              local minutes = math.ceil(diff_seconds / 60)
-              time_display = time_display .. ' (in ' .. minutes .. 'm)'
-            elseif diff_seconds < 0 and diff_seconds >= -3600 then
-              -- Meeting started within the last hour
-              local minutes = math.ceil(-diff_seconds / 60)
-              time_display = time_display .. ' (started ' .. minutes .. 'm ago)'
-            end
-          end
-
-          table.insert(parts, time_display)
-        end
-        if meeting.title ~= nil then
-          local title = meeting.title
-          local max_title_length = 20
-          if title ~= nil and #title > max_title_length then
-            title = title:sub(1, max_title_length):match '^%s*(.-)%s*$' .. '...'
-          end
-          table.insert(parts, title)
-        end
-        if meeting.location then
-          table.insert(parts, '(' .. meeting.location .. ')')
-        end
-        display_text = table.concat(parts, ' | ')
+      if not meeting then
+        return mode_formatter(' ' .. no_meeting_icon .. ' ', window, 'both', 'b')
       end
 
-      return mode_formatter(' ' .. icon .. ' ' .. display_text .. ' ', window, 'both', 'b')
+      local icon = meeting.is_teams and teams_icon or meeting_icon
+      local countdown = ''
+
+      if meeting.start_timestamp then
+        local diff_seconds = meeting.start_timestamp - now
+
+        if diff_seconds < 0 then
+          local minutes = math.ceil(-diff_seconds / 60)
+          countdown = ' (' .. minutes .. 'm ago)'
+        elseif diff_seconds < 3600 then
+          local minutes = math.ceil(diff_seconds / 60)
+          countdown = ' (in ' .. minutes .. 'm)'
+        else
+          local hours = math.floor(diff_seconds / 3600)
+          local minutes = math.ceil((diff_seconds % 3600) / 60)
+          if minutes > 0 then
+            countdown = ' (in ' .. hours .. 'h ' .. minutes .. 'm)'
+          else
+            countdown = ' (in ' .. hours .. 'h)'
+          end
+        end
+      end
+
+      return mode_formatter(' ' .. icon .. countdown .. ' ', window, 'both', 'b')
     end
 
     tabline.setup {
