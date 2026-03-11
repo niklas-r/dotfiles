@@ -110,10 +110,10 @@ config.keys = {
     },
   },
   -- Key table for moving tabs around
-  { key = 'm', mods = 'LEADER', action = act.ActivateKeyTable { name = 'move_tab_mode', one_shot = false } },
+  { key = 'M', mods = 'LEADER', action = act.ActivateKeyTable { name = 'move_tab_mode', one_shot = false } },
 
   -- Meeting notification
-  { key = 'M', mods = 'LEADER', action = features.show_meeting_notification() },
+  { key = 'm', mods = 'LEADER', action = features.show_meeting_notification() },
 
   -- Workspace management
   { key = 'w', mods = 'LEADER', action = act.ShowLauncherArgs { flags = 'FUZZY|WORKSPACES' } },
