@@ -1,0 +1,13 @@
+[post-create]
+install = "pnpm install"
+env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
+
+[post-start]
+copy = "wt step copy-ignored"
+server = "pnpm start -- --port {{ branch | hash_port }}"
+
+[post-remove]
+kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
+
+[commit.generation]
+command = "opencode run -m copilot/claude-sonnet-4.6"

@@ -45,6 +45,7 @@ link "$DOTFILES_DIR/config/wezterm" "$XDG_CONFIG_HOME/wezterm"
 link "$DOTFILES_DIR/config/zed" "$XDG_CONFIG_HOME/zed"
 link "$DOTFILES_DIR/config/atuin" "$XDG_CONFIG_HOME/atuin"
 link "$DOTFILES_DIR/config/mcphub" "$XDG_CONFIG_HOME/mcphub"
+link "$DOTFILES_DIR/config/worktrunk" "$XDG_CONFIG_HOME/worktrunk"
 
 echo "Done symlinking!"
 
