@@ -6,9 +6,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "56959a2ddd833553648e4a884c344acd52e89434",
+      "skillFolderHash": "9fa6850b305ad7237ffe61fc12f9e3d2d9c3d990",
       "installedAt": "2026-02-11T12:04:22.947Z",
-      "updatedAt": "2026-02-25T09:56:57.983Z"
+      "updatedAt": "2026-03-16T09:29:56.047Z"
     },
     "skill-creator": {
       "source": "vercel-labs/agent-browser",
@@ -24,18 +24,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "c2f31172b6f256272305a5e6e7228b258446899f",
+      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
       "installedAt": "2026-02-11T12:04:28.973Z",
-      "updatedAt": "2026-02-11T12:04:28.973Z"
-    },
-    "code-review-expert": {
-      "source": "sanyuan0704/code-review-expert",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/sanyuan0704/code-review-expert.git",
-      "skillPath": "SKILL.md",
-      "skillFolderHash": "bc0aefbe7ddb8b169d359af3b7e7e16de284cc1b",
-      "installedAt": "2026-02-12T12:18:38.318Z",
-      "updatedAt": "2026-02-25T09:57:02.162Z"
+      "updatedAt": "2026-03-16T09:30:00.383Z"
     },
     "simplify": {
       "source": "brianlovin/claude-config",
