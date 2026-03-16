@@ -1,0 +1,1 @@
+./opencode-elf/dist/index.js

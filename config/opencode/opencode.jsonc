@@ -165,6 +165,5 @@
   },
   "plugin": [
     "opencode-anthropic-auth",
-    "opencode-elf@latest"
-  ],
+  ]
 }

@@ -4,3 +4,7 @@
 [submodule ".config/zsh/.antidote"]
 	path = config/zsh/.antidote
 	url = git@github.com:niklas-r/antidote.git
+[submodule "config/opencode/plugins/opencode-elf"]
+	path = config/opencode/plugins/opencode-elf
+	url = git@github.com:niklas-r/opencode-elf.git
+	branch = next
