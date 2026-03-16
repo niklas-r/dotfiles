@@ -85,6 +85,7 @@ return {
           },
         },
         copilot = {},
+        docker_language_server = {},
       }
 
       require('mason').setup()

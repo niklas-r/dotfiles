@@ -11,12 +11,8 @@ vim.filetype.add {
   },
   pattern = {
     ['%.env%.[%w_.-]+'] = 'dotenv',
-  },
-}
-
-vim.filetype.add {
-  pattern = {
     ['.*/%.github[%w/]+workflows[%w/]+.*%.ya?ml'] = 'yaml.github',
+    ['Dockerfile%.[%w_.-]+'] = 'dockerfile',
   },
 }
 

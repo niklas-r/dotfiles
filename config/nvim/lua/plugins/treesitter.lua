@@ -29,6 +29,7 @@ return {
         'vimdoc',
         'gitignore',
         'regex',
+        'dockerfile',
       }
 
       require('nvim-treesitter').install(languages)
