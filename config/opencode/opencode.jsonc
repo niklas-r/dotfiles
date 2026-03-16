@@ -10,14 +10,6 @@
       ],
       "enabled": false
     },
-    "chrome-devtools": {
-      "type": "local",
-      "command": [
-        "npx",
-        "chrome-devtools-mcp@latest"
-      ],
-      "enabled": false
-    },
     // When DW enables us to use this, run:
     // opencode mcp auth atlassian-rovo
     "atlassian-rovo": {
