@@ -1,0 +1,83 @@
+{
+  "version": 3,
+  "skills": {
+    "agent-browser": {
+      "source": "vercel-labs/agent-browser",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
+      "skillPath": "skills/agent-browser/SKILL.md",
+      "skillFolderHash": "56959a2ddd833553648e4a884c344acd52e89434",
+      "installedAt": "2026-02-11T12:04:22.947Z",
+      "updatedAt": "2026-02-25T09:56:57.983Z"
+    },
+    "skill-creator": {
+      "source": "vercel-labs/agent-browser",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "skillFolderHash": "a235030e055c7292a60525ead3c8b06fb2bcf831",
+      "installedAt": "2026-02-11T12:04:22.971Z",
+      "updatedAt": "2026-02-11T12:04:22.971Z"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/vercel-labs/skills.git",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "skillFolderHash": "c2f31172b6f256272305a5e6e7228b258446899f",
+      "installedAt": "2026-02-11T12:04:28.973Z",
+      "updatedAt": "2026-02-11T12:04:28.973Z"
+    },
+    "code-review-expert": {
+      "source": "sanyuan0704/code-review-expert",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/sanyuan0704/code-review-expert.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "bc0aefbe7ddb8b169d359af3b7e7e16de284cc1b",
+      "installedAt": "2026-02-12T12:18:38.318Z",
+      "updatedAt": "2026-02-25T09:57:02.162Z"
+    },
+    "simplify": {
+      "source": "brianlovin/claude-config",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/brianlovin/claude-config.git",
+      "skillPath": "skills/simplify/SKILL.md",
+      "skillFolderHash": "83566973442dc05bcf5abbe83053e8a8e5f50b6b",
+      "installedAt": "2026-02-25T09:58:29.747Z",
+      "updatedAt": "2026-02-25T09:58:29.747Z"
+    },
+    "ast-grep": {
+      "source": "ast-grep/agent-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/ast-grep/agent-skill.git",
+      "skillPath": "ast-grep/skills/ast-grep/SKILL.md",
+      "skillFolderHash": "ef60f77564e2d47d0cba25a809daa3af8f0c469b",
+      "installedAt": "2026-02-27T10:52:41.358Z",
+      "updatedAt": "2026-02-27T10:52:41.358Z"
+    },
+    "worktrunk": {
+      "source": "max-sixty/worktrunk",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/max-sixty/worktrunk.git",
+      "skillPath": "skills/worktrunk/SKILL.md",
+      "skillFolderHash": "712f1786c7d972c3132aedc972375787c6558a37",
+      "pluginName": "worktrunk",
+      "installedAt": "2026-03-16T08:14:23.272Z",
+      "updatedAt": "2026-03-16T08:14:23.272Z"
+    }
+  },
+  "dismissed": {
+    "findSkillsPrompt": true
+  },
+  "lastSelectedAgents": [
+    "amp",
+    "cline",
+    "codex",
+    "cursor",
+    "gemini-cli",
+    "github-copilot",
+    "kimi-cli",
+    "opencode",
+    "warp"
+  ]
+}
