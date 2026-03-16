@@ -16,14 +16,71 @@
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp",
       "enabled": false
+    },
+    "grep-app": {
+      "type": "remote",
+      "url": "https://mcp.grep.app",
+      "enabled": true,
+      "oauth": false,
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "enabled": false,
+      "oauth": false,
+    },
+    "CodeGraphContext": {
+      "type": "local",
+      "command": [
+        "cgc",
+        "mcp",
+        "start"
+      ],
+      "environment": {
+        "DEFAULT_DATABASE": "falkordb",
+        "FALKORDB_PATH": "/Users/niklaskahn/.codegraphcontext/falkordb.db",
+        "FALKORDB_SOCKET_PATH": "/Users/niklaskahn/.codegraphcontext/falkordb.sock",
+        "INDEX_VARIABLES": "true",
+        "ALLOW_DB_DELETION": "false",
+        "DEBUG_LOGS": "false",
+        "DEBUG_LOG_PATH": "/Users/niklaskahn/mcp_debug.log",
+        "ENABLE_APP_LOGS": "CRITICAL",
+        "LOG_FILE_PATH": "/Users/niklaskahn/.codegraphcontext/logs/cgc.log",
+        "MAX_FILE_SIZE_MB": "10",
+        "IGNORE_TEST_FILES": "false",
+        "IGNORE_HIDDEN_FILES": "true",
+        "ENABLE_AUTO_WATCH": "false",
+        "COMPLEXITY_THRESHOLD": "10",
+        "MAX_DEPTH": "unlimited",
+        "PARALLEL_WORKERS": "4",
+        "CACHE_ENABLED": "true",
+        "IGNORE_DIRS": "node_modules,venv,e2e,coverage,.venv,env,.env,dist,build,target,.opencode,out,.git,.idea,.vscode,__pycache__",
+        "INDEX_SOURCE": "true"
+      },
+      "enabled": true,
     }
   },
   "tools": {
     "playwright*": false,
+    "CodeGraphContext*": false,
+    // Disabled OmO tools because I don't use them
     "mcp_session_*": false,
     "mcp_interactive_bash": false
   },
   "agent": {
+    "code-scanner": {
+      "description": "Use this agent when you need to analyze and understand codebases, identify bugs, or generate documentation",
+      "mode": "subagent",
+      "model": "github-copilot/claude-sonnet-4.6",
+      "temperature": 0.1,
+      "tools": {
+        "*": false,
+        "ls": true,
+        "glob": true,
+        "CodeGraphContext*": true
+      },
+      "prompt": "You are a code-scanner subagent. Your job is to analyze the code graph and report findings to the parent agent. Use ONLY CodeGraphContext tools (no file reads, no shell, no edits). Do NOT modify code. If the repo is not indexed, explicitly request that the parent indexes it.",
+    },
     "playwright-test-generator": {
       "description": "Use this agent when you need to create automated browser tests using Playwright",
       "mode": "subagent",
