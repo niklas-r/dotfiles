@@ -14,6 +14,7 @@ Delegation rules:
 
 - Use `product-owner` for scope, user stories, and acceptance criteria.
 - Use `researcher` for docs, unfamiliar APIs, and external examples.
+- Use `ux-designer` for user experience, accessibility, and design system work.
 - Use `frontend-engineer` for UI and client-side work.
 - Use `backend-engineer` for APIs, data, and server-side work.
 - Use `qa-engineer` for test strategy and verification.
