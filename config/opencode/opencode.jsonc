@@ -8,14 +8,14 @@
         "playwright",
         "run-test-mcp-server"
       ],
-      "enabled": false
+      "enabled": true,
     },
     // When DW enables us to use this, run:
     // opencode mcp auth atlassian-rovo
     "atlassian-rovo": {
       "type": "remote",
       "url": "https://mcp.atlassian.com/v1/mcp",
-      "enabled": false
+      "enabled": false,
     },
     "grep-app": {
       "type": "remote",
@@ -26,7 +26,7 @@
     "context7": {
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
-      "enabled": false,
+      "enabled": true,
       "oauth": false,
     },
     "CodeGraphContext": {
@@ -55,19 +55,258 @@
         "PARALLEL_WORKERS": "4",
         "CACHE_ENABLED": "true",
         "IGNORE_DIRS": "node_modules,venv,e2e,coverage,.venv,env,.env,dist,build,target,.opencode,out,.git,.idea,.vscode,__pycache__",
-        "INDEX_SOURCE": "true"
+        "INDEX_SOURCE": "true",
       },
       "enabled": true,
-    }
+    },
+    // Hacked work around thanks to: https://github.com/anomalyco/opencode/issues/988#issuecomment-4022520800
+    "figma": {
+      "type": "remote",
+      "url": "https://mcp.figma.com/mcp",
+      "enabled": true,
+      // When re-auth is necessary, refer to the link above
+      // "oauth": {
+      //   "clientId": "GET_THIS_FROM_THE_CURL_COMMAND",
+      //   "clientSecret": "GET_THIS_FROM_THE_CURL_COMMAND"
+      // },
+    },
   },
   "tools": {
     "playwright*": false,
     "CodeGraphContext*": false,
+    "grep-app*": false,
+    "context7*": false,
+    "figma*": false,
     // Disabled OmO tools because I don't use them
     "mcp_session_*": false,
-    "mcp_interactive_bash": false
+    "mcp_interactive_bash": false,
   },
   "agent": {
+    "team-lead": {
+      "description": "Primary orchestrator that breaks work down, delegates to specialists, and synthesizes the final plan or outcome",
+      "mode": "primary",
+      "model": "github-copilot/gpt-5.4",
+      "temperature": 0.1,
+      "color": "warning",
+      "prompt": "{file:./prompts/team-lead.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "webfetch": true,
+        "question": true,
+        "bash": true,
+        "task": true,
+        "todowrite": true,
+        "todoread": true,
+        "skill": true,
+      },
+      "permission": {
+        "task": {
+          "*": "deny",
+          "product-owner": "allow",
+          "researcher": "allow",
+          "frontend-engineer": "allow",
+          "backend-engineer": "allow",
+          "qa-engineer": "allow",
+          "platform-engineer": "allow",
+          "security-reviewer": "allow",
+          "documentation-writer": "allow",
+          "code-scanner": "allow",
+          "playwright-test-*": "allow",
+        },
+      },
+    },
+    "product-owner": {
+      "description": "Clarifies product intent, slices scope, and writes crisp acceptance criteria before implementation starts",
+      "mode": "subagent",
+      "model": "github-copilot/claude-opus-4.6",
+      "temperature": 0.2,
+      "color": "warning",
+      "prompt": "{file:./prompts/product-owner.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "webfetch": true,
+        "question": true,
+        "bash": true,
+        "skill": true,
+        "figma*": true,
+      },
+    },
+    "researcher": {
+      "description": "Researches docs, APIs, libraries, and real-world examples, then returns a recommendation with tradeoffs",
+      "mode": "subagent",
+      "model": "github-copilot/claude-haiku-4.5",
+      "temperature": 0.1,
+      "color": "info",
+      "prompt": "{file:./prompts/researcher.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "webfetch": true,
+        "context7*": true,
+        "bash": true,
+        "skill": true,
+        "grep-app*": true,
+      },
+    },
+    "frontend-engineer": {
+      "description": "Implements UI, client-side state, accessibility, and frontend tests while preserving the product's visual language",
+      "mode": "subagent",
+      "model": "github-copilot/claude-sonnet-4.6",
+      "temperature": 0.2,
+      "color": "primary",
+      "prompt": "{file:./prompts/frontend-engineer.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "edit": true,
+        "write": true,
+        "bash": true,
+        "webfetch": true,
+        "task": true,
+        "figma*": true,
+        "skill": true,
+      },
+      "permission": {
+        "task": {
+          "*": "deny",
+          "researcher": "allow",
+          "security-reviewer": "allow",
+          "documentation-writer": "allow",
+          "code-scanner": "allow",
+        },
+      },
+    },
+    "backend-engineer": {
+      "description": "Implements APIs, data flows, integrations, and server-side logic with a focus on correctness and operational safety",
+      "mode": "subagent",
+      "model": "github-copilot/gpt-5.3-codex",
+      "temperature": 0.1,
+      "color": "secondary",
+      "prompt": "{file:./prompts/backend-engineer.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "edit": true,
+        "write": true,
+        "bash": true,
+        "webfetch": true,
+        "task": true,
+        "skill": true,
+      },
+      "permission": {
+        "task": {
+          "*": "deny",
+          "researcher": "allow",
+          "security-reviewer": "allow",
+          "documentation-writer": "allow",
+          "code-scanner": "allow",
+        },
+      },
+    },
+    "qa-engineer": {
+      "description": "Designs risk-based test coverage, verifies changes, and coordinates browser and regression testing specialists",
+      "mode": "subagent",
+      "model": "github-copilot/gpt-5.4",
+      "temperature": 0.1,
+      "color": "success",
+      "prompt": "{file:./prompts/qa-engineer.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "bash": true,
+        "task": true,
+        "webfetch": true,
+        "skill": true,
+        "figma*": true,
+      },
+      "permission": {
+        "task": {
+          "*": "deny",
+          "researcher": "allow",
+          "playwright-test-planner": "allow",
+          "playwright-test-generator": "allow",
+          "playwright-test-healer": "allow",
+          "documentation-writer": "allow",
+        },
+      },
+    },
+    "platform-engineer": {
+      "description": "Owns CI/CD, tooling, local developer experience, and deployment-facing configuration changes",
+      "mode": "subagent",
+      "model": "github-copilot/gpt-5.3-codex",
+      "temperature": 0.1,
+      "color": "secondary",
+      "prompt": "{file:./prompts/platform-engineer.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "edit": true,
+        "write": true,
+        "bash": true,
+        "webfetch": true,
+        "task": true,
+        "skill": true,
+      },
+      "permission": {
+        "task": {
+          "*": "deny",
+          "researcher": "allow",
+          "security-reviewer": "allow",
+          "documentation-writer": "allow",
+        },
+      },
+    },
+    "security-reviewer": {
+      "description": "Audits authentication, authorization, secrets, input validation, and attack surfaces without changing code",
+      "mode": "subagent",
+      "model": "github-copilot/claude-opus-4.5",
+      "temperature": 0.1,
+      "color": "error",
+      "prompt": "{file:./prompts/security-reviewer.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "bash": true,
+        "webfetch": true,
+        "skill": true
+      },
+    },
+    "documentation-writer": {
+      "description": "Turns implemented behavior into clean docs, ADRs, onboarding notes, and release-facing summaries",
+      "mode": "subagent",
+      "model": "github-copilot/claude-haiku-4.5",
+      "temperature": 0.2,
+      "color": "info",
+      "prompt": "{file:./prompts/documentation-writer.md}",
+      "tools": {
+        "*": false,
+        "glob": true,
+        "grep": true,
+        "read": true,
+        "edit": true,
+        "write": true,
+        "webfetch": true,
+        "skill": true,
+      },
+    },
     "code-scanner": {
       "description": "Use this agent when you need to analyze and understand codebases, identify bugs, or generate documentation",
       "mode": "subagent",
@@ -77,9 +316,9 @@
         "*": false,
         "ls": true,
         "glob": true,
-        "CodeGraphContext*": true
+        "CodeGraphContext*": true,
       },
-      "prompt": "You are a code-scanner subagent. Your job is to analyze the code graph and report findings to the parent agent. Use ONLY CodeGraphContext tools (no file reads, no shell, no edits). Do NOT modify code. If the repo is not indexed, explicitly request that the parent indexes it.",
+      "prompt": "You are a code-scanner subagent. Your job is to analyze the code graph and report findings to the parent agent. You are the only subagent with CodeGraphContext access. Use ONLY CodeGraphContext tools (no file reads, no shell, no edits). Do NOT modify code. If the repo is not indexed, explicitly request that the parent indexes it.",
     },
     "playwright-test-generator": {
       "description": "Use this agent when you need to create automated browser tests using Playwright",
@@ -108,8 +347,8 @@
         "playwright-test*browser_wait_for": true,
         "playwright-test*generator_read_log": true,
         "playwright-test*generator_setup_page": true,
-        "playwright-test*generator_write_test": true
-      }
+        "playwright-test*generator_write_test": true,
+      },
     },
     "playwright-test-healer": {
       "description": "Use this agent when you need to debug and fix failing Playwright tests",
@@ -129,8 +368,8 @@
         "playwright-test*browser_snapshot": true,
         "playwright-test*test_debug": true,
         "playwright-test*test_list": true,
-        "playwright-test*test_run": true
-      }
+        "playwright-test*test_run": true,
+      },
     },
     "playwright-test-planner": {
       "description": "Use this agent when you need to create comprehensive test plan for a web application or website",
@@ -159,11 +398,11 @@
         "playwright-test*browser_type": true,
         "playwright-test*browser_wait_for": true,
         "playwright-test*planner_setup_page": true,
-        "playwright-test*planner_save_plan": true
-      }
-    }
+        "playwright-test*planner_save_plan": true,
+      },
+    },
   },
   "plugin": [
-    "opencode-anthropic-auth",
-  ]
+    "opencode-anthropic-auth"
+  ],
 }
