@@ -257,14 +257,14 @@ return {
           {
             'workspace',
             padding = 0,
-            icon = '',
+            icons_enabled = false,
             fmt = function(output, window)
               return mode_formatter(' ' .. wez.nerdfonts.cod_terminal_tmux .. ' ' .. output .. ' ', window, 'both', 'b')
             end,
           },
           {
             'workspace',
-            icon = '',
+            icons_enabled = false,
             padding = 0,
             fmt = function(_, window)
               return mode_formatter(right_separator(), window, 'fg-inverse', 'b', 'c')
