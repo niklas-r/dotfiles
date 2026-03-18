@@ -81,6 +81,25 @@
     "mcp_session_*": false,
     "mcp_interactive_bash": false,
   },
+  "permission": {
+    "*": "ask",
+    "read": "allow",
+    "bash": {
+      "*": "ask",
+      "git status*": "allow",
+      "git diff*": "allow",
+      "git log*": "allow",
+      "npm list*": "allow",
+      "ls*": "allow",
+      "find*": "allow",
+    },
+    "external_directory": {
+      "*": "ask",
+      "~/.config/**": "allow",
+      "~/Code/**": "allow",
+      "~/.agents/**": "allow"
+    }
+  },
   "agent": {
     "team-lead": {
       "description": "Primary orchestrator that breaks work down, delegates to specialists, and synthesizes the final plan or outcome",
@@ -103,6 +122,12 @@
         "skill": true,
       },
       "permission": {
+        "external_directory": {
+          "*": "ask",
+          "~/.config/**": "allow",
+          "~/Code/**": "allow",
+          "~/.agents/**": "allow",
+        },
         "task": {
           "*": "deny",
           "product-owner": "allow",
@@ -173,11 +198,23 @@
         "write": true,
         "bash": true,
         "webfetch": true,
+        "lsp": true,
         "task": true,
         "figma*": true,
         "skill": true,
       },
       "permission": {
+        "external_directory": {
+          "~/.config/**": "allow",
+          "~/Code/**": "allow"
+        },
+        "bash": {
+          "*": "ask",
+          "npm *": "allow",
+          "pnpm *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow"
+        },
         "task": {
           "*": "deny",
           "researcher": "allow",
@@ -204,9 +241,21 @@
         "bash": true,
         "webfetch": true,
         "task": true,
+        "lsp": true,
         "skill": true,
       },
       "permission": {
+        "external_directory": {
+          "~/.config/**": "allow",
+          "~/Code/**": "allow"
+        },
+        "bash": {
+          "*": "ask",
+          "npm *": "allow",
+          "pnpm *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow"
+        },
         "task": {
           "*": "deny",
           "researcher": "allow",
@@ -230,6 +279,7 @@
         "read": true,
         "bash": true,
         "task": true,
+        "lsp": true,
         "webfetch": true,
         "skill": true,
         "figma*": true,
@@ -261,10 +311,22 @@
         "write": true,
         "bash": true,
         "webfetch": true,
+        "lsp": true,
         "task": true,
         "skill": true,
       },
       "permission": {
+        "external_directory": {
+          "~/.config/**": "allow",
+          "~/Code/**": "allow"
+        },
+        "bash": {
+          "*": "ask",
+          "npm *": "allow",
+          "pnpm *": "allow",
+          "git status*": "allow",
+          "git diff*": "allow"
+        },
         "task": {
           "*": "deny",
           "researcher": "allow",
@@ -317,6 +379,7 @@
         "*": false,
         "ls": true,
         "glob": true,
+        "read": true,
         "CodeGraphContext*": true,
       },
       "prompt": "You are a code-scanner subagent. Your job is to analyze the code graph and report findings to the parent agent. You are the only subagent with CodeGraphContext access. Use ONLY CodeGraphContext tools (no file reads, no shell, no edits). Do NOT modify code. If the repo is not indexed, explicitly request that the parent indexes it.",
