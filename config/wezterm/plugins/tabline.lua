@@ -10,10 +10,20 @@ local G = globals.read_globals()
 return {
   tabline = tabline,
   setup = function()
+    ---@param isActive boolean
+    ---@return TablineWezTab[]
     local function getTabComponents(isActive)
-      return {
+      ---@type TablineWezTab[]
+      local components = {
         'index',
-        { 'process', padding = { left = 0, right = 0 }, icons_only = true },
+        {
+          'process',
+          process_to_icon = {
+            ['opencode'] = { wez.nerdfonts.oct_sparkle_fill, color = { fg = colors.get_color_by_key 'black_bright' } },
+          },
+          padding = { left = 0, right = 0 },
+          icons_only = true,
+        },
         {
           'parent',
           padding = 0,
@@ -29,7 +39,6 @@ return {
           'cwd',
           padding = { left = 0, right = 1 },
           max_length = isActive and 20 or 10,
-
           cond = function(tab)
             return tab.tab_title == ''
           end,
@@ -61,6 +70,7 @@ return {
         },
         { 'zoomed', padding = 0 },
       }
+      return components
     end
 
     local primary_color = colors.get_color_by_key 'blue'
