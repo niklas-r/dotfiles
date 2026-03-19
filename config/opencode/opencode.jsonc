@@ -61,23 +61,17 @@
     "mcp_interactive_bash": false,
   },
   "permission": {
-    "*": "ask",
-    "read": "allow",
-    "bash": {
-      "*": "ask",
-      "git status*": "allow",
-      "git diff*": "allow",
-      "git log*": "allow",
-      "npm list*": "allow",
-      "ls*": "allow",
-      "find*": "allow",
+    "*": "allow",
+    "task": {
+      "*": "deny",
+      "researcher": "allow",
+      "code-scanner": "allow",
     },
-    "external_directory": {
-      "*": "ask",
-      "~/.config/**": "allow",
-      "~/Code/**": "allow",
-      "~/.agents/**": "allow"
-    }
+    "skill": {
+      "*": "allow",
+      "gitnexus*": "deny",
+      "ast-grep*": "deny",
+    },
   },
   "agent": {
     "team-lead": {
