@@ -359,11 +359,6 @@
         "bash": true,
         "skill": true,
       },
-      "skills": {
-        "*": false,
-        "gitnexus*": true,
-        "ast-grep*": true,
-      },
       "permission": {
         "edit": "deny",
         "bash": {
@@ -379,8 +374,13 @@
           "head*": "allow",
           "tail*": "allow",
         },
+        "skill": {
+          "*": "ask",
+          "gitnexus*": "allow",
+          "ast-grep*": "allow",
+        }
       },
-      "prompt": "You are a code-scanner subagent. Your job is to analyze the code graph and report findings to the parent agent. Use primarily gitnexus skills. You cannot modify content. If the repo is not indexed, explicitly request that the parent indexes it.",
+      "prompt": "{file:./prompts/code-scanner.md}",
     },
     "ux-designer": {
       "description": "Designs user experiences, ensures WCAG accessibility compliance, and maintains design system consistency",
