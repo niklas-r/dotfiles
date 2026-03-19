@@ -1,4 +1,5 @@
 [post-create]
+opencode-link = "ln -sf {{ primary_worktree_path }}/.opencode ."
 install = "pnpm install"
 env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
 
@@ -10,4 +11,4 @@ server = "pnpm start -- --port {{ branch | hash_port }}"
 kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
 
 [commit.generation]
-command = "opencode run -m copilot/claude-sonnet-4.6"
+command = "opencode run -m github-copilot/claude-haiku-4.5"
