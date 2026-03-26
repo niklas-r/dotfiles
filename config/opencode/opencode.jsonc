@@ -73,6 +73,28 @@
       "ast-grep*": "deny",
     },
   },
+  "mode": {
+    "build": {
+      "color": "primary",
+    },
+    "plan": {
+      "color": "secondary",
+      "tools": {
+        "edit": true,
+        "write": true,
+      },
+      "permission": {
+        "edit": {
+          "*": "deny",
+          ".opencode/**/*": "allow",
+        },
+        "write": {
+          "*": "deny",
+          ".opencode/**/*": "allow",
+        }
+      },
+    },
+  },
   "agent": {
     "team-lead": {
       "description": "Primary orchestrator that breaks work down, delegates to specialists, and synthesizes the final plan or outcome",
