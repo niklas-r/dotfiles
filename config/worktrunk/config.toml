@@ -5,10 +5,10 @@ env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
 
 [post-start]
 copy = "wt step copy-ignored"
-server = "pnpm start -- --port {{ branch | hash_port }}"
+# server = "pnpm start -- --port {{ branch | hash_port }}"
 
 [post-remove]
-kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
+# kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
 
 [commit.generation]
 command = "opencode run -m github-copilot/claude-haiku-4.5"
