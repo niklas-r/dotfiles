@@ -112,6 +112,15 @@ return {
       },
     },
   },
+  {
+    'samharju/synthweave.nvim',
+    priority = 1000,
+    config = function()
+      local synthweave = require 'synthweave'
+      synthweave.setup()
+      synthweave.load()
+    end,
+  },
   -- colorsaver automatically save/loads the last used color scheme
   {
     'https://git.sr.ht/~swaits/colorsaver.nvim',

@@ -9,7 +9,7 @@ local M = {}
 ---@param key "surface" | "foreground" | "background" | "tab_bar_bg" | "black" | "red" | "green" | "yellow" | "blue" | "magenta" | "cyan" | "white" | "black_bright" | "red_bright" | "green_bright" | "yellow_bright" | "blue_bright" | "magenta_bright" | "cyan_bright" | "white_bright"
 ---@return string
 function M.get_color_by_key(key)
-  local current_scheme = wez.color.get_builtin_schemes()[G.colorscheme]
+  local current_scheme = M.get_schemes()[G.colorscheme]
 
   local surface = current_scheme.background or current_scheme.ansi[1]
 
@@ -43,6 +43,18 @@ function M.get_color_by_key(key)
   return key_to_color[key]
 end
 
+function M.get_schemes()
+  local schemes = wez.color.get_builtin_schemes()
+
+  local custom = wez.glob(globals.wezterm_path .. '/colors/*.toml')
+  for _, path in ipairs(custom) do
+    local scheme, metadata = wez.color.load_scheme(path)
+    local name = metadata.name or path:match '([^/]+)%.toml$'
+    schemes[name] = scheme
+  end
+  return schemes
+end
+
 ---@type table<string, string> -- key: Neovim theme name, value: Wezterm theme name
 local color_scheme_map = {
   -- Tokyo Night Variants
@@ -67,6 +79,8 @@ local color_scheme_map = {
   ['carbonfox'] = 'carbonfox',
   -- ['terafox'] = 'terafox',
   ['nordfox'] = 'nordfox',
+  -- synthweave
+  [G.opacity < 1 and 'synthweave-transparent' or 'synthweave'] = 'synthweave',
 }
 
 function M.is_nvim_theme(key)

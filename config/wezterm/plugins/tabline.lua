@@ -220,7 +220,7 @@ return {
     tabline.setup {
       options = {
         icons_enabled = true,
-        theme = G.colorscheme,
+        theme = colors.get_schemes()[G.colorscheme],
         theme_overrides = mode_colors,
         color_overrides = {},
         section_separators = {

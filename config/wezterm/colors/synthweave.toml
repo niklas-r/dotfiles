@@ -1,0 +1,86 @@
+[colors]
+ansi = [
+    "#262335",
+    "#fe4450",
+    "#297373",
+    "#ffe347",
+    "#2ee2fa",
+    "#af125a",
+    "#3bf4fb",
+    "#a2c7e5",
+]
+background = "#262335"
+brights = [
+    "#848bbd",
+    "#f27059",
+    "#72f1b8",
+    "#f39237",
+    "#3bf4fb",
+    "#ff7edb",
+    "#2ee2fa",
+    "#fbf9ff",
+]
+compose_cursor = "#ff7edb"
+cursor_bg = "#fbf9ff"
+cursor_border = "#fbf9ff"
+cursor_fg = "#262335"
+foreground = "#a2c7e5"
+scrollbar_thumb = "#2e2a4f"
+selection_bg = "#353163"
+selection_fg = "#a2c7e5"
+split = "#848bbd"
+visual_bell = "#423e77"
+
+[colors.indexed]
+
+[colors.tab_bar]
+background = "#262335"
+inactive_tab_edge = "#2e2a4f"
+
+[colors.tab_bar.active_tab]
+bg_color = "#a2c7e5"
+fg_color = "#262335"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.inactive_tab]
+bg_color = "#2e2a4f"
+fg_color = "#848bbd"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.inactive_tab_hover]
+bg_color = "#353163"
+fg_color = "#a2c7e5"
+intensity = "Normal"
+italic = true
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.new_tab]
+bg_color = "#423e77"
+fg_color = "#a2c7e5"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[colors.tab_bar.new_tab_hover]
+bg_color = "#848bbd"
+fg_color = "#262335"
+intensity = "Normal"
+italic = false
+strikethrough = false
+underline = "None"
+
+[metadata]
+aliases = []
+author = "Niklas Kahn"
+name = "synthweave"
+origin_url = "https://github.com/samharju/synthweave.nvim"
+wezterm_version = "20230712-072601-f4abf8fd"
+

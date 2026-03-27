@@ -11,7 +11,7 @@ M.themes = function(set_nvim_theme)
   return wezterm.action_callback(function(window, pane)
     local choices = {}
 
-    local schemes = wezterm.color.get_builtin_schemes()
+    local schemes = colors.get_schemes()
 
     -- loop over builtin schemes
     for scheme, _ in pairs(schemes) do
