@@ -22,8 +22,8 @@ local mappings = {
   { MEH_MODS, 'D', 'Discord' },
   { MEH_MODS, 'F', 'Finder' },
   { MEH_MODS, 'M', 'Mail' },
-  { MEH_MODS, 'O', 'Microsoft Outlook' }, -- Sigh...
-  { HYPER_MODS, 'O', 'Obsidian' },
+  { HYPER_MODS, 'O', 'Microsoft Outlook' },
+  { MEH_MODS, 'O', 'Obsidian' },
   { MEH_MODS, 'P', 'Postman' },
   { MEH_MODS, 'S', 'Signal' },
   { MEH_MODS, 'T', 'Wezterm' },
