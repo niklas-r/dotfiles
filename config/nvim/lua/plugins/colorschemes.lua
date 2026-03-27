@@ -1,4 +1,6 @@
-local term_transparency = os.getenv 'TERM_TRANSPARENCY' == 'true'
+local term_transparency = not vim.g.neovide and os.getenv 'TERM_TRANSPARENCY' == 'true'
+
+vim.g.neovide_title_background_color = string.format('%x', vim.api.nvim_get_hl(0, { id = vim.api.nvim_get_hl_id_by_name 'Normal' }).bg)
 
 return {
   {
