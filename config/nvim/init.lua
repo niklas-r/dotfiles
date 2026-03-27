@@ -23,6 +23,7 @@ require('lazy').setup {
   checker = {
     enabled = true,
     notify = false, -- hide notification since it's displayed in the lualine
+    frequency = 86400, -- once per day
   },
   install = {
     colorscheme = { 'rose-pine' },
