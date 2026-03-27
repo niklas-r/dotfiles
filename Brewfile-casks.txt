@@ -22,5 +22,5 @@ shottr
 sublime-text
 visual-studio-code
 vlc
-wezterm
+wezterm@nightly
 zed
