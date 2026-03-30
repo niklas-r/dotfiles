@@ -1,2 +1,6 @@
 *
 !.skill-lock.json
+!skills/
+skills/*
+!skills/gh-code-review/
+!skills/gh-code-review/**
