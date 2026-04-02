@@ -8,7 +8,7 @@
         "playwright",
         "run-test-mcp-server"
       ],
-      "enabled": true,
+      "enabled": false,
     },
     // When DW enables us to use this, run:
     // opencode mcp auth atlassian-rovo
@@ -20,13 +20,13 @@
     "grep-app": {
       "type": "remote",
       "url": "https://mcp.grep.app",
-      "enabled": true,
+      "enabled": false,
       "oauth": false,
     },
     "context7": {
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
-      "enabled": true,
+      "enabled": false,
       "oauth": false,
     },
     "gitnexus": {
@@ -43,7 +43,7 @@
     "figma": {
       "type": "remote",
       "url": "https://mcp.figma.com/mcp",
-      "enabled": true,
+      "enabled": false,
       // When re-auth is necessary, refer to the link above
       // "oauth": {
       //   "clientId": "GET_THIS_FROM_THE_CURL_COMMAND",
@@ -52,10 +52,6 @@
     },
   },
   "tools": {
-    "playwright*": false,
-    "grep-app*": false,
-    "context7*": false,
-    "figma*": false,
     // Disabled OmO tools because I don't use them
     "mcp_session_*": false,
     "mcp_interactive_bash": false,
@@ -66,11 +62,6 @@
       "*": "deny",
       "researcher": "allow",
       "code-scanner": "allow",
-    },
-    "skill": {
-      "*": "allow",
-      "gitnexus*": "deny",
-      "ast-grep*": "deny",
     },
   },
   "mode": {
@@ -86,11 +77,11 @@
       "permission": {
         "edit": {
           "*": "deny",
-          ".opencode/**/*": "allow",
+          ".opencode/*": "allow",
         },
         "write": {
           "*": "deny",
-          ".opencode/**/*": "allow",
+          ".opencode/*": "allow",
         }
       },
     },
