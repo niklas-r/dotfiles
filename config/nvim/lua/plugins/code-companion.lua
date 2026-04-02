@@ -51,6 +51,22 @@ return {
           },
         },
 
+        adapters = {
+          acp = {
+            opencode = function()
+              return require('codecompanion.adapters').extend('opencode', {
+                default = {
+                  'opencode',
+                  'acp',
+                },
+                env = {
+                  OPENCODE_API_KEY = os.getenv 'OPENCODE_API_KEY',
+                },
+              })
+            end,
+          },
+        },
+
         interactions = {
           chat = vim.tbl_extend('force', get_default_adapter(), {
             slash_commands = {
