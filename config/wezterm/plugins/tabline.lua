@@ -3,6 +3,7 @@ local wez = require 'wezterm' ---@type Wezterm
 local colors = require 'utils.colors'
 local globals = require 'utils.globals'
 local tabline = wez.plugin.require 'https://github.com/michaelbrusegard/tabline.wez' ---@type TablineWez
+local agent_deck = wez.plugin.require 'https://github.com/Eric162/wezterm-agent-deck'
 local features = require 'features'
 
 local G = globals.read_globals()
@@ -16,6 +17,10 @@ return {
       ---@type TablineWezTab[]
       local components = {
         'index',
+        {
+          'agent_deck',
+          padding = 0,
+        },
         {
           'process',
           process_to_icon = {
@@ -217,6 +222,28 @@ return {
       return mode_formatter(' ' .. icon .. countdown .. ' ', window, 'both', 'b')
     end
 
+    agent_deck.setup {
+      tab_title = { enabled = false },
+      right_status = { enabled = false },
+      colors = {
+        working = colors.get_color_by_key 'green',
+        waiting = colors.get_color_by_key 'yellow',
+        idle = colors.get_color_by_key 'blue',
+        inactive = colors.get_color_by_key 'black_bright',
+      },
+      icons = {
+        style = 'nerd', -- 'unicode', 'emoji' or 'nerd'
+        unicode = { working = '●', waiting = '◔', idle = '○', inactive = '◌' },
+        nerd = {
+          working = wez.nerdfonts.fa_circle,
+          waiting = wez.nerdfonts.fa_adjust,
+          idle = wez.nerdfonts.fa_circle_o,
+          inactive = wez.nerdfonts.md_dots_circle,
+        },
+      },
+      notifications = { enabled = true, on_waiting = true },
+    }
+
     tabline.setup {
       options = {
         icons_enabled = true,
@@ -284,7 +311,14 @@ return {
         tabline_c = { ' ' },
         tab_active = getTabComponents(true),
         tab_inactive = getTabComponents(false),
-        tabline_x = { 'ram', 'cpu' },
+        tabline_x = {
+          {
+            'agent_deck',
+            padding = { left = 0, right = 1 },
+          },
+          'ram',
+          'cpu',
+        },
         tabline_y = {
           {
             'datetime',
