@@ -2,12 +2,13 @@ local snacks_provider = {
   provider = 'snacks', -- Can be "default", "telescope", "fzf_lua", "mini_pick" or "snacks". If not specified, the plugin will autodetect installed providers.
 }
 
-local anthropic_adapter = {
-  adapter = {
-    name = 'anthropic',
-    model = 'claude-sonnet-4-5-20250929',
-  },
-}
+local function get_default_adapter()
+  return {
+    adapter = require('codecompanion.adapters').extend('copilot', {
+      model = 'gpt-5.4',
+    }),
+  }
+end
 
 return {
   {
@@ -32,77 +33,6 @@ return {
       'CodeCompanionChat',
       'CodeCompanionCmd',
     },
-    opts = {
-      display = {
-        action_palette = {
-          provider = 'default',
-        },
-      },
-
-      strategies = {
-        chat = vim.tbl_extend('force', anthropic_adapter, {
-          slash_commands = {
-            ['buffer'] = {
-              opts = snacks_provider,
-            },
-            ['help'] = {
-              opts = snacks_provider,
-            },
-            ['file'] = {
-              opts = snacks_provider,
-            },
-            ['symbols'] = {
-              opts = snacks_provider,
-            },
-            ['fetch'] = {
-              opts = snacks_provider,
-            },
-          },
-        }),
-        inline = anthropic_adapter,
-        cmd = anthropic_adapter,
-      },
-      extensions = {
-        mcphub = {
-          callback = 'mcphub.extensions.codecompanion',
-          opts = {
-            -- MCP Tools
-            make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
-            show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
-            add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
-            show_result_in_chat = true, -- Show tool results directly in chat buffer
-            -- MCP Resources
-            -- When this PR is merged, I can turn make_vars back on:
-            -- https://github.com/ravitemer/mcphub.nvim/pull/279
-            make_vars = false, -- Convert MCP resources to #variables for prompts
-            -- MCP Prompts
-            make_slash_commands = true, -- Add MCP prompts as /slash commands
-          },
-        },
-        history = {
-          enabled = true,
-          opts = {
-            -- Number of days after which chats are automatically deleted (0 to disable)
-            expiration_days = 30,
-            -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
-            picker = 'snacks',
-            title_generation_opts = {
-              -- We set copilot as the adapter because ACP adapters does not support title generation currently
-              adapter = 'copilot', -- "copilot"
-              model = 'gpt-4o', -- "gpt-4o"
-            },
-          },
-        },
-      },
-      prompt_library = {
-        markdown = {
-          dirs = {
-            vim.fn.getcwd() .. '/.prompts',
-            os.getenv 'DOTFILES_DIR' .. '/config/nvim/lua/plugins/code-companion/prompts',
-          },
-        },
-      },
-    },
     init = function()
       vim.keymap.set({ 'n', 'v' }, '<leader>aa', '<cmd>CodeCompanionActions<cr>', { desc = '[A]ctions', noremap = true, silent = true })
       vim.keymap.set({ 'n', 'v' }, '<leader>at', '<cmd>CodeCompanionChat Toggle<cr>', { desc = '[T]oggle chat', noremap = true, silent = true })
@@ -111,8 +41,80 @@ return {
       -- Expand 'cc' into 'CodeCompanion' in the command line
       vim.cmd [[cab cc CodeCompanion]]
     end,
-    config = function(_, opts)
-      require('codecompanion').setup(opts)
+    config = function()
+      local cc = require 'codecompanion'
+
+      cc.setup {
+        display = {
+          action_palette = {
+            provider = 'default',
+          },
+        },
+
+        interactions = {
+          chat = vim.tbl_extend('force', get_default_adapter(), {
+            slash_commands = {
+              ['buffer'] = {
+                opts = snacks_provider,
+              },
+              ['help'] = {
+                opts = snacks_provider,
+              },
+              ['file'] = {
+                opts = snacks_provider,
+              },
+              ['symbols'] = {
+                opts = snacks_provider,
+              },
+              ['fetch'] = {
+                opts = snacks_provider,
+              },
+            },
+          }),
+          inline = get_default_adapter(),
+          cmd = get_default_adapter(),
+        },
+        extensions = {
+          mcphub = {
+            callback = 'mcphub.extensions.codecompanion',
+            opts = {
+              -- MCP Tools
+              make_tools = true, -- Make individual tools (@server__tool) and server groups (@server) from MCP servers
+              show_server_tools_in_chat = true, -- Show individual tools in chat completion (when make_tools=true)
+              add_mcp_prefix_to_tool_names = false, -- Add mcp__ prefix (e.g `@mcp__github`, `@mcp__neovim__list_issues`)
+              show_result_in_chat = true, -- Show tool results directly in chat buffer
+              -- MCP Resources
+              -- When this PR is merged, I can turn make_vars back on:
+              -- https://github.com/ravitemer/mcphub.nvim/pull/279
+              make_vars = false, -- Convert MCP resources to #variables for prompts
+              -- MCP Prompts
+              make_slash_commands = true, -- Add MCP prompts as /slash commands
+            },
+          },
+          history = {
+            enabled = true,
+            opts = {
+              -- Number of days after which chats are automatically deleted (0 to disable)
+              expiration_days = 30,
+              -- Picker interface ("telescope" or "snacks" or "fzf-lua" or "default")
+              picker = 'snacks',
+              title_generation_opts = {
+                adapter = 'copilot',
+                model = 'claude-haiku-4.5',
+              },
+            },
+          },
+        },
+        prompt_library = {
+          markdown = {
+            dirs = {
+              vim.fn.getcwd() .. '/.prompts',
+              os.getenv 'DOTFILES_DIR' .. '/config/nvim/lua/plugins/code-companion/prompts',
+            },
+          },
+        },
+      }
+
       require('plugins.code-companion.utils.extmarks').setup()
     end,
   },
