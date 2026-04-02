@@ -59,6 +59,9 @@ return {
                   'opencode',
                   'acp',
                 },
+                defaults = {
+                  timeout = 50000,
+                },
                 env = {
                   OPENCODE_API_KEY = os.getenv 'OPENCODE_API_KEY',
                 },
