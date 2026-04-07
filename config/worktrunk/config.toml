@@ -2,10 +2,14 @@
 opencode-link = "ln -sf {{ primary_worktree_path }}/.opencode ."
 install = "pnpm install"
 env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
+gitnexus-analyze="gitnexus analyze"
 
 [post-start]
 copy = "wt step copy-ignored"
 # server = "pnpm start -- --port {{ branch | hash_port }}"
+
+[pre-remove]
+gitnexus-clean = "gitnexus clean"
 
 [post-remove]
 # kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
