@@ -83,6 +83,8 @@
       },
     },
   },
+  "model": "github-copilot/gpt-5.4",
+  "small_model": "github-copilot/claude-haiku-4.5",
   "agent": {
     "team-lead": {
       "description": "Primary orchestrator that breaks work down, delegates to specialists, and synthesizes the final plan or outcome",
