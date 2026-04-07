@@ -1,4 +1,4 @@
-[post-create]
+[pre-start]
 opencode-link = "ln -sf {{ primary_worktree_path }}/.opencode ."
 install = "pnpm install"
 env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
