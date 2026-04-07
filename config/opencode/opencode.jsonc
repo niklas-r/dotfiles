@@ -4,7 +4,6 @@
     "playwright-test": {
       "type": "local",
       "command": [
-        "npx",
         "playwright",
         "run-test-mcp-server"
       ],
@@ -32,9 +31,7 @@
     "gitnexus": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "gitnexus@latest",
+        "gitnexus",
         "mcp"
       ],
       "enabled": true,
