@@ -37,6 +37,15 @@ return {
       color = { fg = agent_deck.get_status_color(highest_status) },
     }
 
+    if agent_count > 1 then
+      local old_padding = opts.padding or {}
+
+      opts.padding = {
+        left = old_padding.left or 0,
+        right = math.max(old_padding.right or 0, 1),
+      }
+    end
+
     return agent_count > 1 and tostring(agent_count) or ''
   end,
 }
