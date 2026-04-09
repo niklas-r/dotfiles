@@ -9,7 +9,7 @@ copy = "wt step copy-ignored"
 # server = "pnpm start -- --port {{ branch | hash_port }}"
 
 [pre-remove]
-gitnexus-clean = "gitnexus clean"
+gitnexus-clean = "gitnexus clean --force"
 
 [post-remove]
 # kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
