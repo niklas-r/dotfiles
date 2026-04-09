@@ -15,4 +15,4 @@ gitnexus-clean = "gitnexus clean --force"
 # kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
 
 [commit.generation]
-command = "opencode run -m github-copilot/claude-haiku-4.5"
+command = "opencode run -m github-copilot/claude-haiku-4.5 --variant fast"
