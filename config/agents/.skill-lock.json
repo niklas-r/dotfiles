@@ -6,18 +6,19 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "9fa6850b305ad7237ffe61fc12f9e3d2d9c3d990",
+      "skillFolderHash": "b6f762bf402cdfaf6a06514e9ce4142ce3e4fb4c",
       "installedAt": "2026-02-11T12:04:22.947Z",
-      "updatedAt": "2026-03-16T09:29:56.047Z"
+      "updatedAt": "2026-04-09T13:00:09.560Z"
     },
     "skill-creator": {
-      "source": "vercel-labs/agent-browser",
+      "source": "anthropics/skills",
       "sourceType": "github",
-      "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
+      "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/skill-creator/SKILL.md",
-      "skillFolderHash": "a235030e055c7292a60525ead3c8b06fb2bcf831",
+      "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
+      "pluginName": "example-skills",
       "installedAt": "2026-02-11T12:04:22.971Z",
-      "updatedAt": "2026-02-11T12:04:22.971Z"
+      "updatedAt": "2026-04-09T13:12:43.613Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
@@ -51,10 +52,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/max-sixty/worktrunk.git",
       "skillPath": "skills/worktrunk/SKILL.md",
-      "skillFolderHash": "712f1786c7d972c3132aedc972375787c6558a37",
-      "pluginName": "worktrunk",
+      "skillFolderHash": "8bc19880205fb76fa0a80733231027effaf8b714",
       "installedAt": "2026-03-16T08:14:23.272Z",
-      "updatedAt": "2026-03-16T08:14:23.272Z"
+      "updatedAt": "2026-04-09T13:00:13.705Z"
     }
   },
   "dismissed": {
@@ -62,9 +62,12 @@
   },
   "lastSelectedAgents": [
     "amp",
+    "antigravity",
     "cline",
     "codex",
     "cursor",
+    "deepagents",
+    "firebender",
     "gemini-cli",
     "github-copilot",
     "kimi-cli",
