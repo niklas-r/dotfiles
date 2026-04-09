@@ -16,3 +16,6 @@ gitnexus-clean = "gitnexus clean --force"
 
 [commit.generation]
 command = "opencode run -m github-copilot/claude-haiku-4.5 --variant fast"
+
+[list]
+summary = true
