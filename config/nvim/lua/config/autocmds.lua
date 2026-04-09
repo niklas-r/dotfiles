@@ -1,15 +1,67 @@
+local au = vim.api.nvim_create_autocmd
+
+local _aug = function(name, opts)
+  return vim.api.nvim_create_augroup(name .. 'Group', opts or {})
+end
+
+---@class Autogroups
+---@field Cursor             number for cursor related autocommands.
+---@field Lsp                number for LSP related autocommands.
+---@field MacroRecording     number when a macro recording starts or ends.
+---@field OnLazyFile         number when entering a file.
+---@field OnVimHelpEnter     number when entering vim help files.
+---@field OneKeyExit         number for exiting some views with a single key.
+local aug = {
+  Cursor = _aug('Cursor', { clear = true }),
+  Lsp = _aug('Lsp', { clear = true }),
+  MacroRecording = _aug 'MacroRecording',
+  OnLazyFile = _aug 'OnLazyFile',
+  OnVimHelpEnter = _aug 'OnVimHelpEnter',
+  OneKeyExit = _aug 'OneKeyExit',
+}
+
 -- Don't add DAP buffers to list of buffers
-vim.api.nvim_create_autocmd('FileType', {
+au('FileType', {
   pattern = 'dap-repl',
   callback = function(args)
     vim.api.nvim_set_option_value('buflisted', false, { buf = args.buf })
   end,
 })
 
+-- Rename help buffer to just "help" and remap some keys
+au('FileType', {
+  desc = 'remap some keys for the help page',
+  pattern = 'help',
+  group = aug.OnVimHelpEnter,
+  callback = function()
+    local opts = function(desc)
+      return { buffer = true, silent = true, desc = desc }
+    end
+    vim.keymap.set('n', '<CR>', '<C-]>', opts 'Jump to tag')
+    vim.keymap.set('n', '<BS>', '<C-o>', opts 'Return to prev tag')
+    vim.keymap.set('n', 'q', ':quit<CR>', opts 'exit help buffer')
+    vim.opt_local.conceallevel = 3
+    vim.opt_local.concealcursor = 'nvc'
+  end,
+})
+
+---Quit from some windows by only pressing q
+au('FileType', {
+  desc = "Exit some views with 'q'",
+  pattern = {
+    'qf',
+    'dap-float',
+    'neotest-summary',
+    'man',
+  },
+  command = [[nnoremap <buffer><silent> q :quit<CR>]],
+  group = aug.OneKeyExit,
+})
+
 -- Highlight when yanking (copying) text
-vim.api.nvim_create_autocmd('TextYankPost', {
+au('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  group = aug.Cursor,
   callback = function()
     vim.hl.on_yank()
   end,
@@ -17,8 +69,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- Used to display recording in lualine
 -- Autocmd to track the end of macro recording
-vim.api.nvim_create_autocmd('RecordingEnter', {
+au('RecordingEnter', {
   pattern = '*',
+  group = aug.MacroRecording,
   callback = function()
     vim.g.macro_recording = 'Recording @' .. vim.fn.reg_recording()
     vim.cmd 'redrawstatus'
@@ -27,8 +80,9 @@ vim.api.nvim_create_autocmd('RecordingEnter', {
 })
 
 -- Autocmd to track the end of macro recording
-vim.api.nvim_create_autocmd('RecordingLeave', {
+au('RecordingLeave', {
   pattern = '*',
+  group = aug.MacroRecording,
   callback = function()
     vim.g.macro_recording = ''
     vim.cmd 'redrawstatus'
@@ -36,8 +90,9 @@ vim.api.nvim_create_autocmd('RecordingLeave', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+au('FileType', {
   pattern = 'dotenv',
+  group = aug.OnLazyFile,
   callback = function()
     vim.schedule(function()
       vim.bo.syntax = 'conf'
@@ -45,8 +100,8 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
+au('LspAttach', {
+  group = aug.Lsp,
   callback = function(event)
     local map = function(keys, func, desc, mode, customOpts)
       mode = mode or 'n'
@@ -61,21 +116,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
-      local highlight_augroup = vim.api.nvim_create_augroup('lsp-highlight', { clear = false })
-      vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
+      local highlight_augroup = aug.Lsp
+      au({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,
         group = highlight_augroup,
         callback = vim.lsp.buf.document_highlight,
       })
 
-      vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
+      au({ 'CursorMoved', 'CursorMovedI' }, {
         buffer = event.buf,
         group = highlight_augroup,
         callback = vim.lsp.buf.clear_references,
       })
 
-      vim.api.nvim_create_autocmd('LspDetach', {
-        group = vim.api.nvim_create_augroup('lsp-detach', { clear = true }),
+      au('LspDetach', {
+        group = aug.Lsp,
         callback = function(event2)
           vim.lsp.buf.clear_references()
           vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
@@ -94,8 +149,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -- Cursorline only in active window
 local cl_var = 'auto_cursorline'
 
-vim.api.nvim_create_autocmd({ 'WinEnter', 'FocusGained' }, {
-  group = vim.api.nvim_create_augroup('enable_auto_cursorline', { clear = true }),
+au({ 'WinEnter', 'FocusGained' }, {
+  group = aug.Cursor,
   callback = function()
     local ok, cl = pcall(vim.api.nvim_win_get_var, 0, cl_var)
     if ok and cl then
@@ -105,8 +160,8 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'FocusGained' }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'WinLeave', 'FocusLost' }, {
-  group = vim.api.nvim_create_augroup('disable_auto_cursorline', { clear = true }),
+au({ 'WinLeave', 'FocusLost' }, {
+  group = aug.Cursor,
   callback = function()
     local cl = vim.o.cursorline
     if cl then
