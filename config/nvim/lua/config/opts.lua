@@ -130,6 +130,8 @@ vim.o.winborder = 'rounded'
 
 if vim.g.neovide then
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
+  vim.opt.termguicolors = true
 end
 
 return {}

@@ -114,4 +114,13 @@ vim.keymap.set('n', '<leader>fn', '<cmd>enew<cr>', { desc = '[N]ew File' })
 vim.keymap.set('n', ']S', ']s', { desc = 'Next bad word', noremap = true })
 vim.keymap.set('n', '[S', '[s', { desc = 'Prev bad word', noremap = true })
 
+-- neovide
+if vim.g.neovide == true then
+  vim.keymap.set('n', '<C-+>', ':lua vim.g.neovide_scale_factor = math.min(vim.g.neovide_scale_factor + 0.1,  2.0)<CR>', { silent = true })
+  vim.keymap.set('n', '<C-->', ':lua vim.g.neovide_scale_factor = math.max(vim.g.neovide_scale_factor - 0.1,  0.1)<CR>', { silent = true })
+  vim.keymap.set('n', '<C-(>', ':lua vim.g.neovide_opacity = math.min(vim.g.neovide_opacity + 0.05, 1.0)<CR>', { silent = true })
+  vim.keymap.set('n', '<C-)>', ':lua vim.g.neovide_opacity = math.max(vim.g.neovide_opacity - 0.05, 0.0)<CR>', { silent = true })
+  vim.keymap.set('n', '<C-0>', ':lua vim.g.neovide_scale_factor = 1.0<CR>', { silent = true })
+  vim.keymap.set('n', '<C-=>', ':lua vim.g.neovide_opacity = 1.0<CR>', { silent = true })
+end
 return {}
