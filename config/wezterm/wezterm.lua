@@ -206,6 +206,7 @@ config.tab_max_width = 100
 -- Load plugins
 require('plugins/tabline').setup()
 require('plugins/smart-splits').setup(config)
+require('plugins/presentation').setup(config)
 
 -- Recommended settings for tabline
 config.show_new_tab_button_in_tab_bar = false

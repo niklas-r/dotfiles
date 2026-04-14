@@ -363,7 +363,9 @@ return {
           },
         },
       },
-      extensions = {},
+      extensions = {
+        'presentation',
+      },
     }
   end,
 }
