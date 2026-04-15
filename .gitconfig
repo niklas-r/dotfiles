@@ -38,3 +38,5 @@
 	difftool = true
 [mergetool "codediff"]
 	cmd = nvim \"$MERGED\" -c \"CodeDiff merge \\\"$MERGED\\\"\"
+[init]
+	defaultBranch = main
