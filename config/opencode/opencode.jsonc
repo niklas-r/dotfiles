@@ -60,20 +60,6 @@
     },
     "plan": {
       "color": "secondary",
-      "tools": {
-        "edit": true,
-        "write": true,
-      },
-      "permission": {
-        "edit": {
-          "*": "deny",
-          ".opencode/*": "allow",
-        },
-        "write": {
-          "*": "deny",
-          ".opencode/*": "allow",
-        }
-      },
     },
   },
   "model": "github-copilot/gpt-5.4",
