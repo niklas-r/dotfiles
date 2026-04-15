@@ -1,6 +1,6 @@
 ## Load GitNexus context
 
-You **MUST** run this at the start of every new session.
+If your current working directory contains ~/Code; You **MUST** run this at the start of every new session.
 
 ```sh
 [ -d .gitnexus ] && echo "gitnexus is used" || echo "gitnexus is NOT used"
