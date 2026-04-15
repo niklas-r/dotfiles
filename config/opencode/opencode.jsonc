@@ -485,6 +485,7 @@
     },
   },
   "plugin": [
-    "opencode-anthropic-auth"
+    "opencode-anthropic-auth",
+    "superpowers@git+https://github.com/obra/superpowers.git",
   ],
 }
