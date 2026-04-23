@@ -133,7 +133,7 @@ au('LspAttach', {
         group = aug.Lsp,
         callback = function(event2)
           vim.lsp.buf.clear_references()
-          vim.api.nvim_clear_autocmds { group = 'lsp-highlight', buffer = event2.buf }
+          pcall(vim.api.nvim_clear_autocmds, { group = 'lsp-highlight', buffer = event2.buf })
         end,
       })
     end
