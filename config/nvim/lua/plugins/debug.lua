@@ -4,7 +4,6 @@ return {
     dependencies = {
       'williamboman/mason.nvim',
       'jay-babu/mason-nvim-dap.nvim',
-      'mxsdev/nvim-dap-vscode-js',
     },
     keys = function(_, keys)
       return {
