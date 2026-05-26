@@ -1,2 +1,0 @@
-argcomplete==3.6.3
-codegraphcontext==0.2.5
