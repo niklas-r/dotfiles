@@ -1,8 +1,14 @@
-[pre-start]
+[[pre-start]]
 opencode-link = "ln -sf {{ primary_worktree_path }}/.opencode ."
+
+[[pre-start]]
 install = "pnpm install"
+
+[[pre-start]]
 env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
-gitnexus-analyze="gitnexus analyze"
+
+[[pre-start]]
+gitnexus-analyze = "gitnexus analyze"
 
 [post-start]
 copy = "wt step copy-ignored"
