@@ -1,71 +1,103 @@
 #!/usr/bin/env zsh
 set -euo pipefail
 
+log() {
+    local level="${1:-info}"
+    if [[ $# -gt 1 ]]; then
+        shift
+    fi
+    local emoji=""
+    local label="DOTFILES"
+    case "$level" in
+        info)
+            emoji="🦄"
+            level="INFO"
+            ;;
+        success)
+            emoji="✅"
+            level="SUCCESS"
+            ;;
+        warn)
+            emoji="⚠️"
+            level="WARN"
+            ;;
+        error)
+            emoji="❌"
+            level="ERROR"
+            ;;
+        *)
+            emoji="🔔"
+            level="${(U)level}"
+            ;;
+    esac
+    echo "$emoji [$label $level] $*"
+}
+
 DOTFILES_DIR="$HOME/dotfiles"
 DRY_RUN=false
 FORCE=false
 
 # Parse arguments
 for arg in "$@"; do
-  case "$arg" in
-    --dry-run)
-      DRY_RUN=true
-      shift
-      ;;
-    --force)
-      FORCE=true
-      shift
-      ;;
-    *)
-      echo "Unknown option: $arg"
-      exit 1
-      ;;
-  esac
+    case "$arg" in
+        --dry-run)
+            DRY_RUN=true
+            shift
+            ;;
+        --force)
+            FORCE=true
+            shift
+            ;;
+        *)
+            echo "Unknown option: $arg"
+            exit 1
+            ;;
+    esac
 done
 
 function link() {
-  src="$1"
-  dest="$2"
+    src="$1"
+    dest="$2"
 
-  # If the destination already exists (regular file/dir or symlink),
-  # decide whether to skip or overwrite based on the --force flag.
-  if [ -e "$dest" ] || [ -L "$dest" ]; then
-    if [ -L "$dest" ]; then
-      current_target="$(readlink "$dest")"
-      if [ "$current_target" = "$src" ]; then
-        location_info="already points to expected source ($src)"
-      else
-        location_info="currently points elsewhere ($current_target)"
-      fi
-    else
-      location_info="exists and is not a symlink"
+    # If the destination already exists (regular file/dir or symlink),
+    # decide whether to skip or overwrite based on the --force flag.
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        if [ -L "$dest" ]; then
+            current_target="$(readlink "$dest")"
+            if [ "$current_target" = "$src" ]; then
+                location_info="already points to expected source ($src)"
+            else
+                location_info="currently points elsewhere ($current_target)"
+            fi
+        else
+            location_info="exists and is not a symlink"
+        fi
+
+        if [ "$FORCE" = true ]; then
+            if [ "$DRY_RUN" = true ]; then
+                echo "[DRY RUN] Would overwrite ($location_info): $src → $dest"
+            else
+                mkdir -p "$(dirname "$dest")"
+                rm -rf "$dest"
+                ln -sf "$src" "$dest"
+                echo "Overwrote ($location_info): $src → $dest"
+            fi
+        else
+            echo "Skipped ($location_info), use --force to overwrite: $dest"
+        fi
+        return
     fi
 
-    if [ "$FORCE" = true ]; then
-      if [ "$DRY_RUN" = true ]; then
-        echo "[DRY RUN] Would overwrite ($location_info): $src → $dest"
-      else
+    if [ "$DRY_RUN" = true ]; then
+        echo "[DRY RUN] Would link: $src → $dest"
+    else
         mkdir -p "$(dirname "$dest")"
-        rm -rf "$dest"
         ln -sf "$src" "$dest"
-        echo "Overwrote ($location_info): $src → $dest"
-      fi
-    else
-      echo "Skipped ($location_info), use --force to overwrite: $dest"
+        echo "Linked: $src → $dest"
     fi
-    return
-  fi
-
-  if [ "$DRY_RUN" = true ]; then
-    echo "[DRY RUN] Would link: $src → $dest"
-  else
-    mkdir -p "$(dirname "$dest")"
-    ln -sf "$src" "$dest"
-    echo "Linked: $src → $dest"
-  fi
 }
 
-echo "Symlinking dotfiles..."
+log "Symlinking dotfiles..."
 export XDG_CONFIG_HOME="$HOME/.config"
 
 link "$DOTFILES_DIR/.gitconfig" "$HOME/.gitconfig"
@@ -82,10 +114,10 @@ link "$DOTFILES_DIR/config/mcphub" "$XDG_CONFIG_HOME/mcphub"
 link "$DOTFILES_DIR/config/worktrunk" "$XDG_CONFIG_HOME/worktrunk"
 link "$DOTFILES_DIR/config/agents" "$HOME/.agents"
 
-echo "Done symlinking!"
+log success "Done symlinking!"
 
 
-echo "Initialize ZSH environment..."
+log "Initialize ZSH environment..."
 
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
@@ -100,50 +132,46 @@ link "$DOTFILES_DIR/config/zsh" $ZDOTDIR
 
 setopt EXTENDED_GLOB
 for rcfile in "${ZDOTDIR:-$HOME}"/.zprezto/runcoms/^README.md(.N); do
-  link "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+    link "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
-echo "Done initializing ZSH environment!"
+log success "Done initializing ZSH environment!"
 
-echo "Miscellaneous configurations..."
+log "Miscellaneous configurations..."
 
 # TODO: Integrate with dry run
 defaults write org.hammerspoon.Hammerspoon MJConfigFile "~/.config/hammerspoon/init.lua"
 
-echo "Done with miscellaneous configurations!"
+log success "Done with miscellaneous configurations!"
 
 # TODO: Copy secret-vars
 
-echo "🔍 Checking for Homebrew..."
+log "Checking for Homebrew..."
 
 if command -v brew >/dev/null 2>&1; then
-  echo "✅ Homebrew is already installed."
+    log success "Homebrew is already installed."
 else
-  echo "🍺 Installing Homebrew..."
+    log "Installing Homebrew..."
 
-  NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  echo "✅ Homebrew installation complete."
+    log success "Homebrew installation complete."
 fi
 
-echo "🍻 Homebrew is ready!"
+log success "Homebrew is ready!"
 
-echo "Installing Homebrew packages..."
+log "Installing Homebrew packages..."
 
 xargs brew install < Brewfile-formulae.txt
 xargs brew install --cask < Brewfile-casks.txt
 
-echo "Done installing Homebrew packages!"
+log success "Done installing Homebrew packages!"
 
-echo "Install miscellaneous packages..."
-
-echo "Install pipx and packages..."
+log "Install pipx and packages..."
 
 pip3 install pipx
 pipx install -r requirements-pipx.txt
 
-echo "Done installing pipx and packages!"
+log success "Done installing pipx and packages!"
 
-echo "Done installing miscellaneous packages!"
-
-echo "Done with installation!"
+log success "Done with installation!"
