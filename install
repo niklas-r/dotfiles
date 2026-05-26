@@ -3,12 +3,17 @@ set -euo pipefail
 
 DOTFILES_DIR="$HOME/dotfiles"
 DRY_RUN=false
+FORCE=false
 
 # Parse arguments
 for arg in "$@"; do
   case "$arg" in
     --dry-run)
       DRY_RUN=true
+      shift
+      ;;
+    --force)
+      FORCE=true
       shift
       ;;
     *)
@@ -21,6 +26,35 @@ done
 function link() {
   src="$1"
   dest="$2"
+
+  # If the destination already exists (regular file/dir or symlink),
+  # decide whether to skip or overwrite based on the --force flag.
+  if [ -e "$dest" ] || [ -L "$dest" ]; then
+    if [ -L "$dest" ]; then
+      current_target="$(readlink "$dest")"
+      if [ "$current_target" = "$src" ]; then
+        location_info="already points to expected source ($src)"
+      else
+        location_info="currently points elsewhere ($current_target)"
+      fi
+    else
+      location_info="exists and is not a symlink"
+    fi
+
+    if [ "$FORCE" = true ]; then
+      if [ "$DRY_RUN" = true ]; then
+        echo "[DRY RUN] Would overwrite ($location_info): $src → $dest"
+      else
+        mkdir -p "$(dirname "$dest")"
+        rm -rf "$dest"
+        ln -sf "$src" "$dest"
+        echo "Overwrote ($location_info): $src → $dest"
+      fi
+    else
+      echo "Skipped ($location_info), use --force to overwrite: $dest"
+    fi
+    return
+  fi
 
   if [ "$DRY_RUN" = true ]; then
     echo "[DRY RUN] Would link: $src → $dest"
