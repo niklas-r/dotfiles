@@ -1,1 +1,1 @@
-/Users/niklaskahn/.config/zsh/.zprezto/runcoms/zshrc
+/Users/niklas/.config/zsh/.zprezto/runcoms/zshrc
