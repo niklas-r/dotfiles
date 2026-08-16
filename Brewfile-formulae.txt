@@ -35,6 +35,7 @@ lua
 mergiraf
 moor
 ncspot
+nvim
 python@3.14
 ripgrep
 sevenzip
@@ -43,6 +44,7 @@ syft
 tarkah/tickrs/tickrs
 tcl-tk
 tealdeer
+tree-sitter-cli
 tokei
 uv
 virtualenv
