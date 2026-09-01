@@ -6,28 +6,27 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/agent-browser.git",
       "skillPath": "skills/agent-browser/SKILL.md",
-      "skillFolderHash": "b6f762bf402cdfaf6a06514e9ce4142ce3e4fb4c",
+      "skillFolderHash": "82def67855a0d2aad7794207951820fa5422fdb0",
       "installedAt": "2026-02-11T12:04:22.947Z",
-      "updatedAt": "2026-04-09T13:00:09.560Z"
+      "updatedAt": "2026-08-29T19:00:32.207Z"
     },
     "skill-creator": {
       "source": "anthropics/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/anthropics/skills.git",
       "skillPath": "skills/skill-creator/SKILL.md",
-      "skillFolderHash": "98a510d1cfef9f82c3b1eec200229ca68725e613",
-      "pluginName": "example-skills",
+      "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
       "installedAt": "2026-02-11T12:04:22.971Z",
-      "updatedAt": "2026-04-09T13:12:43.613Z"
+      "updatedAt": "2026-08-29T19:00:35.568Z"
     },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
       "sourceUrl": "https://github.com/vercel-labs/skills.git",
       "skillPath": "skills/find-skills/SKILL.md",
-      "skillFolderHash": "3013fdeb8a11b10b1eb795ec3ae8bfca38f7c26d",
+      "skillFolderHash": "76a98a285cb0434f3d39e1a873823556330e398b",
       "installedAt": "2026-02-11T12:04:28.973Z",
-      "updatedAt": "2026-03-16T09:30:00.383Z"
+      "updatedAt": "2026-08-29T19:00:36.595Z"
     },
     "simplify": {
       "source": "brianlovin/claude-config",
@@ -52,9 +51,9 @@
       "sourceType": "github",
       "sourceUrl": "https://github.com/max-sixty/worktrunk.git",
       "skillPath": "skills/worktrunk/SKILL.md",
-      "skillFolderHash": "8bc19880205fb76fa0a80733231027effaf8b714",
+      "skillFolderHash": "85c0a2c58e134047e8b7d439f649dd47e0bc063d",
       "installedAt": "2026-03-16T08:14:23.272Z",
-      "updatedAt": "2026-04-09T13:00:13.705Z"
+      "updatedAt": "2026-08-29T19:00:39.612Z"
     }
   },
   "dismissed": {
