@@ -9,6 +9,7 @@ carapace
 clippy
 cloudflared
 cmatrix
+copilot-cli
 deno
 difftastic
 dotenv-linter
