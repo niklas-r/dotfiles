@@ -100,6 +100,7 @@ return {
         'jsonlint',
         'yamllint',
         'tree-sitter-cli', -- Required by nvim-treesitter main branch
+        'js-debug-adapter', -- vscode-js-debug, used by nvim-dap for Node.js
       })
 
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }

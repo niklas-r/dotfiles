@@ -39,7 +39,7 @@ return {
       }
     end,
     config = function()
-      -- local dap = require 'dap'
+      local dap = require 'dap'
 
       require('mason-nvim-dap').setup {
         -- Makes a best effort to setup the various debuggers with
@@ -54,10 +54,60 @@ return {
         -- online, please don't ask me how to install them :)
         ensure_installed = {
           -- Update this to ensure that you have the debuggers for the langs you want
-          'chrome-debug-adapter',
           'js-debug-adapter',
         },
       }
+
+      -- vscode-js-debug. Mason's `js-debug-adapter` bin runs the DAP server
+      -- (js-debug/src/dapDebugServer.js), which takes <port> [host] as arguments.
+      -- `${port}` is substituted by nvim-dap with a free port.
+      -- The host argument is required: without it the server binds to `::1` only,
+      -- and nvim-dap's connect to 127.0.0.1 is refused.
+      dap.adapters['pwa-node'] = {
+        type = 'server',
+        host = '127.0.0.1',
+        port = '${port}',
+        executable = {
+          command = 'js-debug-adapter',
+          args = { '${port}', '127.0.0.1' },
+        },
+      }
+
+      -- Attach to a Node process that you started yourself with `--inspect`.
+      local js_configurations = {
+        {
+          type = 'pwa-node',
+          request = 'attach',
+          name = 'Attach to port 9229',
+          address = 'localhost',
+          port = 9229,
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          skipFiles = { '<node_internals>/**', '**/node_modules/**' },
+          -- Re-attach when the process restarts (tsx watch, nodemon, ...)
+          restart = true,
+          -- Don't stay parked on line 1 when the process used `--inspect-brk`
+          continueOnAttach = true,
+        },
+        {
+          type = 'pwa-node',
+          request = 'attach',
+          name = 'Attach to port...',
+          address = 'localhost',
+          port = function()
+            return tonumber(vim.fn.input 'Inspector port: ')
+          end,
+          cwd = '${workspaceFolder}',
+          sourceMaps = true,
+          skipFiles = { '<node_internals>/**', '**/node_modules/**' },
+          restart = true,
+          continueOnAttach = true,
+        },
+      }
+
+      for _, language in ipairs { 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' } do
+        dap.configurations[language] = js_configurations
+      end
 
       -- Change breakpoint icons
       vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
