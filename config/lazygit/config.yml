@@ -1,10 +1,8 @@
 promptToReturnFromSubprocess: false
-
 git:
   paging:
     # colorArg: always
     pager: delta --paging=never
-
-  pagers:
-    - externalDiffCommand: difft --color=always
-
+  diffRenderers:
+    - command: difft --color=always
+      type: extDiff
