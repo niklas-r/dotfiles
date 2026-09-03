@@ -6,14 +6,14 @@ discord
 font-maple-mono-nf
 font-symbols-only-nerd-font
 hammerspoon
-handbrake
+handbrake-app
 itsycal
 jetbrains-toolbox
 karabiner-elements
 keycastr
 mitmproxy
 monitorcontrol
-neovide
+neovide-app
 obs
 orbstack
 postman

@@ -24,6 +24,7 @@ git
 git-absorb
 git-delta
 git-filter-repo
+go
 graphviz
 grype
 hashicorp/tap/terraform
@@ -55,3 +56,4 @@ worktrunk
 yazi
 yq
 zoxide
+zsh
