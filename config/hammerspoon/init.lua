@@ -26,6 +26,7 @@ local mappings = {
   { MEH_MODS, 'O', 'Obsidian' },
   { MEH_MODS, 'P', 'Postman' },
   { MEH_MODS, 'S', 'Signal' },
+  { HYPER_MODS, 'S', 'Slack' },
   { MEH_MODS, 'T', 'Wezterm' },
   { HYPER_MODS, 'T', 'Microsoft Teams' }, -- Sigh...
 }
