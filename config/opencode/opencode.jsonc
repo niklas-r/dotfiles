@@ -28,7 +28,7 @@
         "gitnexus",
         "mcp"
       ],
-      "enabled": true,
+      "enabled": false,
     },
     // Hacked work around thanks to: https://github.com/anomalyco/opencode/issues/988#issuecomment-4022520800
     "figma": {
