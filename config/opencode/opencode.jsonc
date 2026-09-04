@@ -63,13 +63,13 @@
       "color": "secondary",
     },
   },
-  "model": "github-copilot/gpt-5.4",
-  "small_model": "github-copilot/claude-haiku-4.5",
+  "model": "anthropic/claude-opus-5",
+  "small_model": "anthropic/claude-haiku-4-5",
   "agent": {
     "team-lead": {
       "description": "Primary orchestrator that breaks work down, delegates to specialists, and synthesizes the final plan or outcome",
       "mode": "primary",
-      "model": "github-copilot/gpt-5.4",
+      "model": "anthropic/claude-opus-5",
       "temperature": 0.1,
       "color": "warning",
       "prompt": "{file:./prompts/team-lead.md}",
@@ -112,7 +112,7 @@
     "product-owner": {
       "description": "Clarifies product intent, slices scope, and writes crisp acceptance criteria before implementation starts",
       "mode": "subagent",
-      "model": "github-copilot/claude-opus-4.6",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.2,
       "color": "warning",
       "prompt": "{file:./prompts/product-owner.md}",
@@ -131,7 +131,7 @@
     "researcher": {
       "description": "Researches docs, APIs, libraries, and real-world examples, then returns a recommendation with tradeoffs",
       "mode": "subagent",
-      "model": "github-copilot/claude-haiku-4.5",
+      "model": "anthropic/claude-haiku-4-5",
       "temperature": 0.1,
       "color": "info",
       "prompt": "{file:./prompts/researcher.md}",
@@ -150,7 +150,7 @@
     "frontend-engineer": {
       "description": "Implements UI, client-side state, accessibility, and frontend tests while preserving the product's visual language",
       "mode": "subagent",
-      "model": "github-copilot/claude-sonnet-4.6",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.2,
       "color": "primary",
       "prompt": "{file:./prompts/frontend-engineer.md}",
@@ -192,7 +192,7 @@
     "backend-engineer": {
       "description": "Implements APIs, data flows, integrations, and server-side logic with a focus on correctness and operational safety",
       "mode": "subagent",
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.1,
       "color": "secondary",
       "prompt": "{file:./prompts/backend-engineer.md}",
@@ -233,7 +233,7 @@
     "qa-engineer": {
       "description": "Designs risk-based test coverage, verifies changes, and coordinates browser and regression testing specialists",
       "mode": "subagent",
-      "model": "github-copilot/gpt-5.4",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.1,
       "color": "success",
       "prompt": "{file:./prompts/qa-engineer.md}",
@@ -263,7 +263,7 @@
     "platform-engineer": {
       "description": "Owns CI/CD, tooling, local developer experience, and deployment-facing configuration changes",
       "mode": "subagent",
-      "model": "github-copilot/gpt-5.3-codex",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.1,
       "color": "secondary",
       "prompt": "{file:./prompts/platform-engineer.md}",
@@ -303,7 +303,7 @@
     "security-reviewer": {
       "description": "Audits authentication, authorization, secrets, input validation, and attack surfaces without changing code",
       "mode": "subagent",
-      "model": "github-copilot/claude-opus-4.5",
+      "model": "anthropic/claude-opus-5",
       "temperature": 0.1,
       "color": "error",
       "prompt": "{file:./prompts/security-reviewer.md}",
@@ -320,7 +320,7 @@
     "documentation-writer": {
       "description": "Turns implemented behavior into clean docs, ADRs, onboarding notes, and release-facing summaries",
       "mode": "subagent",
-      "model": "github-copilot/claude-haiku-4.5",
+      "model": "anthropic/claude-haiku-4-5",
       "temperature": 0.2,
       "color": "info",
       "prompt": "{file:./prompts/documentation-writer.md}",
@@ -338,7 +338,7 @@
     "code-scanner": {
       "description": "Use this agent when you need to analyze and understand codebases, identify bugs, or generate documentation",
       "mode": "subagent",
-      "model": "github-copilot/claude-sonnet-4.6",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.1,
       "tools": {
         "*": false,
@@ -377,7 +377,7 @@
     "ux-designer": {
       "description": "Designs user experiences, ensures WCAG accessibility compliance, and maintains design system consistency",
       "mode": "subagent",
-      "model": "github-copilot/claude-opus-4.6",
+      "model": "anthropic/claude-sonnet-5",
       "temperature": 0.2,
       "color": "accent",
       "prompt": "{file:./prompts/ux-designer.md}",
