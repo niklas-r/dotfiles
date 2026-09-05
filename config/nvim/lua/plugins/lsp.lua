@@ -39,6 +39,15 @@ return {
           on_attach = function(client, bufnr)
             require('twoslash-queries').attach(client, bufnr)
           end,
+          handlers = {
+            -- vtsls vendors VS Code's source, so its version picker says "Use VS Code's Version"
+            ['window/showMessageRequest'] = function(err, result, ctx, cfg)
+              for _, action in ipairs(result.actions or {}) do
+                action.title = action.title:gsub("Use VS Code's Version", "Use vtsls' bundled version")
+              end
+              return vim.lsp.handlers['window/showMessageRequest'](err, result, ctx, cfg)
+            end,
+          },
         },
         eslint = {}, -- Using ESLint LSP for code actions
         tailwindcss = {
@@ -112,6 +121,36 @@ return {
       for server, config in pairs(servers) do
         vim.lsp.config(server, config)
       end
+
+      -- `:TSVersion`         report the TypeScript version tsserver actually loaded
+      -- `:TSVersion select`  vtsls' own picker: bundled vs. the workspace node_modules copy
+      vim.api.nvim_create_user_command('TSVersion', function(cmd)
+        local client = vim.lsp.get_clients({ bufnr = 0, name = 'vtsls' })[1]
+        if not client then
+          return vim.notify('vtsls is not attached to this buffer', vim.log.levels.WARN)
+        end
+
+        if cmd.args == 'select' then
+          -- Answers with a window/showMessageRequest; tsserver restarts on selection.
+          return client:exec_cmd({ command = 'typescript.selectTypeScriptVersion' }, { bufnr = 0 })
+        end
+
+        client:request('workspace/executeCommand', {
+          command = 'typescript.tsserverRequest',
+          arguments = { 'status', {} },
+        }, function(err, res)
+          if err or not (res and res.body) then
+            return vim.notify('Could not query tsserver status', vim.log.levels.ERROR)
+          end
+          vim.notify('TypeScript ' .. res.body.version)
+        end)
+      end, {
+        nargs = '?',
+        complete = function()
+          return { 'select' }
+        end,
+        desc = 'Show or switch the TypeScript version used by vtsls',
+      })
     end,
   },
 }
