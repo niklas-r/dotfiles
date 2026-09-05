@@ -13,7 +13,6 @@
   "coerce.nvim": { "branch": "main", "commit": "68d931234d02f2230a627fea46812d3c18d24e6e" },
   "colorsaver.nvim": { "branch": "main", "commit": "3c4f0f6dcfdb4a347db9d7d8099779040c7e8608" },
   "conform.nvim": { "branch": "master", "commit": "016802de402556da54c36bd7359b441266b01cdd" },
-  "consolelog.nvim": { "branch": "main", "commit": "5e0d6d2c9f9e799a1578a0ce6e9b347a08c2e06c" },
   "coop.nvim": { "branch": "main", "commit": "b156e541316aee14be4ae64c93ed8bddb6d03bc1" },
   "copilot-lualine": { "branch": "main", "commit": "222e90bd8dcdf16ca1efc4e784416afb5f011c31" },
   "copilot.lua": { "branch": "master", "commit": "7e6723aabea044519462958ffcea68d7985c5ed0" },
