@@ -138,7 +138,7 @@ return {
                 bg = dColor,
               }
             end,
-            separator = { left = '', right = '' },
+            separator = { left = '', right = '' },
             fmt = util.trunc(trunc_widths.L, 8, trunc_widths.M, false),
           },
           {
