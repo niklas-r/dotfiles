@@ -20,6 +20,8 @@ return {
   opts = function()
     local codeCompanionStatus = require 'plugins.lualine.code-companion-status'
     local util = require 'plugins.lualine.utils'
+    local snacks = require 'snacks'
+
     local trunc_widths = {
       XXS = 50,
       XS = 80,
@@ -28,20 +30,17 @@ return {
       L = 140,
     }
 
-    vim.api.nvim_create_autocmd('User', {
-      pattern = 'VeryLazy',
-      callback = function()
-        Snacks.toggle({
-          name = 'lualine lsp names',
-          get = function()
-            return vim.g.custom_lualine_show_lsp_names
-          end,
-          set = function(state)
-            vim.g.custom_lualine_show_lsp_names = state
-          end,
-        }):map '<leader>tN'
-      end,
-    })
+    snacks
+      .toggle({
+        name = 'lualine lsp names',
+        get = function()
+          return vim.g.custom_lualine_show_lsp_names
+        end,
+        set = function(state)
+          vim.g.custom_lualine_show_lsp_names = state
+        end,
+      })
+      :map '<leader>tN'
 
     local dmode_enabled = false
     vim.api.nvim_create_autocmd('User', {
@@ -130,12 +129,12 @@ return {
               return dmode_enabled
             end,
             color = function()
-              local dColor = Snacks.util.color('dCursor', 'bg')
+              local dColor = snacks.util.color('dCursor', 'bg')
               if dColor == nil then
                 return
               end
               return {
-                fg = Snacks.util.blend(dColor, '#000000', 0.3),
+                fg = snacks.util.blend(dColor, '#000000', 0.3),
                 bg = dColor,
               }
             end,
@@ -146,7 +145,7 @@ return {
             require('lazy.status').updates,
             cond = require('lazy.status').has_updates,
             color = function()
-              return { fg = Snacks.util.color 'Special' }
+              return { fg = snacks.util.color 'Special' }
             end,
             fmt = util.trunc(0, 0, trunc_widths.L, false),
           },
