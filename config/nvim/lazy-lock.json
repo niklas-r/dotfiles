@@ -77,6 +77,7 @@
   "treesitter-modules.nvim": { "branch": "main", "commit": "290eec96bfc43ed28264661dd30e894a60c4b99c" },
   "trouble.nvim": { "branch": "main", "commit": "bd67efe408d4816e25e8491cc5ad4088e708a69a" },
   "ts-error-translator.nvim": { "branch": "main", "commit": "558abff11b9e8f4cefc0de09df780c56841c7a4b" },
+  "ts-expand-hover.nvim": { "branch": "main", "commit": "f83350d29e7163ac2dc017900051565b41addd1f" },
   "tsc.nvim": { "branch": "main", "commit": "e083bcf1e54bc3af7df92b33235efb334e8c782c" },
   "twoslash-queries.nvim": { "branch": "main", "commit": "1262c20cad5abd6e89995dc4bc0eaab0e2e4e0b9" },
   "ultimate-autopair.nvim": { "branch": "v0.6", "commit": "6b58234de921437836efe27714b2026ed2ee235a" },
