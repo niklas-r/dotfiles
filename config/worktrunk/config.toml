@@ -2,26 +2,26 @@
 opencode-link = "ln -sf {{ primary_worktree_path }}/.opencode ."
 
 [[pre-start]]
-install = "pnpm install"
+install = "npm install"
 
 [[pre-start]]
 env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
 
-[[pre-start]]
-gitnexus-analyze = "gitnexus analyze"
+# [[pre-start]]
+# gitnexus-analyze = "gitnexus analyze"
 
 [post-start]
 copy = "wt step copy-ignored"
 # server = "pnpm start -- --port {{ branch | hash_port }}"
 
-[pre-remove]
-gitnexus-clean = "gitnexus clean --force"
+# [pre-remove]
+# gitnexus-clean = "gitnexus clean --force"
 
-[post-remove]
+# [post-remove]
 # kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
 
 [commit.generation]
-command = "opencode run -m github-copilot/claude-haiku-4.5 --variant fast"
+command = "opencode run -m anthropic/claude-haiku-4.5 --variant fast"
 
 [list]
 summary = true
