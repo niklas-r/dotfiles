@@ -109,9 +109,27 @@ return {
         dap.configurations[language] = js_configurations
       end
 
-      -- Change breakpoint icons
-      vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
-      vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+      -- Change breakpoint icons.
+      -- `:colorscheme` runs `hi clear`, which wipes these user-defined groups, so
+      -- they have to be re-applied. Two things conspire here:
+      --   1. nvim-dap is loaded eagerly during startup (easy-dotnet.nvim `require`s
+      --      "dap"), so this config runs *before* the colorscheme is picked.
+      --   2. colorsaver applies the saved colorscheme from a VimEnter autocmd, and
+      --      autocommands triggered from inside an autocommand don't fire unless the
+      --      outer one is `nested` -- so no ColorScheme event is emitted for it.
+      -- Hence: apply now, re-apply on ColorScheme (manual switches), and re-apply
+      -- once on the next event-loop tick to cover the silent startup switch.
+      local function set_dap_highlights()
+        vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
+        vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
+      end
+      vim.api.nvim_create_autocmd('ColorScheme', {
+        group = vim.api.nvim_create_augroup('dap-highlights', { clear = true }),
+        callback = set_dap_highlights,
+      })
+      set_dap_highlights()
+      vim.schedule(set_dap_highlights)
+
       local breakpoint_icons = vim.g.have_nerd_font
           and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
         or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
@@ -132,19 +150,15 @@ return {
           function()
             require('debugmaster').mode.toggle()
           end,
-          { desc = 'Debug mode', mode = { 'n', 'v' }, nowait = true },
+          desc = 'Debug mode',
+          mode = { 'n', 'v' },
+          nowait = true,
         },
         unpack(keys),
       }
     end,
     config = function()
       local dm = require 'debugmaster'
-      -- make sure you don't have any other keymaps that starts with "<leader>d" to avoid delay
-      -- Alternative keybindings to "<leader>d" could be: "<leader>m", "<leader>;"
-      vim.keymap.set({ 'n', 'v' }, '<leader>D', dm.mode.toggle, { nowait = true })
-      -- If you want to disable debug mode in addition to leader+D using the Escape key:
-      -- vim.keymap.set("n", "<Esc>", dm.mode.disable)
-      -- This might be unwanted if you already use Esc for ":noh"
       vim.keymap.set('t', '<C-\\>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
       dm.plugins.osv_integration.enabled = true -- needed if you want to debug neovim lua code
