@@ -39,3 +39,5 @@ Temporary Items
 # AI-assisted coding
 .sisyphus/
 .opencode/
+
+**/.claude/settings.local.json
