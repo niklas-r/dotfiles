@@ -1,27 +1,31 @@
-[[pre-start]]
-opencode-link = "ln -sf {{ primary_worktree_path }}/.opencode ."
+# A string is a single command:
+# pre-start = "npm install"
+#
+# A table is multiple command that run concurrently:
+# ```
+# [post-start]
+# server = "npm run dev"
+# watch = "npm run watch"
+# ```
+#
+# A pipeline is a sequence of `[[hook]]` blocks run in order. Each block is one step; multiple keys within a block run concurrently. A failing step aborts the rest of the pipeline:
+# ```
+# [[post-start]]
+# install = "npm ci"
+#
+# [[post-start]]
+# build = "npm run build"
+# server = "npm run dev"
+# ```
+
+# pre-start: Runs once when a new worktree is created, blocking `post-start`/`--execute` until complete: recommended for dependency install, env file generation
+# post-start: Runs once when a new worktree is created, in the background: recommended for dev servers, long builds, file watchers, copying caches
 
 [[pre-start]]
-install = "npm install"
-
-[[pre-start]]
-env = "echo 'PORT={{ branch | hash_port }}' > .env.local"
-
-# [[pre-start]]
-# gitnexus-analyze = "gitnexus analyze"
-
-[post-start]
 copy = "wt step copy-ignored"
-# server = "pnpm start -- --port {{ branch | hash_port }}"
-
-# [pre-remove]
-# gitnexus-clean = "gitnexus clean --force"
-
-# [post-remove]
-# kill-server = "lsof -ti :{{ branch | hash_port }} -sTCP:LISTEN | xargs kill 2>/dev/null || true"
 
 [commit.generation]
-command = "opencode run -m anthropic/claude-haiku-4.5 --variant fast"
+command = "MAX_THINKING_TOKENS=0 claude -p --no-session-persistence --model=haiku --tools='' --safe-mode --setting-sources='user' --system-prompt=''"
 
 [list]
 summary = true
