@@ -63,8 +63,9 @@ vim.keymap.set('x', '<leader>p', [["_dP]], { desc = 'Paste over selection' })
 vim.keymap.set({ 'n', 'v' }, '<leader>d', '"_d', { desc = 'Black hole delete' })
 
 -- Don't start a macro by mistake ever again...
-vim.keymap.set('n', 'q', '<Nop>')
-vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
+-- `Q` will become multi-cursor in Neovim 0.13, so let's get used to `q` again
+-- vim.keymap.set('n', 'q', '<Nop>')
+-- vim.keymap.set('n', 'Q', 'q', { desc = 'Record macro' })
 
 -- Key binds which will get you cancelled
 vim.keymap.set('n', '<C-c>', 'ciw')
