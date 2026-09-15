@@ -1,0 +1,31 @@
+onboarding = false
+
+[theme]
+name = "rose-pine"
+auto_switch = false
+
+[ui.toast]
+delivery = "system"
+
+[keys]
+prefix = "ctrl+s"
+split_horizontal = "prefix+s"
+split_vertical = "prefix+v"
+settings = "prefix+shift+s"
+navigate_workspace_down = "j"
+navigate_workspace_up = "k"
+
+
+[[keys.command]]
+key = "prefix+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "nvim sidebar"
+
+[[keys.command]]
+key = "prefix+o"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "open file from agent output"
+
+

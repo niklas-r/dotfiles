@@ -28,6 +28,7 @@ go
 graphviz
 grype
 hashicorp/tap/terraform
+herdr
 imagemagick
 imagesnap
 jq

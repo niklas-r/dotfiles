@@ -109,6 +109,7 @@ link "$DOTFILES_DIR/config/btop" "$XDG_CONFIG_HOME/btop"
 link "$DOTFILES_DIR/config/eza" "$XDG_CONFIG_HOME/eza"
 link "$DOTFILES_DIR/config/gh-dash" "$XDG_CONFIG_HOME/gh-dash"
 link "$DOTFILES_DIR/config/hammerspoon" "$XDG_CONFIG_HOME/hammerspoon"
+link "$DOTFILES_DIR/config/herdr" "$XDG_CONFIG_HOME/herdr"
 link "$DOTFILES_DIR/config/lazygit" "$XDG_CONFIG_HOME/lazygit"
 link "$DOTFILES_DIR/config/markdownlint" "$XDG_CONFIG_HOME/markdownlint"
 link "$DOTFILES_DIR/config/mcphub" "$XDG_CONFIG_HOME/mcphub"
@@ -173,6 +174,13 @@ xargs brew install < Brewfile-formulae.txt
 xargs brew install --cask < Brewfile-casks.txt
 
 log success "Done installing Homebrew packages!"
+
+
+log "Starting Homebrew services..."
+
+brew services start herdr
+
+log success "Done starting Homebrew services!"
 
 log "Install pipx and packages..."
 
