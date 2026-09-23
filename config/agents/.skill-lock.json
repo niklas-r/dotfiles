@@ -54,6 +54,33 @@
       "skillFolderHash": "82def67855a0d2aad7794207951820fa5422fdb0",
       "installedAt": "2026-09-07T13:08:01.996Z",
       "updatedAt": "2026-09-07T13:08:01.996Z"
+    },
+    "herdr": {
+      "source": "herdrdev/herdr",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/herdrdev/herdr.git",
+      "skillPath": "skills/herdr/SKILL.md",
+      "skillFolderHash": "6985a5e8418d43171c45c2a9e04b02de7308e1d8",
+      "installedAt": "2026-09-17T14:44:56.653Z",
+      "updatedAt": "2026-09-17T14:44:56.653Z"
+    },
+    "jscpd": {
+      "source": "kucherenko/jscpd",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/kucherenko/jscpd.git",
+      "skillPath": "skills/jscpd/SKILL.md",
+      "skillFolderHash": "685662879f14baba8d335acf954462c4c918201e",
+      "installedAt": "2026-09-17T16:17:22.979Z",
+      "updatedAt": "2026-09-17T16:17:22.979Z"
+    },
+    "dry-refactoring": {
+      "source": "kucherenko/jscpd",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/kucherenko/jscpd.git",
+      "skillPath": "skills/dry-refactoring/SKILL.md",
+      "skillFolderHash": "2f61f3b9fed215cfca84183a0dbd5cb9ad72630e",
+      "installedAt": "2026-09-17T16:17:35.027Z",
+      "updatedAt": "2026-09-17T16:17:35.027Z"
     }
   },
   "dismissed": {
@@ -61,14 +88,13 @@
   },
   "lastSelectedAgents": [
     "amp",
-    "antigravity",
-    "antigravity-cli",
     "cline",
     "codex",
     "cursor",
-    "deepagents",
+    "droid",
     "gemini-cli",
     "github-copilot",
+    "kilo",
     "kimi-code-cli",
     "opencode",
     "warp",
