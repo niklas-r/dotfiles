@@ -34,9 +34,9 @@ return {
       'CodeCompanionCmd',
     },
     init = function()
-      vim.keymap.set({ 'n', 'v' }, '<leader>aa', '<cmd>CodeCompanionActions<cr>', { desc = '[A]ctions', noremap = true, silent = true })
-      vim.keymap.set({ 'n', 'v' }, '<leader>at', '<cmd>CodeCompanionChat Toggle<cr>', { desc = '[T]oggle chat', noremap = true, silent = true })
-      vim.keymap.set('v', '<leader>ac', '<cmd>CodeCompanionChat Add<cr>', { desc = 'Add selection to [C]hat', noremap = true, silent = true })
+      vim.keymap.set({ 'n', 'v' }, '<leader>aa', '<cmd>CodeCompanionActions<cr>', { desc = 'CodeCompanion: [A]ctions', noremap = true, silent = true })
+      vim.keymap.set({ 'n', 'v' }, '<leader>at', '<cmd>CodeCompanionChat Toggle<cr>', { desc = 'CodeCompanion: [T]oggle chat', noremap = true, silent = true })
+      vim.keymap.set('v', '<leader>aC', '<cmd>CodeCompanionChat Add<cr>', { desc = 'CodeCompanion: Add selection to [C]hat', noremap = true, silent = true })
 
       -- Expand 'cc' into 'CodeCompanion' in the command line
       vim.cmd [[cab cc CodeCompanion]]
