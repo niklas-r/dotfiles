@@ -81,6 +81,7 @@ return {
             sessionToken = gh_token,
           },
         },
+        gitlab_ci_ls = {},
         bashls = {},
         marksman = {},
         lua_ls = {
