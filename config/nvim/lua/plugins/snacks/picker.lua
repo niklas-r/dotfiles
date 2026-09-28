@@ -40,6 +40,7 @@ return {
     { "<leader>sw", function() Snacks.picker.grep_word() end, desc = "current [W]ord (or selection)", mode = { "n", "x" } },
     -- search
     { "<leader>sd", function() Snacks.picker.diagnostics() end, desc = "[D]iagnostics" },
+    { "<leader>sm", function() require("plugins.snacks.utils.semgrep").open() end, desc = "Se[m]grep findings" },
     { "<leader>sh", function() Snacks.picker.help() end, desc = "[H]elp" },
     { "<leader>sk", function() Snacks.picker.keymaps() end, desc = "[K]eymaps" },
     { "<leader>sr", function() Snacks.picker.resume() end, desc = "[R]esume" },
@@ -74,6 +75,10 @@ return {
     -- stylua: ignore end
   },
   opts = {
-    picker = {},
+    picker = {
+      sources = {
+        semgrep = require('plugins.snacks.utils.semgrep').source,
+      },
+    },
   },
 }
