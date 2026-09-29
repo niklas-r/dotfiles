@@ -15,6 +15,14 @@ local function walk_in_codediff(current_commit)
   end)
 end
 
+-- codediff and gitsigns both map ]g/[g buffer-locally on working-tree files, and
+-- codediff stands down for good once gitsigns overwrites it, so gitsigns' ]g/[g
+-- must defer to codediff inside a diff session.
+local function in_codediff()
+  local lifecycle = package.loaded['codediff.ui.lifecycle']
+  return lifecycle ~= nil and lifecycle.get_session(vim.api.nvim_get_current_tabpage()) ~= nil
+end
+
 local function git_pickaxe(opts)
   opts = opts or {}
   local is_global = opts.global or false
@@ -121,7 +129,9 @@ return {
 
         -- Navigation
         map('n', ']g', function()
-          if vim.wo.diff then
+          if in_codediff() then
+            require('codediff').next_hunk()
+          elseif vim.wo.diff then
             vim.cmd.normal { ']c', bang = true }
           else
             gitsigns.nav_hunk 'next'
@@ -129,7 +139,9 @@ return {
         end, { desc = 'Jump to next [G]it change' })
 
         map('n', '[g', function()
-          if vim.wo.diff then
+          if in_codediff() then
+            require('codediff').prev_hunk()
+          elseif vim.wo.diff then
             vim.cmd.normal { '[c', bang = true }
           else
             gitsigns.nav_hunk 'prev'
