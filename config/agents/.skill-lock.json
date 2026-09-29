@@ -81,6 +81,150 @@
       "skillFolderHash": "2f61f3b9fed215cfca84183a0dbd5cb9ad72630e",
       "installedAt": "2026-09-17T16:17:35.027Z",
       "updatedAt": "2026-09-17T16:17:35.027Z"
+    },
+    "memory-capture": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-capture/SKILL.md",
+      "skillFolderHash": "d7f0382cebb649a4e7a4bd073c45df99cd9707e7",
+      "installedAt": "2026-09-24T20:48:54.232Z",
+      "updatedAt": "2026-09-24T20:48:54.232Z"
+    },
+    "memory-ci-capture": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-ci-capture/SKILL.md",
+      "skillFolderHash": "bd707013314644acaf0752c6d5fc281d4f2511ee",
+      "installedAt": "2026-09-24T20:48:54.234Z",
+      "updatedAt": "2026-09-24T20:48:54.234Z"
+    },
+    "memory-continue": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-continue/SKILL.md",
+      "skillFolderHash": "a83d46a66ec01b03e9f14937e5d527c859100f2b",
+      "installedAt": "2026-09-24T20:48:54.235Z",
+      "updatedAt": "2026-09-24T20:48:54.235Z"
+    },
+    "memory-curate": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-curate/SKILL.md",
+      "skillFolderHash": "0b5a69943b333a8d454ca1cfc4516dfdffe33978",
+      "installedAt": "2026-09-24T20:48:54.236Z",
+      "updatedAt": "2026-09-24T20:48:54.236Z"
+    },
+    "memory-defrag": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-defrag/SKILL.md",
+      "skillFolderHash": "029c27cd215e8feb2e3ef093c35cb31262a340ba",
+      "installedAt": "2026-09-24T20:48:54.236Z",
+      "updatedAt": "2026-09-24T20:48:54.236Z"
+    },
+    "memory-ingest": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-ingest/SKILL.md",
+      "skillFolderHash": "f549204538f0c5024eee06a165920151f7e493ab",
+      "installedAt": "2026-09-24T20:48:54.237Z",
+      "updatedAt": "2026-09-24T20:48:54.237Z"
+    },
+    "memory-lifecycle": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-lifecycle/SKILL.md",
+      "skillFolderHash": "3e3456bad0979df2056eca40d00f49d91f22d9e9",
+      "installedAt": "2026-09-24T20:48:54.237Z",
+      "updatedAt": "2026-09-24T20:48:54.237Z"
+    },
+    "memory-literary-analysis": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-literary-analysis/SKILL.md",
+      "skillFolderHash": "30d15414f773174aa177daca164bbf93d59a28a0",
+      "installedAt": "2026-09-24T20:48:54.238Z",
+      "updatedAt": "2026-09-24T20:48:54.238Z"
+    },
+    "memory-metadata-search": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-metadata-search/SKILL.md",
+      "skillFolderHash": "2b8831a2ee811f174e959f8bf13751aaff8a7211",
+      "installedAt": "2026-09-24T20:48:54.239Z",
+      "updatedAt": "2026-09-24T20:48:54.239Z"
+    },
+    "memory-notes": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-notes/SKILL.md",
+      "skillFolderHash": "52808488c128bba879d7cc2affbf53f150d97491",
+      "installedAt": "2026-09-24T20:48:54.239Z",
+      "updatedAt": "2026-09-24T20:48:54.239Z"
+    },
+    "memory-onboarding": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-onboarding/SKILL.md",
+      "skillFolderHash": "0ac4a2fde9e1e4fc809aed39733072d39d6c2aa3",
+      "installedAt": "2026-09-24T20:48:54.240Z",
+      "updatedAt": "2026-09-24T20:48:54.240Z"
+    },
+    "memory-reflect": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-reflect/SKILL.md",
+      "skillFolderHash": "8aa83d50c0113e1d86928e19ec8a0bf3d272b355",
+      "installedAt": "2026-09-24T20:48:54.240Z",
+      "updatedAt": "2026-09-24T20:48:54.240Z"
+    },
+    "memory-research": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-research/SKILL.md",
+      "skillFolderHash": "651c6a5ed7fe7a6a790b3179d7fe47baa7565259",
+      "installedAt": "2026-09-24T20:48:54.241Z",
+      "updatedAt": "2026-09-24T20:48:54.241Z"
+    },
+    "memory-schema": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-schema/SKILL.md",
+      "skillFolderHash": "d0ade1643617171b4b15a86b3c16a917f98d42e3",
+      "installedAt": "2026-09-24T20:48:54.241Z",
+      "updatedAt": "2026-09-24T20:48:54.241Z"
+    },
+    "memory-tasks": {
+      "source": "basicmachines-co/basic-memory",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/basicmachines-co/basic-memory.git",
+      "skillPath": "skills/memory-tasks/SKILL.md",
+      "skillFolderHash": "b3ec5711dc1f9632af02eec5911fc9fcbc284d38",
+      "installedAt": "2026-09-24T20:48:54.242Z",
+      "updatedAt": "2026-09-24T20:48:54.242Z"
+    },
+    "asd-ste100": {
+      "source": "danyuchn/asd-ste100-skill",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/danyuchn/asd-ste100-skill.git",
+      "skillPath": "SKILL.md",
+      "skillFolderHash": "7d4a135a199a5d7447c4886bcd7ffe742a627bc9",
+      "installedAt": "2026-09-28T07:03:02.762Z",
+      "updatedAt": "2026-09-28T07:03:02.762Z"
     }
   },
   "dismissed": {
