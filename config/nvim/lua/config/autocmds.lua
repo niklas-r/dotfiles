@@ -52,6 +52,8 @@ au('FileType', {
     'qf',
     'dap-float',
     'neotest-summary',
+    'neotest-output',
+    'neotest-output-panel',
     'man',
   },
   command = [[nnoremap <buffer><silent> q :quit<CR>]],
