@@ -94,7 +94,6 @@ return {
             },
           },
         },
-        copilot = {},
         docker_language_server = {},
       }
 
@@ -109,6 +108,8 @@ return {
         'jq', -- Fast JSON formatter and more
         'jsonlint',
         'yamllint',
+        'markdownlint',
+        'shellcheck',
         'tree-sitter-cli', -- Required by nvim-treesitter main branch
         'js-debug-adapter', -- vscode-js-debug, used by nvim-dap for Node.js
       })
@@ -116,7 +117,8 @@ return {
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       -- This bridges Mason with nvim-lspconfig and calls vim.lsp.enable() for each server
-      require('mason-lspconfig').setup()
+      -- copilot.lua runs its own server and force-stops any other client named "copilot"
+      require('mason-lspconfig').setup { automatic_enable = { exclude = { 'copilot' } } }
 
       -- This will override any default LSP config, check `:h lsp-config` for info on merge rules
       for server, config in pairs(servers) do
