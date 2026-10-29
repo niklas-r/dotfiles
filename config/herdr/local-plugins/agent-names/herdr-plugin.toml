@@ -1,0 +1,16 @@
+id = "niklas.agent-names"
+name = "Agent Names"
+version = "0.1.0"
+min_herdr_version = "0.9.3"
+description = "Gives every agent pane a unique human name and a personality"
+platforms = ["linux", "macos"]
+
+# One long-running process; it is the only thing that names agents on events.
+[[startup]]
+command = ["python3", "bin/daemon"]
+
+[[actions]]
+id = "reroll"
+title = "Reroll agent name"
+contexts = ["pane"]
+command = ["python3", "bin/reroll"]

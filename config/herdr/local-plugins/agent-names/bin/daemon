@@ -1,0 +1,160 @@
+#!/usr/bin/env python3
+"""Startup process: names agents on startup and whenever Herdr detects one."""
+
+import json
+import os
+import socket
+import sys
+import time
+import traceback
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+
+import agent_names as an
+
+SUBSCRIPTIONS = [
+    {"type": "pane.agent_detected"},
+    {"type": "pane.closed"},
+    {"type": "pane.moved"},
+]
+TICK_SECONDS = 30
+RETRY_SECONDS = 30
+
+# Set when a reconcile or an event failed; a tick reconciles again once
+# RETRY_SECONDS have passed since the last attempt.
+needs_reconcile = False
+last_attempt = None
+clock = time.monotonic
+
+
+def socket_identity(path):
+    try:
+        st = os.stat(path)
+        return (st.st_dev, st.st_ino)
+    except FileNotFoundError:
+        return None
+
+
+def handle(event, names):
+    kind, data = event.get("event"), event.get("data")
+    if not isinstance(data, dict):
+        return
+    path = an.state_path()
+    with an.state_lock(path):
+        state = an.load_state(path)
+        if kind == "pane_moved":
+            new_pane_id = (data.get("pane") or {}).get("pane_id")
+            pending = an.load_pending(path)
+            if new_pane_id and an.rekey(state, pending, data.get("previous_pane_id"), new_pane_id):
+                an.save_state(path, state)
+                an.save_pending(path, pending)
+            return
+        pane_id = data.get("pane_id")
+        if not pane_id:
+            return
+        if kind == "pane_closed":
+            if state.pop(pane_id, None) is not None:
+                an.save_state(path, state)
+            return
+        if kind == "pane_agent_detected" and not data.get("released"):
+            pending = an.load_pending(path)
+            if an.ensure_named(pane_id, an.list_agents(), state, names, pending):
+                an.save_state(path, state)
+            an.save_pending(path, pending)
+
+
+def safe_reconcile(names):
+    """Reconcile; stay flagged for retry while any agent could not be named."""
+    global needs_reconcile, last_attempt
+    last_attempt = clock()
+    try:
+        failures = an.reconcile(names)
+    except Exception:
+        an.log(f"reconcile failed, will retry:\n{traceback.format_exc()}")
+        failures = 1
+    if failures:
+        an.log(f"{failures} agent(s) not named, will retry in {RETRY_SECONDS}s")
+    needs_reconcile = bool(failures)
+
+
+def tick(names):
+    """Retry whatever failed earlier. Cheap to call often; never raises."""
+    if needs_reconcile and (last_attempt is None or clock() - last_attempt >= RETRY_SECONDS):
+        safe_reconcile(names)
+    try:
+        an.retry_metadata(names)
+    except Exception:
+        an.log(f"metadata retry failed:\n{traceback.format_exc()}")
+
+
+def process_line(line, names):
+    """Handle one socket line. Returns False when the subscription is over."""
+    global needs_reconcile, last_attempt
+    try:
+        msg = json.loads(line)
+    except ValueError:
+        an.log(f"ignoring malformed line: {line[:200]!r}")
+        return True
+    if not isinstance(msg, dict):
+        an.log(f"ignoring non-object line: {line[:200]!r}")
+        return True
+    if "error" in msg:
+        an.log(f"subscription error: {msg['error']}")
+        return False
+    result = msg.get("result")
+    if isinstance(result, dict) and result.get("type") == "subscription_started":
+        safe_reconcile(names)
+        return True
+    try:
+        handle(msg, names)
+    except Exception:
+        an.log(f"event failed, will reconcile:\n{traceback.format_exc()}")
+        needs_reconcile = True
+        last_attempt = clock()
+    return True
+
+
+def run(sock_path, names):
+    """Subscribe, then handle events until the connection drops."""
+    s = socket.socket(socket.AF_UNIX)
+    s.connect(sock_path)
+    request = {"id": "agent-names", "method": "events.subscribe",
+               "params": {"subscriptions": SUBSCRIPTIONS}}
+    s.sendall((json.dumps(request) + "\n").encode())
+    s.settimeout(TICK_SECONDS)
+    buf = b""
+    with s:
+        while True:
+            try:
+                chunk = s.recv(65536)
+            except socket.timeout:
+                tick(names)
+                continue
+            if not chunk:
+                return
+            *lines, buf = (buf + chunk).split(b"\n")
+            for line in lines:
+                if line.strip() and not process_line(line, names):
+                    return
+            tick(names)
+
+
+def main():
+    sock_path = os.environ["HERDR_SOCKET_PATH"]
+    server = socket_identity(sock_path)
+    names = an.load_names()
+    an.log(f"started, pid {os.getpid()}, state {an.state_path()}")
+    while True:
+        try:
+            run(sock_path, names)
+        except OSError as e:
+            an.log(f"connection lost: {e}")
+        time.sleep(2)
+        # A new server runs its own startup hook; this process belongs to the old one.
+        if socket_identity(sock_path) != server:
+            an.log("server changed or gone, exiting")
+            return
+
+
+if __name__ == "__main__":
+    main()

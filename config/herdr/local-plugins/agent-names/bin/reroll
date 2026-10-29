@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+"""Action: give the focused pane's agent a new random unused name."""
+
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+
+import agent_names as an
+
+
+def main():
+    pane_id = os.environ.get("HERDR_PANE_ID")
+    if not pane_id:
+        an.log("reroll needs a pane")
+        return 1
+    names = an.load_names()
+    path = an.state_path()
+    # Same lock as the daemon, so neither overwrites the other's update.
+    with an.state_lock(path):
+        agents = an.list_agents()
+        agent = next((a for a in agents if a["pane_id"] == pane_id), None)
+        if agent is None:
+            an.log(f"no agent in pane {pane_id}")
+            return 1
+        state = an.load_state(path)
+        pending = an.load_pending(path)
+        old = agent.get("name") or state.get(pane_id)
+        state.pop(pane_id, None)
+        try:
+            name = an.give_name(pane_id, agents, state, names, pending)
+        finally:
+            an.save_state(path, state)
+            # A failed metadata report stays here; the daemon's tick retries it.
+            an.save_pending(path, pending)
+    an.log(f"rerolled {pane_id}: {old} -> {name} (state {path})")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
