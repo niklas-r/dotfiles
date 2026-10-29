@@ -16,17 +16,17 @@ end
 
 local mappings = {
   { MEH_MODS, '1', '1Password' },
-  { MEH_MODS, 'A', 'Arc' },
   { MEH_MODS, 'B', 'Bitwarden' },
   { MEH_MODS, 'C', 'Calendar' },
-  { MEH_MODS, 'D', 'Discord' },
+  { MEH_MODS, 'D', 'Dia' },
+  { HYPER_MODS, 'D', 'Discord' },
   { MEH_MODS, 'F', 'Finder' },
   { MEH_MODS, 'M', 'Mail' },
   { HYPER_MODS, 'O', 'Microsoft Outlook' },
   { MEH_MODS, 'O', 'Obsidian' },
   { MEH_MODS, 'P', 'Postman' },
-  { MEH_MODS, 'S', 'Signal' },
-  { HYPER_MODS, 'S', 'Slack' },
+  { HYPER_MODS, 'S', 'Signal' },
+  { MEH_MODS, 'S', 'Slack' },
   { MEH_MODS, 'T', 'Wezterm' },
   { HYPER_MODS, 'T', 'Microsoft Teams' }, -- Sigh...
 }
