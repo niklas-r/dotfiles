@@ -41,3 +41,6 @@ Temporary Items
 .opencode/
 
 **/.claude/settings.local.json
+
+# Basic memory file
+:memory:.ses
