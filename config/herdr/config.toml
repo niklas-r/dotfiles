@@ -5,7 +5,7 @@ name = "rose-pine"
 auto_switch = false
 
 [ui.toast]
-delivery = "system"
+delivery = "terminal"
 
 [keys]
 prefix = "ctrl+s"
