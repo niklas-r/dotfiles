@@ -7,6 +7,13 @@ auto_switch = false
 [ui.toast]
 delivery = "terminal"
 
+[ui.sidebar.agents]
+# $name comes from the niklas.agent-names plugin (local-plugins/agent-names).
+rows = [
+  ["state_icon", "machine", { token = "$name", bold = true }, "workspace"],
+  ["pane"]
+]
+
 [keys]
 prefix = "ctrl+s"
 split_horizontal = "prefix+s"
