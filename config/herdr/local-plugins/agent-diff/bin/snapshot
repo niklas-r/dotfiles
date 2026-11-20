@@ -1,0 +1,19 @@
+#!/usr/bin/env python3
+"""Event hook for pane.agent_detected: snapshot the agent's working tree."""
+import json
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+import agent_diff as ad
+import runner
+import snapshot
+
+try:
+    pane_id = json.loads(os.environ["HERDR_PLUGIN_EVENT_JSON"])["data"]["pane_id"]
+    pane = runner.herdr_json("pane", "get", pane_id)["pane"]
+    session = (pane.get("agent_session") or {}).get("value")
+    ref = snapshot.ref_name(session, pane_id, runner.agent_pid(pane_id))
+    snapshot.snapshot(ad.repo_dir(pane), ref)
+except Exception as err:
+    print(f"agent-diff snapshot skipped: {err}", file=sys.stderr)

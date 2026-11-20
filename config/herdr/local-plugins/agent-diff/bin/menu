@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+import os
+import sys
+import termios
+import tty
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+import agent_diff as ad
+import runner
+
+
+def read_key():
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd)
+    try:
+        tty.setraw(fd)
+        return sys.stdin.read(1)
+    finally:
+        termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+
+def main():
+    print("\r\n".join(f" {k}  {label}" for k, label in ad.SCOPES.items()) + "\r\n\n q  cancel")
+    key = read_key()
+    if key not in ad.SCOPES:
+        return
+    try:
+        pane = runner.herdr_json("pane", "get", os.environ["AGENT_DIFF_PANE"])["pane"]
+        runner.open_diff(pane, runner.resolve_args(key, pane, ad.repo_dir(pane)))
+    except Exception as err:
+        runner.notify("agent-diff", str(err))
+        print(f"\r\n agent-diff: {err}\r\n\n press any key")
+        read_key()
+
+
+main()

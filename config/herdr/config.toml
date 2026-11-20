@@ -73,3 +73,9 @@ key = "prefix+m"
 type = "plugin_action"
 command = "annotate.manage"
 description = "manage annotations"
+
+[[keys.command]]
+key = "prefix+d"
+type = "plugin_action"
+command = "niklas.agent-diff.pick"
+description = "diff agent changes in nvim"
