@@ -1,15 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "skill-creator": {
-      "source": "anthropics/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/anthropics/skills.git",
-      "skillPath": "skills/skill-creator/SKILL.md",
-      "skillFolderHash": "3cf9a8db32597ba3e24b584a3d696f4e11c7d7b6",
-      "installedAt": "2026-02-11T12:04:22.971Z",
-      "updatedAt": "2026-08-29T19:00:35.568Z"
-    },
     "find-skills": {
       "source": "vercel-labs/skills",
       "sourceType": "github",
@@ -216,15 +207,6 @@
       "skillFolderHash": "b3ec5711dc1f9632af02eec5911fc9fcbc284d38",
       "installedAt": "2026-09-24T20:48:54.242Z",
       "updatedAt": "2026-09-24T20:48:54.242Z"
-    },
-    "asd-ste100": {
-      "source": "danyuchn/asd-ste100-skill",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/danyuchn/asd-ste100-skill.git",
-      "skillPath": "SKILL.md",
-      "skillFolderHash": "7d4a135a199a5d7447c4886bcd7ffe742a627bc9",
-      "installedAt": "2026-09-28T07:03:02.762Z",
-      "updatedAt": "2026-09-28T07:03:02.762Z"
     },
     "show-me": {
       "source": "humanlayer/skills",
