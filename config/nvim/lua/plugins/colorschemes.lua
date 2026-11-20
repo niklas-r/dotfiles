@@ -6,8 +6,11 @@ return {
   -- colorsaver automatically save/loads the last used color scheme
   {
     'https://git.sr.ht/~swaits/colorsaver.nvim',
-    lazy = true,
-    event = 'VimEnter',
+    -- Loaded at startup, not from a VimEnter autocmd: a `:colorscheme` run inside a
+    -- non-nested autocmd emits no ColorScheme event, so plugins loaded earlier
+    -- (e.g. `nvim -c CodeDiff`) lost their highlight groups to its `hi clear`.
+    lazy = false,
+    priority = 1000,
     opts = {},
     dependencies = {
       {
