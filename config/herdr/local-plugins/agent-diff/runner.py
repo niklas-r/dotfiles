@@ -110,7 +110,8 @@ def open_diff(pane, args):
                      "--label", "diff", "--focus")
     new_pane = tab["root_pane"]["pane_id"]
     cmd = ad.codediff_command(repo, args, exit_on_close=True)
-    run(["herdr", "pane", "run", new_pane, "nvim", "-c", shlex.quote(cmd)])
+    # exec: the tab closes when nvim exits
+    run(["herdr", "pane", "run", new_pane, "exec", "nvim", "-c", shlex.quote(cmd)])
 
 
 def notify(title, body=""):

@@ -32,7 +32,7 @@ the focused agent changed, in nvim.
 - Target: if the tab has a live herdr-nvim sidebar (state file + socket + pane),
   `CodeDiff` runs there via `nvim --remote-expr 'execute(...)'`, then the
   sidebar is zoomed on and focused. Otherwise a new `diff` tab runs
-  `nvim -c 'CodeDiff --exit-on-close ...'`.
+  `exec nvim -c 'CodeDiff --exit-on-close ...'`, so the tab closes with nvim.
 - Errors (no git repo, no base) show as a Herdr notification.
 
 Pure logic is in `agent_diff.py`; herdr/git/nvim calls are in `runner.py`.
