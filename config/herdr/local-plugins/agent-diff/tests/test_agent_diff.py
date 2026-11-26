@@ -1,4 +1,7 @@
+import shutil
+import subprocess
 import sys
+import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
@@ -79,6 +82,36 @@ class Command(unittest.TestCase):
             ad.codediff_command("/my repo", ["main..."], exit_on_close=True),
             "CodeDiff --exit-on-close --repo /my\\ repo main...",
         )
+
+
+class LaunchdPath(unittest.TestCase):
+    """herdr as a brew service runs plugins with PATH=/usr/bin:/bin:/usr/sbin:/sbin."""
+
+    PATH = "/usr/bin:/bin:/usr/sbin:/sbin"
+
+    def fake_bin(self, name, body="exit 0"):
+        tmp = Path(tempfile.mkdtemp())
+        self.addCleanup(shutil.rmtree, tmp)
+        exe = tmp / name
+        exe.write_text(f"#!/bin/sh\n{body}\n")
+        exe.chmod(0o755)
+        return exe
+
+    def test_herdr_resolves_to_bin_path(self):
+        env = {"PATH": self.PATH, "HERDR_BIN_PATH": "/x/herdr"}
+        self.assertEqual(ad.tool("herdr", env), "/x/herdr")
+
+    def test_tool_found_outside_path(self):
+        nvim = self.fake_bin("nvim")
+        self.assertEqual(ad.tool("nvim", {"PATH": self.PATH}, extra=(str(nvim.parent),)), str(nvim))
+
+    def test_pick_opens_menu(self):
+        herdr = self.fake_bin("herdr", 'echo "$@" > "$0.args"')
+        env = {"PATH": self.PATH, "HERDR_BIN_PATH": str(herdr), "HERDR_PANE_ID": "w1:p2"}
+        pick = Path(__file__).resolve().parent.parent / "bin/pick"
+        proc = subprocess.run([sys.executable, str(pick)], env=env, capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
+        self.assertIn("AGENT_DIFF_PANE=w1:p2", Path(f"{herdr}.args").read_text())
 
 
 if __name__ == "__main__":

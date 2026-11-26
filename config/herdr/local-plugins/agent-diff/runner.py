@@ -16,7 +16,7 @@ class DiffError(Exception):
 
 
 def run(cmd, cwd=None, check=True):
-    proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    proc = subprocess.run([ad.tool(cmd[0]), *cmd[1:]], cwd=cwd, capture_output=True, text=True)
     if check and proc.returncode != 0:
         raise DiffError(f"{cmd[0]} {cmd[1]}: {proc.stderr.strip() or proc.stdout.strip()}")
     return proc

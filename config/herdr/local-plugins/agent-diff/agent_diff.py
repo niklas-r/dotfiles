@@ -1,6 +1,7 @@
 """Pure logic for agent-diff: scope -> CodeDiff args, timestamps, nvim paths."""
 import json
 import os
+import shutil
 from datetime import datetime
 from pathlib import Path
 
@@ -10,6 +11,14 @@ SCOPES = {
     "3": "Uncommitted changes",
 }
 BRANCH_FALLBACKS = ("test", "main", "master")
+EXTRA_PATH = ("/opt/homebrew/bin", "/usr/local/bin")
+
+
+def tool(name, env=os.environ, extra=EXTRA_PATH):
+    """Executable for `name`. A launchd-started herdr gives plugins a PATH without Homebrew."""
+    if name == "herdr" and env.get("HERDR_BIN_PATH"):
+        return env["HERDR_BIN_PATH"]
+    return shutil.which(name, path=os.pathsep.join([env.get("PATH", ""), *extra])) or name
 
 
 def scope_args(key, base):

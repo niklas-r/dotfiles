@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 import os
-import subprocess
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+import runner
 
 pane = os.environ["HERDR_PANE_ID"]
-subprocess.run(["herdr", "plugin", "pane", "open", "--plugin", "niklas.agent-diff",
-                "--entrypoint", "menu", "--env", f"AGENT_DIFF_PANE={pane}"], check=True)
+runner.run(["herdr", "plugin", "pane", "open", "--plugin", "niklas.agent-diff",
+            "--entrypoint", "menu", "--env", f"AGENT_DIFF_PANE={pane}"])
