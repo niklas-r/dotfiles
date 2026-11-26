@@ -28,7 +28,7 @@ local mappings = {
   { HYPER_MODS, 'S', 'Signal' },
   { MEH_MODS, 'S', 'Slack' },
   { MEH_MODS, 'T', 'Wezterm' },
-  { HYPER_MODS, 'T', 'Microsoft Teams' }, -- Sigh...
+  { HYPER_MODS, 'T', 'Microsoft Teams (work or school)' }, -- Sigh...
 }
 
 for _, mapping in pairs(mappings) do
