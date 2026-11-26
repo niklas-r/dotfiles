@@ -2,5 +2,21 @@
   "$schema": "https://opencode.ai/v2/cli.json",
   "theme": {
     "name": "rosepine"
-  }
+  },
+  "plugins": [
+    "./herdr-opencode",
+    "./herdr-name-injector"
+  ],
+  "session": {
+    "thinking": "hide",
+    "verbosity": "low",
+    "permissions": "prompt",
+    "sidebar": "auto",
+    "scrollbar": false,
+    "grouping": "auto"
+  },
+  "tabs": {
+    "indicators": "status"
+  },
+  "animations": true
 }
